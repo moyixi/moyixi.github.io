@@ -61,6 +61,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-二叉树类算法题2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" class="article-date">
+  <time datetime="2020-04-18T04:43:41.531Z" itemprop="datePublished">2020-04-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/">二叉树类算法题2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>层次遍历：<br>求一棵树每层节点的平均数</p>
+<p>public List<Double> averageOfLevels(TreeNode root){<br>    List<Double> ret new ArrayList&lt;&gt;();<br>        //ret用来存储每层节点的平均数<br>    if (root == null) return ret;<br>    Queue<TreeNode> queue = new LinkedList&lt;&gt;();<br>        //用一个队列queue来存储当前层的所有节点<br>    queue.add(root);<br>    while(!queue.isEmpty()){<br>        int cnt = queue.size();<br>        //当前层节点压入队列之后，队列大小即节点数<br>        double sum = 0;//用来累加当前层的节点和<br>        for(int i = 0 ; i &lt; cnt ; i++){<br>            TreeNode node = queue.poll();<br>            sum += node.val;<br>            if(node.left != null) queue.add(node.left);<br>            if(node.right != null) queue.add(node.right);<br>        }<br>        ret.add(sum/cnt);<br>        //sum/cnt即某层的节点平均数，压入ret中<br>    }<br>    return ret;<br>}</p>
+<p>求二叉树最下层的最左边的结点。<br>层序遍历时，从右往左的向队列中压入一整层的节点,再出队列。则最后一个出队列的节点是最底层的最左边节点。</p>
+<p>public int findBottomLeftValue(TreeNode root){<br>    Queue<TreeNode> queue = new LinkedList&lt;&gt;();<br>    queue.add(root);<br>    while(!queue.isEmpty()){<br>        root = queue.poll();<br>        if(root.right!=null) queue.add(root.right);<br>        if(root.left!=null) queue.add(root.left);<br>    }<br>    return root.val;<br>}</p>
+<p>二叉树前序遍历：<br>需要借助栈，因为前序遍历是  root -&gt; left -&gt; right<br>而栈是后进先出，所以为达到遍历过程中的先左后右，必须要使得压栈过程先右后左。<br>public List<Integer> preorderTraversal(TreeNode root){<br>    List<Integer> ret = new ArrayList&lt;&gt;();<br>    Stack<TreeNode> stack = new Stack&lt;&gt;();<br>    stack.push(root);<br>    while(!stack.isEmpty()){<br>        TreeNode node = stack.pop();<br>        if(node == null) continue;<br>        //空节点不记录入ret中，它无左右节点，也不需要将左右节点压栈<br>        //当空节点被压入栈中时，说明上一次出栈操作的root为叶子节点或只有左右节点中的一个。<br>        //若无这一步，不对node做null判断，每次常规的压栈操作，会将叶子节点的左右节点(均为空)<br>        //或只有一个孩子节点的节点的左右节点(有一个为空)均压入栈中后记录,即在最终的遍历结果中出现很多null且无法退出遍历。<br>        //有了这一步判断，仍然会在上一层循环中压入null，但进行一次判断后，null节点的左右孩子节点(仍为null)不会再压入栈中，<br>        //null节点也不会计入ret中。而是遇到null之后做弹栈操作。弹到非null节点为止。<br>        ret.add(node.val);<br>        stack.push(root.right);//顺序很重要<br>        stack.push(root.left);//顺序很重要<br>    }<br>    return ret;<br>}</p>
+<p>二叉树的后序遍历：<br>后序遍历可以通过前序遍历修改。<br>前序遍历是  root -&gt; left -&gt; right<br>后序遍历是  left -&gt; right -&gt; root<br>将前序遍历改为 root -&gt; right -&gt; left 再逆序即可。</p>
+<p>public List<Integer> postorderTraversal(TreeNode root){<br>    List<Integer> ret = new ArrayList&lt;&gt;();<br>    Stack<TreeNode> stack = new Stack&lt;&gt;();<br>    stack.push(root);<br>    while(!stack.isEmpty()){<br>        TreeNode node = stack.pop();<br>        if(node == null) continue;<br>        ret.add(node.val);<br>        stack.push(root.left);<br>        //前序遍历时先压右节点再压左节点保证先出左节点后出右节点<br>        stack.push(root.right);<br>        //后序遍历时，与之相反，最后要将结果逆置<br>    }<br>    Collections.reverse(ret);<br>    return ret;<br>}</p>
+<p>中序遍历<br>public List<Integer> inorderTraversal(TreeNode root){<br>    List<Integer> ret = new ArrayList&lt;&gt;();<br>    if(root == null) return ret;<br>    Stack<TreeNode> stack = new Stack&lt;&gt;();<br>    TreeNode cur = root;<br>    while(cur!=null || !stack.isEmpty()){<br>        while(cur != null){<br>        stack.push(cur);<br>        cur = cur.left;<br>        }<br>        //中序遍历 left -&gt; root -&gt; right，所以每次压栈要将left压到底为止<br>        TreeNode node = stack.pop();<br>        ret.add(node.val);<br>        cur = node.right;<br>        //压栈完，进行弹栈操作并记录后再压入node.right，即在root之后记录right<br>    }<br>    return ret;<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" data-id="ck958wevy00026crghxmw9ar4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-二叉树类算法题1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" class="article-date">
@@ -132,7 +176,7 @@ helper(root.right);</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck92v2oke000124rgg7ir5keq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck958wevv00016crg3fs0bx3l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -172,7 +216,7 @@ helper(root.right);</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck92v2okm000424rgduqfasud" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck958wewe00056crg3orl2gud" class="article-share-link">Share</a>
       
       
     </footer>
@@ -220,7 +264,7 @@ helper(root.right);</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/myFirstBlog/" data-id="ck92v2oki000224rghgprauo7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/myFirstBlog/" data-id="ck958wew000036crg2ql44qj4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -260,7 +304,7 @@ helper(root.right);</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" data-id="ck92v2okk000324rg91hx535p" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" data-id="ck958wew200046crgb0vy9y76" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,7 +353,7 @@ helper(root.right);</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/hello-world/" data-id="ck92v2ok6000024rgfqgj3qgj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/hello-world/" data-id="ck958wevn00006crgfnojhlrn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,6 +394,10 @@ helper(root.right);</code></pre><p>}</p>
       <ul>
         
           <li>
+            <a href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/">二叉树类算法题2</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/">二叉树类算法题1</a>
           </li>
         
@@ -363,10 +411,6 @@ helper(root.right);</code></pre><p>}</p>
         
           <li>
             <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">SSD上采样反向融合笔记</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/12/hello-world/">Hello World</a>
           </li>
         
       </ul>
