@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Markdown写作 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、 普通文本 直接输入例： 普通文本 2、标题 两种方法 a、#加空格加内容，多级标题就用多个# b、标题下用多个 = [一级标题]或多个 - [二级标题] 标题 二级标题3、斜体和粗体(前后加 * 一个是斜体，两个是粗体，三个是粗斜体，星号和内容之间不可加空格) 斜体粗体粗斜体 4、链接和图片的插入、空格后的英文引号里的内容为鼠标悬停时的title 链接插入的几种方法：中括号加小括号a、哔哩哔">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown写作">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;25&#x2F;Markdown%E5%86%99%E4%BD%9C&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、 普通文本 直接输入例： 普通文本 2、标题 两种方法 a、#加空格加内容，多级标题就用多个# b、标题下用多个 = [一级标题]或多个 - [二级标题] 标题 二级标题3、斜体和粗体(前后加 * 一个是斜体，两个是粗体，三个是粗斜体，星号和内容之间不可加空格) 斜体粗体粗斜体 4、链接和图片的插入、空格后的英文引号里的内容为鼠标悬停时的title 链接插入的几种方法：中括号加小括号a、哔哩哔">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;image.baidu.com&#x2F;search&#x2F;detail?z=0&amp;word=%E6%91%84%E5%BD%B1%E5%B8%88%E6%9D%B0%E5%A4%AB%E4%BD%9C%E5%93%81&amp;hs=0&amp;pn=3&amp;spn=0&amp;di=0&amp;pi=5139273732223422616&amp;tn=baiduimagedetail&amp;is=0%2C0&amp;ie=utf-8&amp;oe=utf-8&amp;cs=1808288369%2C2886187605&amp;os=1464113726%2C3911183433&amp;simid=&amp;adpicid=0&amp;lpn=0&amp;fm=&amp;sme=&amp;cg=&amp;bdtype=-1&amp;oriquery=&amp;objurl=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853&amp;fromurl=&amp;gsm=40000000004&amp;catename=pcindexhot&amp;islist=&amp;querylist=">
+<meta property="og:image" content="d:%5C%E6%99%9A%E5%AA%9A.jpg">
+<meta property="og:updated_time" content="2020-04-25T09:14:17.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;image.baidu.com&#x2F;search&#x2F;detail?z=0&amp;word=%E6%91%84%E5%BD%B1%E5%B8%88%E6%9D%B0%E5%A4%AB%E4%BD%9C%E5%93%81&amp;hs=0&amp;pn=3&amp;spn=0&amp;di=0&amp;pi=5139273732223422616&amp;tn=baiduimagedetail&amp;is=0%2C0&amp;ie=utf-8&amp;oe=utf-8&amp;cs=1808288369%2C2886187605&amp;os=1464113726%2C3911183433&amp;simid=&amp;adpicid=0&amp;lpn=0&amp;fm=&amp;sme=&amp;cg=&amp;bdtype=-1&amp;oriquery=&amp;objurl=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853&amp;fromurl=&amp;gsm=40000000004&amp;catename=pcindexhot&amp;islist=&amp;querylist=">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Markdown写作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" class="article-date">
+  <time datetime="2020-04-25T07:56:11.956Z" itemprop="datePublished">2020-04-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Markdown写作
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、 普通文本 直接输入<br>例： 普通文本</p>
+<p>2、标题 两种方法 a、#加空格加内容，多级标题就用多个# b、标题下用多个 = [一级标题]或多个 - [二级标题]</p>
+<h1 id="标题"><a href="#标题" class="headerlink" title="标题 "></a>标题 </h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p>3、斜体和粗体(前后加 * 一个是斜体，两个是粗体，三个是粗斜体，星号和内容之间不可加空格)</p>
+<p><em>斜体</em><br><strong>粗体</strong><br><strong><em>粗斜体</em></strong></p>
+<p>4、链接和图片的插入、空格后的英文引号里的内容为鼠标悬停时的title</p>
+<p>链接插入的几种方法：中括号加小括号<br>a、<br><a href="https://www.bilibili.com" target="_blank" rel="noopener">哔哩哔哩</a><br><a href="https://www.bilibili.com" target="_blank" rel="noopener" title="bilibili">哔哩哔哩</a><br>b、<br><a href="https://www.bilibili.com" target="_blank" rel="noopener">https://www.bilibili.com</a><br>c、<br>[哔哩哔哩][哔哩哔哩的网址]<br>[哔哩哔哩的网址]:<a href="https://www.bilibili.com" target="_blank" rel="noopener">https://www.bilibili.com</a> “bilibili”</p>
+<p>图片插入方法:感叹号加中括号加小括号<br>网络图片：<br><img src="https://image.baidu.com/search/detail?z=0&word=%E6%91%84%E5%BD%B1%E5%B8%88%E6%9D%B0%E5%A4%AB%E4%BD%9C%E5%93%81&hs=0&pn=3&spn=0&di=0&pi=5139273732223422616&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&cs=1808288369%2C2886187605&os=1464113726%2C3911183433&simid=&adpicid=0&lpn=0&fm=&sme=&cg=&bdtype=-1&oriquery=&objurl=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D1484500186%2C1503043093%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1280%26h%3D853&fromurl=&gsm=40000000004&catename=pcindexhot&islist=&querylist=" alt="这是网络图片名称"></p>
+<p>本地图片：本地图片也区分为相对位置绝对位置略过不表<br><img src="D:%5C%E6%99%9A%E5%AA%9A.jpg" alt="这是本地图片名称" title="这是图片title"></p>
+<p>![这也是本地图片名称][图片]<br>[图片]:D:\晚媚.jpg </p>
+<p>5、脚注(脚注id必须唯一)<br>我需要一个脚注<a href="我是你的脚注">^er</a></p>
+<p>我也需要一个脚注[^12306]<br>[^12306]:我是第二个脚注</p>
+<p>6、引用段落</p>
+<blockquote>
+<p>第一层引用</p>
+<blockquote>
+<p>第二层引用</p>
+<blockquote>
+<p>第三层引用</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>7、代码块儿<br><code>System.out.println(Hello World)</code></p>
+<p>代码区：连打四个空格或 Tab<br>    System.out.println(Hello World)</p>
+<pre><code>System.out.println(Hello World)</code></pre><p>8、下划线：三个* 或三个- 或三个_</p>
+<hr>
+<hr>
+<hr>
+<p>删除线：文字前后加两个~<br><del>被删除了</del></p>
+<p>9、无序列表 在前面加上 * 或- 或+</p>
+<ul>
+<li>111</li>
+</ul>
+<ul>
+<li>222</li>
+</ul>
+<ul>
+<li>333<br>有序列表 数字 点儿[.] 空格</li>
+</ul>
+<p>1.<br>2. </p>
+<p>多级列表</p>
+<ul>
+<li>一级 <ul>
+<li>二级 </li>
+<li>三级 </li>
+</ul>
+</li>
+</ul>
+<p>10、表格<br>列与列与用 | 分开 ,第二行 多个- 加前后的 : 表明对齐方式 :在左左对齐，在右右对齐，左右都有居中</p>
+<table>
+<thead>
+<tr>
+<th align="center">表格</th>
+<th align="left">表格</th>
+<th align="right">表格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一</td>
+<td align="left">二</td>
+<td align="right">三</td>
+</tr>
+<tr>
+<td align="center">四</td>
+<td align="left">五</td>
+<td align="right">六</td>
+</tr>
+<tr>
+<td align="center">七</td>
+<td align="left">八</td>
+<td align="right">九</td>
+</tr>
+</tbody></table>
+<p>11、排版:使用html<br>文字中输入回车只是空格</p>
+<p>111<br>222</p>
+<p>两个空格后再输入回车才是换行<br>111<br>222</p>
+<p>段前首行缩进 一个、半个、四分之一字符//&emsp;、&ensp;、&nbsp;<br>一二三<br>&emsp; 四五六<br>&ensp; 七八九<br>&nbsp; 十沟圈</p>
+<p>居中使用//<div align=center> </div></p>
+<div align=center>居中</div>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" data-id="ck9feqiko0000cwrg7fspeieg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">字典树Trie</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/">Markdown写作</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/">字典树Trie</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">二叉查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/">二叉树类算法题2</a>
+          </li>
+        
+          <li>
+            <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/">二叉树类算法题1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
