@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。 二叉树两节点的最长路径: 二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1故根结点为root的二叉树的两节点最长路径 = Max">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-16T14:26:28.982Z">
+<meta property="og:updated_time" content="2020-04-25T06:58:10.433Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -116,16 +116,7 @@
 <p>f(root) = max(root.val + f(ll) + f(lr) + f(rl) + f(rr) , f(l)+f(r))</p>
 <p>public int rob(TreeNode root){<br>    if(root == null) return 0;<br>    int val1 = root.val;<br>    if(root.left!=null){<br>    val1 = val1 + rob(root.left.left) + rob(root.left.right);<br>    }<br>    if(root.right!=null){<br>    val1 = val1 + rob(root.right.left) + rob(<br>    root.right.right);<br>    }<br>    int val2 = rob(root.left)+rob(root.right);<br>    return Math.max(val1,val2);<br>}</p>
 <p>给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么这个节点的值不大于它的子节点的值。 给出这样的一个二叉树，你需要输出所有节点中的第二小的值。如果第二小的值不存在的话，输出 -1 。</p>
-<p>1、定义两个变量，一个保存最小值一个保存次小值。再定义一个flag递归过程中，若找到过次小值则改变flag，返回次小值。若未找到过次小值，则返回-1；<br>int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;<br>int flag = 0;<br>public int findSecondMinimumValue(TreeNode root){<br>    helper(root);<br>    return flag == 0 ? -1:second;<br>}<br>public void helper(TreeNode root){<br>    if(root == null)<br>    return ;</p>
-<pre><code>if(root.val &lt; first){
-    second = first;
-    first = root.val;
-}else if(root.val &lt;= second &amp;&amp; root.val &gt; first){
-    flag++;
-    second = root.val;
-}
-helper(root.left);
-helper(root.right);</code></pre><p>}</p>
+<p>1、定义两个变量，一个保存最小值一个保存次小值。再定义一个flag递归过程中，若找到过次小值则改变flag，返回次小值。若未找到过次小值，则返回-1；<br>int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;<br>int flag = 0;<br>public int findSecondMinimumValue(TreeNode root){<br>    helper(root);<br>    return flag == 0 ? -1:second;<br>}<br>public void helper(TreeNode root){<br>    if(root == null)<br>    return ;<br>    if(root.val &lt; first){<br>        second = first;<br>        first = root.val;<br>    }else if(root.val &lt;= second &amp;&amp; root.val &gt; first){<br>        flag++;<br>        second = root.val;<br>    }<br>    helper(root.left);<br>    helper(root.right);<br>}</p>
 <p>2、因为这个二叉树父节点的值必≤子节点的值，故根结点必定为最小值，所以第二小的值必在左右两个子树之中，<br>倘若左右两个子树中的最小值都不和根结点相等，则第二小的值是左右两个子树最小值中的较小值。<br>倘若左(右)子节点和父节点的值相等，则需要在左(右)子树中找出第二小的值来与右(左)子树的最小值一起比较出一个较小值出来。这样才能保证比对出来的是真正的第二小的值。<br>简而言之，要在左右子树中分别找出和根结点不相等的最小值。<br>这两个最小值中的较小者就是第二小的值。</p>
 <p>若左(右)子节点和根节点相等，才需要递归的找左(右)子树的次小值。<br>因为左右子树作为一个单独的树做此题的判断，root.left必定是left树的最小值，递归后找到的次小值也即左子树除根结点外的最小值。<br>否则直接取左右子节点中的较小值即可。</p>
 <p>public int findSecondMinimumValue(TreeNode root){<br>    if(root == null) return -1;<br>    //递归返回条件 1 节点为空，树没有次小值。<br>    if(root.val==null &amp;&amp; root.right == null) return -1;<br>    //递归返回条件 2 节点没有子节点，树没有次小值。<br>    int leftVal = root.left.val;<br>    int rightVal = root.right.val;<br>    if(leftVal == root.val) {<br>        leftVal ==     findSecondMinimumValue(root.left);<br>    }<br>    if(rightVal == root.val){<br>        rightVal == findSecondMinimumValue(root.right);<br>    }<br>    if(leftVal != -1 &amp;&amp; rightVal != -1){<br>        return Math.min(leftVal,rightVal);<br>        //递归返回条件 3 因为左右节点若与根结点相等则会继续递归，递归到找到没有子节点的节点 返回-1为止。<br>        //若都不为 -1 则说明两边都没有一直递归到树的末端，而是在中途由于某个子节点不和父节点相等而返回<br>        //即满足，左右子节点都不和父节点的值相等。<br>        //那么这两个数值中的较小值就是整个树的次小值。<br>    }<br>    if(leftVal != -1) return leftVal;<br>    // 递归返回条件4 在上一步判断完了两个子节点都不和根结点相等之后，再继续执行则说明，必有一个子节点和根结点值相等，此时若 左子节点不为-1，即左子节点不和根结点相等，即右子节点和根节点相等，此时次小值为左子节点。<br>    return rightVal;<br>}</p>
@@ -133,7 +124,7 @@ helper(root.right);</code></pre><p>}</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck9f9rkud0004zgrg05b7fidp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck9fdmig20003m8rgd2wh071v" class="article-share-link">Share</a>
       
       
     </footer>
