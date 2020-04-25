@@ -5,13 +5,16 @@
   
 
   
-  <title>Archives: 2019 | Hexo</title>
+  <title>字典树Trie | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;index.html">
+  <meta name="description" content="字典树、前缀树、Trie 用于判断字符串是否存在或是否具有某种字符串前缀 实现前缀树：插入、查找、查找前缀功能 class Trie{ public Trie(){ }private class Node{    Node[] childs = new Node[26];    boolean isWord;} private Node root = new Node();private int">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字典树Trie">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;25&#x2F;%E5%AD%97%E5%85%B8%E6%A0%91Trie&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="字典树、前缀树、Trie 用于判断字符串是否存在或是否具有某种字符串前缀 实现前缀树：插入、查找、查找前缀功能 class Trie{ public Trie(){ }private class Node{    Node[] childs = new Node[26];    boolean isWord;} private Node root = new Node();private int">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-25T07:45:34.203Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -59,78 +62,62 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/11/12/myFirstBlog/" class="archive-article-date">
-  <time datetime="2019-11-12T07:30:02.000Z" itemprop="datePublished">Nov 12</time>
+        <section id="main"><article id="post-字典树Trie" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" class="article-date">
+  <time datetime="2020-04-25T06:56:49.176Z" itemprop="datePublished">2020-04-25</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/12/myFirstBlog/">多模态论文阅读笔记</a>
+    <h1 class="article-title" itemprop="name">
+      字典树Trie
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" class="archive-article-date">
-  <time datetime="2019-11-12T07:30:02.000Z" itemprop="datePublished">Nov 12</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">SSD上采样反向融合笔记</a>
-    </h1>
-  
+        <p>字典树、前缀树、Trie 用于判断字符串是否存在或是否具有某种字符串前缀</p>
+<p>实现前缀树：<br>插入、查找、查找前缀功能</p>
+<p>class Trie{</p>
+<p>public Trie(){</p>
+<p>}<br>private class Node{<br>    Node[] childs = new Node[26];<br>    boolean isWord;<br>}</p>
+<p>private Node root = new Node();<br>private int indexForChar(char c){<br>    return c - ‘a’;<br>}</p>
+<p>public void insert(String word){<br>    insert(word,root);<br>}<br>private void insert(String word,Node node){<br>    if(node == null) return ;<br>    if(word.length == 0){<br>        node.isWord == true;<br>        return ;<br>    }<br>    int index = indexForChar(word.charAt(0));<br>    if(node.childs[index] == null){<br>        node.childs[index] = new Node();<br>    }<br>    insert(word.substring(1),node.childs[index]);<br>}</p>
+<p>public boolean search(String word){<br>    return search(word,root);<br>}</p>
+<p>private boolean search(String word,Node node){<br>    if(node == null)return false;<br>    if(word.length()==0) return node.isWord;<br>    int index = indexForChar(word.charAt(0));<br>    return search(word.substring(1),node.childs[index]);<br>}</p>
+<p>public boolean startsWith(String prefix) {<br>        return startWith(prefix, root);<br>}</p>
+<p>private boolean startWith(String prefix, Node node) {<br>    if (node == null) return false;<br>    if (prefix.length() == 0) return true;<br>    int index = indexForChar(prefix.charAt(0));<br>    return startWith(prefix.substring(1), node.childs[index]);<br>}<br>}</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/11/12/hello-world/" class="archive-article-date">
-  <time datetime="2019-11-12T07:22:10.980Z" itemprop="datePublished">Nov 12</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/11/12/hello-world/">Hello World</a>
-    </h1>
-  
-
-    </header>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" data-id="ck9fdr39v000784rga9p976fp" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">二叉查找树</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
