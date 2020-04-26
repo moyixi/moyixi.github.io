@@ -96,11 +96,11 @@
         si++;//若孩子满足了，饼干后移一位，若孩子不满足，说明饼干不够大，试下一个饼干是否满足。
     }
     return gi;//gi即为最终满足的孩子数
-}</code></pre>
+}</code></pre><h2 id="2-不重叠的区间个数"><a href="#2-不重叠的区间个数" class="headerlink" title="2.不重叠的区间个数"></a>2.不重叠的区间个数</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" data-id="ck9gkyn900009pcrgaz7ld4al" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" data-id="ck9gld0bq0008borgh3erdxzl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -214,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" data-id="ck9gkyn7j0000pcrg0ik12o1y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" data-id="ck9gld0aw0000borghdur0zuj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -261,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" data-id="ck9gkyn8c0007pcrgatu76un3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" data-id="ck9gld0bn0006borg9ad79w1d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,47 +294,208 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>二叉查找树(BST)：根结点大于等于左子树所有节点，小于等于右子树所有节点.<br>特点：中序遍历有序(由小到大)，那么按右 中 左 方式的遍历即由大到小的有序</p>
-<p>1、给定一个二叉查找树和左右边界值，修剪二叉查找树，只保留边界值之内的数字。<br>public TreeNode trimBST(TreeNode root , int L ,int R){<br>    if(root == null) return null;<br>    if(root.val &lt; L) return trimBST(root.right,L,R);<br>    //若当前root值小于左边界，则左子树可被抛弃，问题等同于修剪以root.right为根结点的子树<br>    if(root.val &gt; R) return trimBST(root.left,L,R);<br>    //若当前root值大于右边界，则右子树可被抛弃，问题等同于修剪以root.left为根结点的子树<br>    root.left = trimBST(root.left,L,R);<br>    root.right = trimBST(root.right,L,R);<br>    //经过上面两部判断后，root值都在L,R的范围之内，可将问题递归至左右结点。<br>    return root;<br>}</p>
-<p>2.0、寻找二叉查找树由小到大第k个元素<br>因为二叉查找树中序遍历有序，所以中序遍历到第k个即可<br>private int cnt = 0;<br>private int val;</p>
-<p>public int kthSmallest(TreeNode root , int k){<br>    inOrder(root, k);<br>    return val;<br>}</p>
-<p>//类比于普通情况下的中序遍历<br>void dfs(TreeNode root){<br>    dfs(root.left);<br>    visit(root);<br>    dfs(root.right);<br>}</p>
-<p>private void inOrder(TreeNode node,int k){//中序遍历找到第k个元素的过程<br>    if(node == null) return ;<br>    inOrder(node.left,k);<br>//<br>    cnt++;<br>    if(cnt == k){<br>        val = node.val;<br>        return;<br>    }<br>    //上面这一坨就是visit(root);讲的故事<br>//<br>    inOrder(node.right,k);<br>}</p>
-<p>2.1、寻找二叉查找树由小到大第k个元素,递归解法<br>// count 函数计算以root为根节点的二叉树上有多少个节点。<br>public int count(TreeNode root){<br>    if(root == null) return 0;<br>    return 1 + count(root.left)+count(root.right);<br>}<br>//若以root.left 为根节点的二叉树上有n个结点则 root 是第 n+1个节点。<br>//那么进入此题判断逻辑，若 root.left 有k-1个节点，则root为所求的第k个节点。<br>//若root.left上的节点比k-1多，则抛弃右子树<br>//若root.left上的节点比k-1少，则抛弃左子树，并减去左子树上的节点个数和root节点，在右子树上继续进行本题。</p>
-<p>public int kthSmallest(TreeNode root , int k){<br>    int leftcount = count(root.left);<br>    if(leftcount == k - 1) return root.val;<br>    if(leftcount  &gt; k - 1) return kthSmallest(root.left , k);<br>    return kthSmallset(root.right , k - leftcount - 1);<br>}</p>
-<p>3、把二叉查找树每个节点的值都加上比它大的节点的值。<br>二叉查找树节点值 左 &lt; 中 &lt; 右<br>对于整棵二叉查找树，从大到小排序之后，从 1 到 n,第x个数 需要加上的值 是它前面所有数的和,即0不变，1=0+1 , 2=0+1+2 , 3=0+1+2+3。<br>二叉查找树按照 左 中 右遍历是从小到大,按照 右 中 左遍历是从大到小。<br>private int sum = 0;</p>
-<p>public TreeNode convertBST(TreeNode root){<br>    traver(root);<br>    return root;<br>}</p>
-<p>private void traver(TreeNode node){<br>    if(node == null) return ;<br>    traver(node.right);<br>    sum += node.val;<br>    node.val = sum;<br>    traver(node.left);<br>}</p>
-<p>4、二叉树查找树中两个节点的最近公共祖先<br>两个节点 p q，值分别为 p.val q.val<br>若当前节点root的值在root.val在p q值之间，即root为p q的公共祖先<br>若root的值比p、q的值都大，则p、q的祖先在root 的左子树上<br>若root的值比p、的值都小，则p、q的祖先在root 的右子树上<br>public TreeNode lowestCommonAncestor(TreeNode root , TreeNode p , TreeNode q){<br>    if(root.val &gt; p.val &amp;&amp; root.val &gt; q.val) return lowestCommonAncestor(root.left , p , q);<br>    if(root.val &lt; p.val &amp;&amp; root.val &lt; q.val) return lowestCommonAncestor(root.right , p , q);<br>    return root;<br>}</p>
-<p>5、二叉树中两个两个节点的最低公共祖先<br>对于p、q两个节点，从根节点root开始遍历，若root等于p、q中的某个，则其为公共祖先。否则分别递归左右子树，若一个节点在左子树上一个节点在右子树上<br>则root为公共结点，若两个节点都在左子树上，则最低公共祖先在左子树上，右子树同理。</p>
-<p>public TreeNode lowestCommonAncestor(TreeNode root , TreeNode p , TreeNode q){<br>    if(root == null || root == p || root == q) return root;<br>    TreeNode left = lowestCommonAncestor(root.left , p , q);<br>    TreeNode right = lowestCommonAncestor(root.right , p , q);<br>    //以下内容也可写为三目运算符<br>    if(left!=null&amp;&amp;right!=null) return root;<br>    else if(left!=null) return left;<br>    else if(right!=null) return right;<br>    else return null;<br>    //以上内容也可写为三目运算符:<br>    return left == null ? right : right == null? left : root;<br>    //left为null 时返回right,不为空时判断right是否为null, right为null则返回left 否则返回root;<br>}</p>
-<p>6、将有序数组变为二叉查找树<br>把数组中点看做根，讲数组分为左右子树，再对左右子树做同样操作,类似二分查找。<br>public TreeNode sortedArraytoBST(int [] num){<br>    if(num == null|| num.length == 0)return null;<br>    return help(num , 0 , num.length - 1);<br>}</p>
-<p>private TreeNode helper(int []num , int l , int r){<br>    if(l&gt;r) return null;<br>    int m = (l+r)/2;<br>    TreeNode root = new TreeNode(num[m]);<br>    root.left = helper(num, l , m-1);<br>    root.right = helper(num, m+1 , r);<br>    return root;<br>}</p>
-<p>7、根据有序链表构造平衡的二叉查找树<br>取巧解法：先把有序链表转换为有序数组，问题就变成了有序数组构造二叉查找树问题即(6)<br>普通解法：定义函数，使用快慢指针，可以找到链表的中点。有了这个函数就可以和之前的有序数组构造二叉查找树问题类似了。<br>快慢指针找链表的中点有两种写法</p>
-<p>ListNode fast = head;<br>ListNode slow = head;<br>while(fast!=null){<br>    fast = fast.next;<br>    slow = slow.next;<br>    if(fast==null)break;<br>    fast = fast.next;<br>}<br>//上面这种写法偶数个节点时slow指向中点右侧，奇数个节点时slow指向中间节点的下一个节点<br>例： 1 2 3 4 5 6<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:null<br>e: 循环退出</p>
+<h2 id="1、修建二叉查找树"><a href="#1、修建二叉查找树" class="headerlink" title="1、修建二叉查找树"></a>1、修建二叉查找树</h2><p>给定一个二叉查找树和左右边界值，修剪二叉查找树，只保留边界值之内的数字。</p>
+<pre><code>public TreeNode trimBST(TreeNode root , int L ,int R){
+    if(root == null) return null;
+    if(root.val &lt; L) return trimBST(root.right,L,R);
+    //若当前root值小于左边界，则左子树可被抛弃，问题等同于修剪以root.right为根结点的子树
+    if(root.val &gt; R) return trimBST(root.left,L,R);
+    //若当前root值大于右边界，则右子树可被抛弃，问题等同于修剪以root.left为根结点的子树
+    root.left = trimBST(root.left,L,R);
+    root.right = trimBST(root.right,L,R);
+    //经过上面两部判断后，root值都在L,R的范围之内，可将问题递归至左右结点。
+    return root;
+}</code></pre><h2 id="2-0、寻找二叉查找树由小到大第k个元素"><a href="#2-0、寻找二叉查找树由小到大第k个元素" class="headerlink" title="2.0、寻找二叉查找树由小到大第k个元素"></a>2.0、寻找二叉查找树由小到大第k个元素</h2><p>因为二叉查找树中序遍历有序，所以中序遍历到第k个即可</p>
+<pre><code>private int cnt = 0;
+private int val;
+public int kthSmallest(TreeNode root , int k){
+    inOrder(root, k);
+    return val;
+}
+//类比于普通情况下的中序遍历
+void dfs(TreeNode root){
+    dfs(root.left);
+    visit(root);
+    dfs(root.right);
+}
+private void inOrder(TreeNode node,int k){//中序遍历找到第k个元素的过程
+    if(node == null) return ;
+    inOrder(node.left,k);
+//
+    cnt++;
+    if(cnt == k){
+        val = node.val;
+        return;
+    }
+    //上面这一坨就是visit(root);讲的故事
+//
+    inOrder(node.right,k);
+}</code></pre><h2 id="2-1、寻找二叉查找树由小到大第k个元素-递归解法"><a href="#2-1、寻找二叉查找树由小到大第k个元素-递归解法" class="headerlink" title="2.1、寻找二叉查找树由小到大第k个元素,递归解法"></a>2.1、寻找二叉查找树由小到大第k个元素,递归解法</h2><pre><code>// count 函数计算以root为根节点的二叉树上有多少个节点。
+public int count(TreeNode root){
+    if(root == null) return 0;
+    return 1 + count(root.left)+count(root.right);
+}
+//若以root.left 为根节点的二叉树上有n个结点则 root 是第 n+1个节点。
+//那么进入此题判断逻辑，若 root.left 有k-1个节点，则root为所求的第k个节点。
+//若root.left上的节点比k-1多，则抛弃右子树
+//若root.left上的节点比k-1少，则抛弃左子树，并减去左子树上的节点个数和root节点，在右子树上继续进行本题。
+public int kthSmallest(TreeNode root , int k){
+    int leftcount = count(root.left);
+    if(leftcount == k - 1) return root.val;
+    if(leftcount  &gt; k - 1) return kthSmallest(root.left , k);
+    return kthSmallset(root.right , k - leftcount - 1);
+}</code></pre><h2 id="3、把二叉查找树每个节点的值都加上比它大的节点的值。"><a href="#3、把二叉查找树每个节点的值都加上比它大的节点的值。" class="headerlink" title="3、把二叉查找树每个节点的值都加上比它大的节点的值。"></a>3、把二叉查找树每个节点的值都加上比它大的节点的值。</h2><p>二叉查找树节点值 左 &lt; 中 &lt; 右<br>对于整棵二叉查找树，从大到小排序之后，从 1 到 n,第x个数 需要加上的值 是它前面所有数的和,即0不变，1=0+1 , 2=0+1+2 , 3=0+1+2+3。<br>二叉查找树按照 左 中 右遍历是从小到大,按照 右 中 左遍历是从大到小。</p>
+<pre><code>private int sum = 0;
+public TreeNode convertBST(TreeNode root){
+    traver(root);
+    return root;
+}
+private void traver(TreeNode node){
+    if(node == null) return ;
+    traver(node.right);
+    sum += node.val;
+    node.val = sum;
+    traver(node.left);
+}</code></pre><h2 id="4、二叉树查找树中两个节点的最近公共祖先"><a href="#4、二叉树查找树中两个节点的最近公共祖先" class="headerlink" title="4、二叉树查找树中两个节点的最近公共祖先"></a>4、二叉树查找树中两个节点的最近公共祖先</h2><p>两个节点 p q，值分别为 p.val q.val<br>若当前节点root的值在root.val在p q值之间，即root为p q的公共祖先<br>若root的值比p、q的值都大，则p、q的祖先在root 的左子树上<br>若root的值比p、的值都小，则p、q的祖先在root 的右子树上</p>
+<pre><code>public TreeNode lowestCommonAncestor(TreeNode root , TreeNode p , TreeNode q){
+    if(root.val &gt; p.val &amp;&amp; root.val &gt; q.val) return lowestCommonAncestor(root.left , p , q);
+    if(root.val &lt; p.val &amp;&amp; root.val &lt; q.val) return lowestCommonAncestor(root.right , p , q);
+    return root;
+}</code></pre><h2 id="5、二叉树中两个两个节点的最低公共祖先"><a href="#5、二叉树中两个两个节点的最低公共祖先" class="headerlink" title="5、二叉树中两个两个节点的最低公共祖先"></a>5、二叉树中两个两个节点的最低公共祖先</h2><p>对于p、q两个节点，从根节点root开始遍历，若root等于p、q中的某个，则其为公共祖先。否则分别递归左右子树，若一个节点在左子树上一个节点在右子树上<br>则root为公共结点，若两个节点都在左子树上，则最低公共祖先在左子树上，右子树同理。</p>
+<pre><code>public TreeNode lowestCommonAncestor(TreeNode root , TreeNode p , TreeNode q){
+    if(root == null || root == p || root == q) return root;
+    TreeNode left = lowestCommonAncestor(root.left , p , q);
+    TreeNode right = lowestCommonAncestor(root.right , p , q);
+    //以下内容也可写为三目运算符
+    if(left!=null&amp;&amp;right!=null) return root;
+    else if(left!=null) return left;
+    else if(right!=null) return right;
+    else return null;
+    //以上内容也可写为三目运算符:
+    return left == null ? right : right == null? left : root;
+    //left为null 时返回right,不为空时判断right是否为null, right为null则返回left 否则返回root;
+}</code></pre><h2 id="6、将有序数组变为二叉查找树"><a href="#6、将有序数组变为二叉查找树" class="headerlink" title="6、将有序数组变为二叉查找树"></a>6、将有序数组变为二叉查找树</h2><p>把数组中点看做根，讲数组分为左右子树，再对左右子树做同样操作,类似二分查找。</p>
+<pre><code>public TreeNode sortedArraytoBST(int [] num){
+    if(num == null|| num.length == 0)return null;
+    return help(num , 0 , num.length - 1);
+}
+private TreeNode helper(int []num , int l , int r){
+    if(l&gt;r) return null;
+    int m = (l+r)/2;
+    TreeNode root = new TreeNode(num[m]);
+    root.left = helper(num, l , m-1);
+    root.right = helper(num, m+1 , r);
+    return root;
+}</code></pre><h2 id="7、根据有序链表构造平衡的二叉查找树"><a href="#7、根据有序链表构造平衡的二叉查找树" class="headerlink" title="7、根据有序链表构造平衡的二叉查找树"></a>7、根据有序链表构造平衡的二叉查找树</h2><p>取巧解法：先把有序链表转换为有序数组，问题就变成了有序数组构造二叉查找树问题即(6)<br>普通解法：定义函数，使用快慢指针，可以找到链表的中点。有了这个函数就可以和之前的有序数组构造二叉查找树问题类似了。<br>快慢指针找链表的中点有两种写法</p>
+<pre><code>ListNode fast = head;
+ListNode slow = head;
+while(fast!=null){
+    fast = fast.next;
+    slow = slow.next;
+    if(fast==null)break;
+    fast = fast.next;
+}</code></pre><p>//上面这种写法偶数个节点时slow指向中点右侧，奇数个节点时slow指向中间节点的下一个节点<br>例： 1 2 3 4 5 6<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:null<br>e: 循环退出</p>
 <p>例： 1 2 3 4 5 6 7<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:7<br>e: fast:null slow:5  fast==null break;循环退出</p>
-<p>ListNode slow = head;<br>ListNode fast = head.next;<br>while(fast!=null &amp;&amp; fast.next!=null){<br>    slow = slow.next;<br>    fast = fast.next.next;<br>}<br>//上面这种写法偶数个节点时slow指向中点左侧，奇数个节点时slow指向中间节点<br>例： 1 2 3 4 5 6<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: fast.next==null,循环停止</p>
+<pre><code>ListNode slow = head;
+ListNode fast = head.next;
+while(fast!=null &amp;&amp; fast.next!=null){
+    slow = slow.next;
+    fast = fast.next.next;
+}</code></pre><p>//上面这种写法偶数个节点时slow指向中点左侧，奇数个节点时slow指向中间节点<br>例： 1 2 3 4 5 6<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: fast.next==null,循环停止</p>
 <p>例： 1 2 3 4 5 6 7<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: slow:4 fast:null<br>e: fast==null,循环停止</p>
-<p>private ListNode getPreMid(ListNode node){<br>    ListNode slow = head;<br>    ListNode fast = head.next;<br>    ListNode pre = head;<br>    while(fast!=null &amp;&amp; fast.next!=null){<br>        pre = slow;<br>        slow = slow.next;<br>        fast = fast.next.next;<br>    }<br>    return pre;//本题所找到的pre 是slow节点的前一个节点,以便后续操作时同时取到中点和中点前一个节点<br>}</p>
-<p>public TreeNode sortedListToBST(ListNode head){<br>    if(head == null)return null;<br>    if(head.next == null) return new TreeNode(head.val);//若链表只有一个节点，则直接将其变为二叉树节点即可。<br>    ListNode preMid = getPreMid(head);<br>    ListNode mid = preMid.next;<br>    preMid.next = null;//调用getPreMid函数获得了有序链表的中点和中点的前一个节点后，将链表从中点断开，问题变为两个链表的子问题，<br>                       //左边子问题的初始节点仍然为head,将mid转化为二叉树节点,右边子问题的初始节点为mid.next<br>    TreeNode t = new TreeNode(mid.val);<br>    t.left = sortedListToBST(head);<br>    t.right = sortedListToBST(mid.next);<br>    return t;<br>}</p>
-<p>8、判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值</p>
-<p>twosum问题的变体，解题方法是在有序数组中使用双指针，二叉查找树中序遍历即可变为有序数组</p>
-<p>private void inOrder(TreeNode node , List<Integer> nums){<br>    if(root == null)return;<br>    inOrder(root.left,nums);<br>    nums.add(root.val);<br>    inOrder(root.right,nums);<br>}//中序遍历把二叉查找树转为有序数组并存于nums中</p>
-<p>public boolean findTarget(TreeNode root, int k){<br>    List<Integer> nums = new ArrayList&lt;&gt;();<br>    inOrder(root , nums);<br>    int i = 0 , j = nums.size() - 1;<br>    while(i &lt; j){<br>        if(nums.get(i)+nums.get(j)==k) {return true;}<br>        else if(nums.get(i)+nums.get(j)&gt;k){<br>        j–;<br>        }<br>        else{<br>            i++;<br>        }<br>    }<br>    return false;<br>}</p>
-<p>9、在二叉查找树中查找两个节点之差的最小绝对值<br>中序遍历，遍历时取某一节点和其前一个节点，计算差值，取最小。</p>
-<p>private int minDiff = Integer.MAX_VALUE;<br>private TreeNode preNode = null;</p>
-<p>private void inOrder(TreeNode node){<br>    if(node == null) return;<br>    inOrder(node.left);<br>    if(preNode != null) minDiff = Math.min(minDiff, node.val - preNode.val);<br>    preNode = node;<br>    inOrder(node.right);<br>}</p>
-<p>public int getMinimumDifference(TreeNode root){<br>    inOrder(root);<br>    return minDiff;<br>}</p>
-<p>10、寻找二叉查找树中出现次数最多的值</p>
-<p>private int curCnt = 1;<br>private int MaxCnt = 1;<br>private TreeNode preNode = null;</p>
-<p>public int [] findMode(TreeNode root){//中序遍历得到结果存入maxCntNums中再将其转化为数组ret<br>    List<Integer> maxCntNums = new ArrayList&lt;&gt;();<br>    inOrder(root,maxCntNums);<br>    int [] ret = new int[maxCntNums.size()];<br>    int idx = 0;<br>    for(int num: maxCntNums){<br>    ret[idx++] = num;<br>    }<br>    return ret;<br>}</p>
-<p>private void inOrder(TreeNode node , List<Integer> nums){<br>    if(node ==null )return;<br>    inOrder(node.left, nums);</p>
-<p>//累计相同数字出现次数<br>    if(preNode != null){<br>        if(preNode.val==node.val) curCnt++;<br>        else curCnt = 1;<br>    }</p>
-<p>//若当前数字出现次数大于最大出现次数，则更新<br>    if(curCnt &gt; maxCnt){<br>        maxCnt = curCnt;<br>        nums.clear();<br>        nums.add(node.val);<br>    }else if (curCnt == maxCnt){//若当前数字出现次数等于最大出现次数，则增加一个众数<br>        nums.add(node.val);<br>    }<br>    preNode = node;<br>//<br>    inOrder(node.right,nums);<br>}</p>
-
+<pre><code>private ListNode getPreMid(ListNode node){
+    ListNode slow = head;
+    ListNode fast = head.next;
+    ListNode pre = head;
+    while(fast!=null &amp;&amp; fast.next!=null){
+        pre = slow;
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return pre;//本题所找到的pre 是slow节点的前一个节点,以便后续操作时同时取到中点和中点前一个节点
+}
+public TreeNode sortedListToBST(ListNode head){
+    if(head == null)return null;
+    if(head.next == null) return new TreeNode(head.val);//若链表只有一个节点，则直接将其变为二叉树节点即可。
+    ListNode preMid = getPreMid(head);
+    ListNode mid = preMid.next;
+    preMid.next = null;//调用getPreMid函数获得了有序链表的中点和中点的前一个节点后，将链表从中点断开，问题变为两个链表的子问题，
+                       //左边子问题的初始节点仍然为head,将mid转化为二叉树节点,右边子问题的初始节点为mid.next
+    TreeNode t = new TreeNode(mid.val);
+    t.left = sortedListToBST(head);
+    t.right = sortedListToBST(mid.next);
+    return t;
+}</code></pre><h2 id="8、判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值"><a href="#8、判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值" class="headerlink" title="8、判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值"></a>8、判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值</h2><p>twosum问题的变体，解题方法是在有序数组中使用双指针，二叉查找树中序遍历即可变为有序数组</p>
+<pre><code>private void inOrder(TreeNode node , List&lt;Integer&gt; nums){
+    if(root == null)return;
+    inOrder(root.left,nums);
+    nums.add(root.val);
+    inOrder(root.right,nums);
+}//中序遍历把二叉查找树转为有序数组并存于nums中
+public boolean findTarget(TreeNode root, int k){
+    List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();
+    inOrder(root , nums);
+    int i = 0 , j = nums.size() - 1;
+    while(i &lt; j){
+        if(nums.get(i)+nums.get(j)==k) {return true;}
+        else if(nums.get(i)+nums.get(j)&gt;k){
+        j--;
+        }
+        else{
+            i++;
+        }
+    }
+    return false;
+}</code></pre><h2 id="9、在二叉查找树中查找两个节点之差的最小绝对值"><a href="#9、在二叉查找树中查找两个节点之差的最小绝对值" class="headerlink" title="9、在二叉查找树中查找两个节点之差的最小绝对值"></a>9、在二叉查找树中查找两个节点之差的最小绝对值</h2><p>中序遍历，遍历时取某一节点和其前一个节点，计算差值，取最小。</p>
+<pre><code>private int minDiff = Integer.MAX_VALUE;
+private TreeNode preNode = null;
+private void inOrder(TreeNode node){
+    if(node == null) return;
+    inOrder(node.left);
+    if(preNode != null) minDiff = Math.min(minDiff, node.val - preNode.val);
+    preNode = node;
+    inOrder(node.right);
+}
+public int getMinimumDifference(TreeNode root){
+    inOrder(root);
+    return minDiff;
+}</code></pre><h2 id="10、寻找二叉查找树中出现次数最多的值"><a href="#10、寻找二叉查找树中出现次数最多的值" class="headerlink" title="10、寻找二叉查找树中出现次数最多的值"></a>10、寻找二叉查找树中出现次数最多的值</h2><pre><code>private int curCnt = 1;
+private int MaxCnt = 1;
+private TreeNode preNode = null;
+public int [] findMode(TreeNode root){//中序遍历得到结果存入maxCntNums中再将其转化为数组ret
+    List&lt;Integer&gt; maxCntNums = new ArrayList&lt;&gt;();
+    inOrder(root,maxCntNums);
+    int [] ret = new int[maxCntNums.size()];
+    int idx = 0;
+    for(int num: maxCntNums){
+    ret[idx++] = num;
+    }
+    return ret;
+}
+private void inOrder(TreeNode node , List&lt;Integer&gt; nums){
+    if(node ==null )return;
+    inOrder(node.left, nums);
+//累计相同数字出现次数
+    if(preNode != null){
+        if(preNode.val==node.val) curCnt++;
+        else curCnt = 1;
+    }
+//若当前数字出现次数大于最大出现次数，则更新
+    if(curCnt &gt; maxCnt){
+        maxCnt = curCnt;
+        nums.clear();
+        nums.add(node.val);
+    }else if (curCnt == maxCnt){//若当前数字出现次数等于最大出现次数，则增加一个众数
+        nums.add(node.val);
+    }
+    preNode = node;
+//
+    inOrder(node.right,nums);
+}</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" data-id="ck9gkyn830003pcrgen6662p9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" data-id="ck9gld0bl0004borgeg4cai3p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -366,91 +527,95 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>层次遍历：<br>求一棵树每层节点的平均数</p>
-<p>public List<Double> averageOfLevels(TreeNode root){<br>    List<Double> ret new ArrayList&lt;&gt;();<br>        //ret用来存储每层节点的平均数<br>    if (root == null) return ret;<br>    Queue<TreeNode> queue = new LinkedList&lt;&gt;();<br>        //用一个队列queue来存储当前层的所有节点<br>    queue.add(root);<br>    while(!queue.isEmpty()){<br>        int cnt = queue.size();<br>        //当前层节点压入队列之后，队列大小即节点数<br>        double sum = 0;//用来累加当前层的节点和<br>        for(int i = 0 ; i &lt; cnt ; i++){<br>            TreeNode node = queue.poll();<br>            sum += node.val;<br>            if(node.left != null) queue.add(node.left);<br>            if(node.right != null) queue.add(node.right);<br>        }<br>        ret.add(sum/cnt);<br>        //sum/cnt即某层的节点平均数，压入ret中<br>    }<br>    return ret;<br>}</p>
-<p>求二叉树最下层的最左边的结点。<br>层序遍历时，从右往左的向队列中压入一整层的节点,再出队列。则最后一个出队列的节点是最底层的最左边节点。</p>
-<p>public int findBottomLeftValue(TreeNode root){<br>    Queue<TreeNode> queue = new LinkedList&lt;&gt;();<br>    queue.add(root);<br>    while(!queue.isEmpty()){<br>        root = queue.poll();<br>        if(root.right!=null) queue.add(root.right);<br>        if(root.left!=null) queue.add(root.left);<br>    }<br>    return root.val;<br>}</p>
-<p>二叉树前序遍历：<br>需要借助栈，因为前序遍历是  root -&gt; left -&gt; right<br>而栈是后进先出，所以为达到遍历过程中的先左后右，必须要使得压栈过程先右后左。<br>public List<Integer> preorderTraversal(TreeNode root){<br>    List<Integer> ret = new ArrayList&lt;&gt;();<br>    Stack<TreeNode> stack = new Stack&lt;&gt;();<br>    stack.push(root);<br>    while(!stack.isEmpty()){<br>        TreeNode node = stack.pop();<br>        if(node == null) continue;<br>        //空节点不记录入ret中，它无左右节点，也不需要将左右节点压栈<br>        //当空节点被压入栈中时，说明上一次出栈操作的root为叶子节点或只有左右节点中的一个。<br>        //若无这一步，不对node做null判断，每次常规的压栈操作，会将叶子节点的左右节点(均为空)<br>        //或只有一个孩子节点的节点的左右节点(有一个为空)均压入栈中后记录,即在最终的遍历结果中出现很多null且无法退出遍历。<br>        //有了这一步判断，仍然会在上一层循环中压入null，但进行一次判断后，null节点的左右孩子节点(仍为null)不会再压入栈中，<br>        //null节点也不会计入ret中。而是遇到null之后做弹栈操作。弹到非null节点为止。<br>        ret.add(node.val);<br>        stack.push(root.right);//顺序很重要<br>        stack.push(root.left);//顺序很重要<br>    }<br>    return ret;<br>}</p>
-<p>二叉树的后序遍历：<br>后序遍历可以通过前序遍历修改。<br>前序遍历是  root -&gt; left -&gt; right<br>后序遍历是  left -&gt; right -&gt; root<br>将前序遍历改为 root -&gt; right -&gt; left 再逆序即可。</p>
-<p>public List<Integer> postorderTraversal(TreeNode root){<br>    List<Integer> ret = new ArrayList&lt;&gt;();<br>    Stack<TreeNode> stack = new Stack&lt;&gt;();<br>    stack.push(root);<br>    while(!stack.isEmpty()){<br>        TreeNode node = stack.pop();<br>        if(node == null) continue;<br>        ret.add(node.val);<br>        stack.push(root.left);<br>        //前序遍历时先压右节点再压左节点保证先出左节点后出右节点<br>        stack.push(root.right);<br>        //后序遍历时，与之相反，最后要将结果逆置<br>    }<br>    Collections.reverse(ret);<br>    return ret;<br>}</p>
-<p>中序遍历<br>public List<Integer> inorderTraversal(TreeNode root){<br>    List<Integer> ret = new ArrayList&lt;&gt;();<br>    if(root == null) return ret;<br>    Stack<TreeNode> stack = new Stack&lt;&gt;();<br>    TreeNode cur = root;<br>    while(cur!=null || !stack.isEmpty()){<br>        while(cur != null){<br>        stack.push(cur);<br>        cur = cur.left;<br>        }<br>        //中序遍历 left -&gt; root -&gt; right，所以每次压栈要将left压到底为止<br>        TreeNode node = stack.pop();<br>        ret.add(node.val);<br>        cur = node.right;<br>        //压栈完，进行弹栈操作并记录后再压入node.right，即在root之后记录right<br>    }<br>    return ret;<br>}</p>
-
+        <h2 id="层次遍历："><a href="#层次遍历：" class="headerlink" title="层次遍历："></a>层次遍历：</h2><p>求一棵树每层节点的平均数</p>
+<pre><code>public List&lt;Double&gt; averageOfLevels(TreeNode root){
+    List&lt;Double&gt; ret new ArrayList&lt;&gt;();
+        //ret用来存储每层节点的平均数
+    if (root == null) return ret;
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+        //用一个队列queue来存储当前层的所有节点
+    queue.add(root);
+    while(!queue.isEmpty()){
+        int cnt = queue.size();
+        //当前层节点压入队列之后，队列大小即节点数
+        double sum = 0;//用来累加当前层的节点和
+        for(int i = 0 ; i &lt; cnt ; i++){
+            TreeNode node = queue.poll();
+            sum += node.val;
+            if(node.left != null) queue.add(node.left);
+            if(node.right != null) queue.add(node.right);
+        }
+        ret.add(sum/cnt);
+        //sum/cnt即某层的节点平均数，压入ret中
+    }
+    return ret;
+}</code></pre><h2 id="求二叉树最下层的最左边的结点。"><a href="#求二叉树最下层的最左边的结点。" class="headerlink" title="求二叉树最下层的最左边的结点。"></a>求二叉树最下层的最左边的结点。</h2><p>层序遍历时，从右往左的向队列中压入一整层的节点,再出队列。则最后一个出队列的节点是最底层的最左边节点。</p>
+<pre><code>public int findBottomLeftValue(TreeNode root){
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+    queue.add(root);
+    while(!queue.isEmpty()){
+        root = queue.poll();
+        if(root.right!=null) queue.add(root.right);
+        if(root.left!=null) queue.add(root.left);
+    }
+    return root.val;
+}</code></pre><h2 id="二叉树前序遍历："><a href="#二叉树前序遍历：" class="headerlink" title="二叉树前序遍历："></a>二叉树前序遍历：</h2><p>需要借助栈，因为前序遍历是  root -&gt; left -&gt; right<br>而栈是后进先出，所以为达到遍历过程中的先左后右，必须要使得压栈过程先右后左。</p>
+<pre><code>public List&lt;Integer&gt; preorderTraversal(TreeNode root){
+    List&lt;Integer&gt; ret = new ArrayList&lt;&gt;();
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+    stack.push(root);
+    while(!stack.isEmpty()){
+        TreeNode node = stack.pop();
+        if(node == null) continue;
+        //空节点不记录入ret中，它无左右节点，也不需要将左右节点压栈
+        //当空节点被压入栈中时，说明上一次出栈操作的root为叶子节点或只有左右节点中的一个。
+        //若无这一步，不对node做null判断，每次常规的压栈操作，会将叶子节点的左右节点(均为空)
+        //或只有一个孩子节点的节点的左右节点(有一个为空)均压入栈中后记录,即在最终的遍历结果中出现很多null且无法退出遍历。
+        //有了这一步判断，仍然会在上一层循环中压入null，但进行一次判断后，null节点的左右孩子节点(仍为null)不会再压入栈中，
+        //null节点也不会计入ret中。而是遇到null之后做弹栈操作。弹到非null节点为止。
+        ret.add(node.val);
+        stack.push(root.right);//顺序很重要
+        stack.push(root.left);//顺序很重要
+    }
+    return ret;
+}</code></pre><h2 id="二叉树的后序遍历："><a href="#二叉树的后序遍历：" class="headerlink" title="二叉树的后序遍历："></a>二叉树的后序遍历：</h2><p>后序遍历可以通过前序遍历修改。<br>前序遍历是  root -&gt; left -&gt; right<br>后序遍历是  left -&gt; right -&gt; root<br>将前序遍历改为 root -&gt; right -&gt; left 再逆序即可。</p>
+<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root){
+    List&lt;Integer&gt; ret = new ArrayList&lt;&gt;();
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+    stack.push(root);
+    while(!stack.isEmpty()){
+        TreeNode node = stack.pop();
+        if(node == null) continue;
+        ret.add(node.val);
+        stack.push(root.left);
+        //前序遍历时先压右节点再压左节点保证先出左节点后出右节点
+        stack.push(root.right);
+        //后序遍历时，与之相反，最后要将结果逆置
+    }
+    Collections.reverse(ret);
+    return ret;
+}</code></pre><h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><pre><code>public List&lt;Integer&gt; inorderTraversal(TreeNode root){
+    List&lt;Integer&gt; ret = new ArrayList&lt;&gt;();
+    if(root == null) return ret;
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
+    TreeNode cur = root;
+    while(cur!=null || !stack.isEmpty()){
+        while(cur != null){
+        stack.push(cur);
+        cur = cur.left;
+        }
+        //中序遍历 left -&gt; root -&gt; right，所以每次压栈要将left压到底为止
+        TreeNode node = stack.pop();
+        ret.add(node.val);
+        cur = node.right;
+        //压栈完，进行弹栈操作并记录后再压入node.right，即在root之后记录right
+    }
+    return ret;
+}</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" data-id="ck9gkyn870005pcrg9aja1z6q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-二叉树类算法题1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" class="article-date">
-  <time datetime="2020-04-02T06:50:46.695Z" itemprop="datePublished">2020-04-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/">二叉树类算法题1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。</p>
-<p>二叉树两节点的最长路径:</p>
-<p>二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1<br>故根结点为root的二叉树的两节点最长路径 = Max(左子树的最长路径，右子树的最长路径，左子树深度(去根)+右子树深度(去根)+1)即<br>public class solution {<br>int max = 0;<br>public int diameterOfBinaryTree(TreeNode root){<br>    getDepth(root);<br>    return max;<br>}</p>
-<p>private int getDepth(TreeNode root){//返回树的最大深度<br>    if(root == null)<br>    return 0;<br>    int l = getDepth(root.left);<br>    int r = getDepth(root.right);<br>    int max = Math.max(max , l+r);<br>    return Math.max(l,r)+1;<br>    }<br>}</p>
-<p>反转二叉树：<br>常见的递归操作题<br>public TreeNode invertTree(TreeNode root){<br>    if(root == null) return null;<br>    TreeNode left = root.left;//记录root.left防止丢失<br>    root.left = invertTree(root.right);<br>    root.right = invertTree(left);<br>    return root;<br>}</p>
-<p>归并两棵二叉树：</p>
-<p>public TreeNode MergeTree(TreeNode tree1 , TreeNode tree2){<br>    if(tree1 == null &amp;&amp; tree2 == null)return null;<br>    if(tree1 == null) return tree2;<br>    if(tree2 == null) return tree1;<br>    TreeNode root = new TreeNode(tree1.val + tree2.val);<br>    root.left = MergeTree(tree1.left, tree2.left);<br>    root.right = MergeTree(tree1.right , tree2.right);<br>    return root;<br>}</p>
-<p>判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径：</p>
-<p>路径要么在左子树上，要么在右子树上。<br>走向左右子树后，目标数减去根结点数值，对左右子树做递归。<br>因为必须要走到叶子结点后结束，即当前节点没有左右节点时判断是否为目标数。<br>public boolean hasPathsum(TreeNode root , int sum){<br>    if(root == null) return false;<br>    if(root.left == null &amp;&amp; root.right == null &amp;&amp; root.val == sum) return true;<br>    return hasPathsum(root.left,sum-root.val) || hasPathsum(root.right, sum-root.val);<br>}</p>
-<p>统计二叉树中路径和等于目标数的路径数量，不需要从根节点起到叶子节点止，但需要连续。</p>
-<p>整个判断过程，先从根节点开始走路径，然后递归左右子节点。<br>判断过程中，省去了验证最后一个结点为叶子结点的过程。<br>然后再做一次递归，从这个根节点的左右子树开始判断，以左右子树为根结点再判断一次是否符合题意。即本题有两种递归，一种是递归的判断以某点作为起点是否存在路径，一种是递归的找起点。</p>
-<p>public int pathSum(TreeNode root , int sum){//这个函数是递归的找起始节点。<br>    if(root == null) return 0;<br>    int result = pathSumStartWithRoot(root,sum)+pathSum(root.left , sum)+pathSum(root.right , sum);<br>    return result;<br>}</p>
-<p>private int pathSumStartWithRoot(TreeNode root , int sum){//这个函数可以判断出从根节点开始的路径和是否满足目标数<br>    if(root == null) return 0;<br>    int result = 0;<br>    if(root.val == sum) result ++;<br>    result += pathSumStartWithRoot(root.left , sum - root.val) + pathSumStarrtWithRoot(root.right , sum - root.val);<br>    return result;<br>}</p>
-<p>判断A树是否为B树的子树</p>
-<p>若A树是B树的子树，那必和B树的一部分相等,以下为判断两树是否相等<br>方法：若都为null，则相等，若只有一个为null，则不相等，若数值不同则不相等，递归对比他们的左右子树。</p>
-<p>判断A树是否和B树相等之后，再递归比较A树是否和B树的左右子树相等即可判断A树是否是B树的子树,当B树为null时递归退出<br>public boolean isSubtree(TreeNode A , TreeNode B){<br>    if(B==null) return false;<br>    return isSame(A,B)||isSubtree(A,B.left)||isSubtree(A,B.right);<br>}</p>
-<p>private boolean isSame(TreeNode A,TreeNode B){<br>    if(A == null &amp;&amp; B == null) return true;<br>    if(A == null || B == null) return false;<br>    //都为空排除后的或证明了一个为空一个不为空<br>    if(A.val != B.val) return false;<br>    return isSame(A.left,B.left)&amp;&amp;isSame(A.right,B.right);<br>}</p>
-<p>判断一个树是否左右对称<br>此题和子树判断题类似，可以将左右对称变为判断两个树是否相等<br>public boolean isSymmetric(Tree root){<br>    if(root==null) return true;//之所以null时返回true是因为比对到null则说明递归到底，比对成功了<br>    return isSame(root.left, root.right);<br>}</p>
-<p>树的最小路径：<br>public int minDepth(TreeNode root){<br>    if(root == null) return 0;//若这个树为空则高度为0<br>    if(root.left == null &amp;&amp; root.right == null) return 1;//若这个树左右子树同时为空则高度为1<br>    int leftDepth = minDepth(root.left);<br>    int rightDepth = minDepth(root.right);<br>    if(leftDepth == 0)<br>    //若这个树左子树为空，则长度为右子树长度+1<br>        return rightDepth + 1;<br>    else if(rightDepth == 0)<br>    //若这个树右子树为空，则长度为左子树长度+1<br>        return leftDepth + 1;<br>    else<br>        return min(leftDepth,rightDepth) + 1;<br>     //若左右子树都不为空，则长度为左右子树的较小值+1<br> }以上代码可优化为<br>public int minDepth(TreeNode root){<br>    if(root == null)return 0;<br>    int leftDepth = minDepth(root.left);<br>    int rightDepth = minDepth(root.right);<br>    if(leftDepth == 0 || rightDepth == 0) {<br>        return leftDepth+rightDepth+1;<br>    }<br>    //leftDepth和rightDepth都不为0才返回下一御酒<br>    return Math.min(leftDepth,rightDepth)+1;<br>}</p>
-<p>统计左叶子节点的和<br>//若一个结点的左孩子是叶节点，即他的左孩子是左叶子结点，累加左孩子数值之后再递归判断这个结点的右子树<br>//否则，递归判断这个结点的左右子树<br>public int sumOfLeftLeaves(TreeNode root){<br>    if(root == null) return 0;<br>    if(isLeaf(root.left)){<br>        return root.left.val + sumOfLeftLeaves(root.right);<br>    }<br>    return sumOfLeftLeaves(root.left)+sumOfLeftLeaves(root.right);<br>}</p>
-<p>//判断一个节点是不是叶子节点<br>private boolean isLeaf(TreeNode node){<br>    if(node == null) return false;<br>    return node.left == null &amp;&amp; node.right == null;<br>}</p>
-<p>相同结点值的最大路径长度<br>需要用到深度优先搜索</p>
-<p>树的递归题目中，写出的左右子节点的递归，可以默认写出时即已经是正确的结果，再进行后续。</p>
-<p>private int path = 0;</p>
-<p>public int longestUnivaluePath(TreeNode root){<br>    dfs(root);<br>    return path;<br>}</p>
-<p>private int dfs(TreeNode root){<br>    if(root == null)return 0;<br>    int left = dfs(root.left);<br>    int right = dfs(root.right);<br>    //dfs的子函数return的值可从 最外层的dfs看出。<br>    // Math.max(leftPath,rightPath)即，返回的是 左路径和右路径中的较大值。<br>    //即 left返回的是 root左节点 的左右路径中的较大值<br>    // right 返回的是root右节点 的左右路径中的较大值<br>    int leftPath = root.left!=null &amp;&amp; root.left.val == root.val ? left+1 : 0;<br>    int rightPath = root.right!=null &amp;&amp; root.right.val == root.val ? right+1 : 0;<br>    //获得了左右子节点的左右路径中的较长者之后，对于当前的root节点而言，若root节点的值和左节点相等，则左路径+1，类似的右路径+1。<br>    path = Math.max(path,leftPath + rightPath);<br>    //path用来记录并更新一个以root为根结点的树的相同节点最大路径长度<br>    return Math.max(leftPath,rightPath);<br>    //所返回的值是之前计算过的左右路径中的较大值。<br>}</p>
-<p>House Robber III<br>The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the “root.” Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that “all houses in this place forms a binary tree”. It will automatically contact the police if two directly-linked houses were broken into on the same night.</p>
-<p>Determine the maximum amount of money the thief can rob tonight without alerting the police<br>间隔遍历：在二叉树中取点，要求任意两点不相邻，求所取点之和的最大值为多少。</p>
-<p>对于root为根的二叉树，最优解为取根结点+四个孙子节点或 取两个孩子结点之间的较大值。即</p>
-<p>f(root) = max(root.val + f(ll) + f(lr) + f(rl) + f(rr) , f(l)+f(r))</p>
-<p>public int rob(TreeNode root){<br>    if(root == null) return 0;<br>    int val1 = root.val;<br>    if(root.left!=null){<br>    val1 = val1 + rob(root.left.left) + rob(root.left.right);<br>    }<br>    if(root.right!=null){<br>    val1 = val1 + rob(root.right.left) + rob(<br>    root.right.right);<br>    }<br>    int val2 = rob(root.left)+rob(root.right);<br>    return Math.max(val1,val2);<br>}</p>
-<p>给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么这个节点的值不大于它的子节点的值。 给出这样的一个二叉树，你需要输出所有节点中的第二小的值。如果第二小的值不存在的话，输出 -1 。</p>
-<p>1、定义两个变量，一个保存最小值一个保存次小值。再定义一个flag递归过程中，若找到过次小值则改变flag，返回次小值。若未找到过次小值，则返回-1；<br>int first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;<br>int flag = 0;<br>public int findSecondMinimumValue(TreeNode root){<br>    helper(root);<br>    return flag == 0 ? -1:second;<br>}<br>public void helper(TreeNode root){<br>    if(root == null)<br>    return ;<br>    if(root.val &lt; first){<br>        second = first;<br>        first = root.val;<br>    }else if(root.val &lt;= second &amp;&amp; root.val &gt; first){<br>        flag++;<br>        second = root.val;<br>    }<br>    helper(root.left);<br>    helper(root.right);<br>}</p>
-<p>2、因为这个二叉树父节点的值必≤子节点的值，故根结点必定为最小值，所以第二小的值必在左右两个子树之中，<br>倘若左右两个子树中的最小值都不和根结点相等，则第二小的值是左右两个子树最小值中的较小值。<br>倘若左(右)子节点和父节点的值相等，则需要在左(右)子树中找出第二小的值来与右(左)子树的最小值一起比较出一个较小值出来。这样才能保证比对出来的是真正的第二小的值。<br>简而言之，要在左右子树中分别找出和根结点不相等的最小值。<br>这两个最小值中的较小者就是第二小的值。</p>
-<p>若左(右)子节点和根节点相等，才需要递归的找左(右)子树的次小值。<br>因为左右子树作为一个单独的树做此题的判断，root.left必定是left树的最小值，递归后找到的次小值也即左子树除根结点外的最小值。<br>否则直接取左右子节点中的较小值即可。</p>
-<p>public int findSecondMinimumValue(TreeNode root){<br>    if(root == null) return -1;<br>    //递归返回条件 1 节点为空，树没有次小值。<br>    if(root.val==null &amp;&amp; root.right == null) return -1;<br>    //递归返回条件 2 节点没有子节点，树没有次小值。<br>    int leftVal = root.left.val;<br>    int rightVal = root.right.val;<br>    if(leftVal == root.val) {<br>        leftVal ==     findSecondMinimumValue(root.left);<br>    }<br>    if(rightVal == root.val){<br>        rightVal == findSecondMinimumValue(root.right);<br>    }<br>    if(leftVal != -1 &amp;&amp; rightVal != -1){<br>        return Math.min(leftVal,rightVal);<br>        //递归返回条件 3 因为左右节点若与根结点相等则会继续递归，递归到找到没有子节点的节点 返回-1为止。<br>        //若都不为 -1 则说明两边都没有一直递归到树的末端，而是在中途由于某个子节点不和父节点相等而返回<br>        //即满足，左右子节点都不和父节点的值相等。<br>        //那么这两个数值中的较小值就是整个树的次小值。<br>    }<br>    if(leftVal != -1) return leftVal;<br>    // 递归返回条件4 在上一步判断完了两个子节点都不和根结点相等之后，再继续执行则说明，必有一个子节点和根结点值相等，此时若 左子节点不为-1，即左子节点不和根结点相等，即右子节点和根节点相等，此时次小值为左子节点。<br>    return rightVal;<br>}</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck9gkyn850004pcrgghiu5s74" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" data-id="ck9gld0bm0005borg0fo327an" class="article-share-link">Share</a>
       
       
     </footer>
@@ -482,55 +647,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>交换链表中的相邻结点<br>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
+        <h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
 <p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
-<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：<br>ListNode node =new ListNode(-1)<br>node.next = head;<br>ListNode pre = node;<br>While(pre.next!=null &amp;&amp; pre.next.next!=null){<br>ListNode l1 = pre.next;<br>ListNode l2 = pre.next.next;<br>ListNode next = l2.next;<br>l1.next = next;<br>l2.next = l1;<br>pre.next = l2;<br>pre = l1<br>}<br>return node.next </p>
-<p>链表求和<br>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
+<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
+<pre><code>ListNode node =new ListNode(-1)
+node.next = head;
+ListNode pre = node;
+While(pre.next!=null &amp;&amp; pre.next.next!=null){
+ListNode l1 = pre.next;
+ListNode l2 = pre.next.next;
+ListNode next = l2.next;
+l1.next = next;
+l2.next = l1;
+pre.next = l2;
+pre = l1
+}
+return node.next </code></pre><h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck9gkyn8i0008pcrg9jua9wgz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-上采样反向融合" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" class="article-date">
-  <time datetime="2019-11-12T07:30:02.000Z" itemprop="datePublished">2019-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">SSD上采样反向融合笔记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
-<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
-<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
-<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" data-id="ck9gkyn7y0001pcrg1cxo43su" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck9gld0bp0007borg923a7zdz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -578,7 +715,47 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/myFirstBlog/" data-id="ck9gkyn890006pcrg3mdg3oen" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/myFirstBlog/" data-id="ck9gld0bg0002borggl6m0b9c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-上采样反向融合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" class="article-date">
+  <time datetime="2019-11-12T07:30:02.000Z" itemprop="datePublished">2019-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">SSD上采样反向融合笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
+<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
+<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
+<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" data-id="ck9gld0bj0003borgawyofmps" class="article-share-link">Share</a>
       
       
     </footer>
@@ -627,7 +804,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/hello-world/" data-id="ck9gkyn800002pcrgg5eje90k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/hello-world/" data-id="ck9gld0bd0001borg3ejx15bc" class="article-share-link">Share</a>
       
       
     </footer>

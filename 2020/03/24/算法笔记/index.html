@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-24T15:48:23.413Z">
+<meta property="og:updated_time" content="2020-04-26T05:00:52.877Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -84,15 +84,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>交换链表中的相邻结点<br>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
+        <h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
 <p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
-<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：<br>ListNode node =new ListNode(-1)<br>node.next = head;<br>ListNode pre = node;<br>While(pre.next!=null &amp;&amp; pre.next.next!=null){<br>ListNode l1 = pre.next;<br>ListNode l2 = pre.next.next;<br>ListNode next = l2.next;<br>l1.next = next;<br>l2.next = l1;<br>pre.next = l2;<br>pre = l1<br>}<br>return node.next </p>
-<p>链表求和<br>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
+<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
+<pre><code>ListNode node =new ListNode(-1)
+node.next = head;
+ListNode pre = node;
+While(pre.next!=null &amp;&amp; pre.next.next!=null){
+ListNode l1 = pre.next;
+ListNode l2 = pre.next.next;
+ListNode next = l2.next;
+l1.next = next;
+l2.next = l1;
+pre.next = l2;
+pre = l1
+}
+return node.next </code></pre><h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck9gkyn8i0008pcrg9jua9wgz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck9gld0bp0007borg923a7zdz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -101,19 +113,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          二叉树类算法题1
+          二叉树类算法题2
         
       </div>
     </a>
   
   
-    <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2019/11/12/myFirstBlog/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">SSD上采样反向融合笔记</div>
+      <div class="article-nav-title">多模态论文阅读笔记</div>
     </a>
   
 </nav>
