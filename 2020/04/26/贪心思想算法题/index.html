@@ -5,13 +5,16 @@
   
 
   
-  <title>Archives: 2020/3 | Hexo</title>
+  <title>贪心思想算法题 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2020&#x2F;03&#x2F;index.html">
+  <meta name="description" content="贪心思想1.分配饼干每个孩子都有一个满足度grid，每个饼干都有一个大小size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。即存在 grid 和 size 两个数组，先用小饼干去满足需求小的孩子，以便后面让大饼干满足需求大的孩子，所以要先对数组排序。 public int findContentChildren(int grid[],int siz">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贪心思想算法题">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;26&#x2F;%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="贪心思想1.分配饼干每个孩子都有一个满足度grid，每个饼干都有一个大小size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。即存在 grid 和 size 两个数组，先用小饼干去满足需求小的孩子，以便后面让大饼干满足需求大的孩子，所以要先对数组排序。 public int findContentChildren(int grid[],int siz">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-04-26T04:56:11.061Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -59,40 +62,64 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  <time datetime="2020-03-24T15:45:57.821Z" itemprop="datePublished">Mar 24</time>
+        <section id="main"><article id="post-贪心思想算法题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" class="article-date">
+  <time datetime="2020-04-26T04:33:03.704Z" itemprop="datePublished">2020-04-26</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/">算法笔记</a>
+    <h1 class="article-title" itemprop="name">
+      贪心思想算法题
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="贪心思想"><a href="#贪心思想" class="headerlink" title="贪心思想"></a>贪心思想</h1><h2 id="1-分配饼干"><a href="#1-分配饼干" class="headerlink" title="1.分配饼干"></a>1.分配饼干</h2><p>每个孩子都有一个满足度grid，每个饼干都有一个大小size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。<br>即存在 grid 和 size 两个数组，先用小饼干去满足需求小的孩子，以便后面让大饼干满足需求大的孩子，所以要先对数组排序。</p>
+<pre><code>public int findContentChildren(int grid[],int size[]){
+    if(grid == null || size == null) return 0;
+    Arrays.sort(grid);
+    Arrays.sort(size);
+    int gi = 0 , si = 0;
+    while(gi &lt; grid.length &amp;&amp; si &lt; size.length){
+        if(grid[gi] &lt; size(si)){//若孩子的需求&lt;饼干的大小，则满足了,满足的孩子数量+1。
+        gi++;
+        }
+        si++;//若孩子满足了，饼干后移一位，若孩子不满足，说明饼干不够大，试下一个饼干是否满足。
+    }
+    return gi;//gi即为最终满足的孩子数
+}</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" data-id="ck9gkyn900009pcrgaz7ld4al" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Markdown写作</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         

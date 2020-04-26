@@ -61,6 +61,55 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-贪心思想算法题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" class="article-date">
+  <time datetime="2020-04-26T04:33:03.704Z" itemprop="datePublished">2020-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/">贪心思想算法题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="贪心思想"><a href="#贪心思想" class="headerlink" title="贪心思想"></a>贪心思想</h1><h2 id="1-分配饼干"><a href="#1-分配饼干" class="headerlink" title="1.分配饼干"></a>1.分配饼干</h2><p>每个孩子都有一个满足度grid，每个饼干都有一个大小size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。<br>即存在 grid 和 size 两个数组，先用小饼干去满足需求小的孩子，以便后面让大饼干满足需求大的孩子，所以要先对数组排序。</p>
+<pre><code>public int findContentChildren(int grid[],int size[]){
+    if(grid == null || size == null) return 0;
+    Arrays.sort(grid);
+    Arrays.sort(size);
+    int gi = 0 , si = 0;
+    while(gi &lt; grid.length &amp;&amp; si &lt; size.length){
+        if(grid[gi] &lt; size(si)){//若孩子的需求&lt;饼干的大小，则满足了,满足的孩子数量+1。
+        gi++;
+        }
+        si++;//若孩子满足了，饼干后移一位，若孩子不满足，说明饼干不够大，试下一个饼干是否满足。
+    }
+    return gi;//gi即为最终满足的孩子数
+}</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" data-id="ck9gkyn900009pcrgaz7ld4al" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Markdown写作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" class="article-date">
@@ -165,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" data-id="ck9ffkygz00008org6olt9xu5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" data-id="ck9gkyn7j0000pcrg0ik12o1y" class="article-share-link">Share</a>
       
       
     </footer>
@@ -212,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" data-id="ck9ffkyhw00078org9ex030pr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" data-id="ck9gkyn8c0007pcrgatu76un3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -285,7 +334,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" data-id="ck9ffkyhp00048org0tjg3wm0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" data-id="ck9gkyn830003pcrgen6662p9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -329,7 +378,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" data-id="ck9ffkyhu00068org7p1o8am4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" data-id="ck9gkyn870005pcrg9aja1z6q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -401,7 +450,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck9ffkyhs00058orgbj5keiqa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" data-id="ck9gkyn850004pcrgghiu5s74" class="article-share-link">Share</a>
       
       
     </footer>
@@ -441,7 +490,47 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck9ffkyhy00088orggossb56x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" data-id="ck9gkyn8i0008pcrg9jua9wgz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-上采样反向融合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" class="article-date">
+  <time datetime="2019-11-12T07:30:02.000Z" itemprop="datePublished">2019-11-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">SSD上采样反向融合笔记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
+<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
+<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
+<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" data-id="ck9gkyn7y0001pcrg1cxo43su" class="article-share-link">Share</a>
       
       
     </footer>
@@ -489,47 +578,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/myFirstBlog/" data-id="ck9ffkyhh00028org6dsx0kyc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-上采样反向融合" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" class="article-date">
-  <time datetime="2019-11-12T07:30:02.000Z" itemprop="datePublished">2019-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">SSD上采样反向融合笔记</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
-<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
-<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
-<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" data-id="ck9ffkyhl00038orgfgzg3wiv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/myFirstBlog/" data-id="ck9gkyn890006pcrg3mdg3oen" class="article-share-link">Share</a>
       
       
     </footer>
@@ -578,7 +627,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/12/hello-world/" data-id="ck9ffkyhd00018org7hr4a7s5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/12/hello-world/" data-id="ck9gkyn800002pcrgg5eje90k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -619,6 +668,10 @@
       <ul>
         
           <li>
+            <a href="/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/">贪心思想算法题</a>
+          </li>
+        
+          <li>
             <a href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/">Markdown写作</a>
           </li>
         
@@ -632,10 +685,6 @@
         
           <li>
             <a href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/">二叉树类算法题2</a>
-          </li>
-        
-          <li>
-            <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/">二叉树类算法题1</a>
           </li>
         
       </ul>
