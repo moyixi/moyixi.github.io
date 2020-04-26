@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="贪心思想1.分配饼干每个孩子都有一个满足度grid，每个饼干都有一个大小size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。即存在 grid 和 size 两个数组，先用小饼干去满足需求小的孩子，以便后面让大饼干满足需求大的孩子，所以要先对数组排序。 public int findContentChildren(int grid[],int siz">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-26T04:58:11.949Z">
+<meta property="og:updated_time" content="2020-04-26T05:44:25.252Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -97,11 +97,49 @@
         si++;//若孩子满足了，饼干后移一位，若孩子不满足，说明饼干不够大，试下一个饼干是否满足。
     }
     return gi;//gi即为最终满足的孩子数
-}</code></pre><h2 id="2-不重叠的区间个数"><a href="#2-不重叠的区间个数" class="headerlink" title="2.不重叠的区间个数"></a>2.不重叠的区间个数</h2>
+}</code></pre><h2 id="2-不重叠的区间个数"><a href="#2-不重叠的区间个数" class="headerlink" title="2.不重叠的区间个数"></a>2.不重叠的区间个数</h2><p>给定一个区间的集合，找到需要移除区间的最小数量，使剩余区间互不重叠。<br>例如：输入： [ [1,2], [2,3], [3,4], [1,3] ]，移除[1,3]后不重叠，输出：1<br>     输入: [ [1,2], [1,2], [1,2] ]，移除两个[1,2]后不重叠，输出：2</p>
+<p>这题和活动时间安排问题类似，为最大化安排，需要先安排结束的早的事情，此题也是一样，先安排右边界小的区间，这样留的空间就越大</p>
+<pre><code>public int eraseOverlapIntervals(int [][] intervals){
+    if(intervals.length == 0) return 0;
+    Arrays.sort(intervals , new Comparator&lt;int [] &gt;() {
+        public int compare(int []a1 , int []a2){
+            return a1[1] - a2[1];
+        }
+        });
+    int count = 1;
+    int end = intervals[0][1];
+    for(int i = 1 ; i &lt; intervals.length ; i++){
+        if(intervals[i][0]&lt;end){
+            continue;
+        }
+        end = intervals[i][1];
+        count++;
+    } 
+    return intervals.length - count;
+}</code></pre><h2 id="3-投飞镖刺破气球"><a href="#3-投飞镖刺破气球" class="headerlink" title="3.投飞镖刺破气球"></a>3.投飞镖刺破气球</h2><p>在二维空间中有许多球形的气球。对于每个气球，提供的输入是水平方向上，气球直径的开始和结束坐标。由于它是水平的，所以y坐标并不重要，因此只要知道开始和结束的x坐标就足够了。开始坐标总是小于结束坐标。一支弓箭可以沿着x轴从不同点完全垂直地射出。在坐标x处射出一支箭，若有一个气球的直径的开始和结束坐标为 xstart，xend， 且满足  xstart ≤ x ≤ xend，则该气球会被引爆。可以射出的弓箭的数量没有限制。 弓箭一旦被射出之后，可以无限地前进。我们想找到使得所有气球全部被引爆，所需的弓箭的最小数量。</p>
+<p>此题也是找重复区间的题目，区别在于上一题连续的区间不算重复，这一题连续的区间算重复</p>
+<pre><code>public int findMinArrowShots(int [][]points){
+    if(points == 0) return 0;
+    Arrays.sort(points, new Comparator&lt;int [] &gt;(){
+        public int compare(int []a1 , int []a2){
+            return a1[1] - a2[1];
+        }
+        });
+    int count = 1;
+    int end = points[0][1];
+    for(int i = 1 ; i &lt; points.length ; i++){
+        if(points[i][0] &lt;= end){
+            continue;
+        }
+        end = points[i][1];
+        count++;
+    }
+    return count;
+}</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" data-id="ck9gld0bq0008borgh3erdxzl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/" data-id="ck9gmoptb0008e0rg4lea72p4" class="article-share-link">Share</a>
       
       
     </footer>
