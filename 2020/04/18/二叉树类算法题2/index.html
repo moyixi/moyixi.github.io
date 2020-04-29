@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="title:二叉树类算法题categories:数据结构与算法刷题  层次遍历：求一棵树每层节点的平均数 public List&amp;lt;Double&amp;gt; averageOfLevels(TreeNode root){     List&amp;lt;Double&amp;gt; ret new ArrayList&amp;lt;&amp;gt;();         &#x2F;&#x2F;ret用来存储每层节点的平均数     if (ro">
+<meta name="description" content="层次遍历：求一棵树每层节点的平均数 12345678910111213141516171819202122public List&amp;lt;Double&amp;gt; averageOfLevels(TreeNode root)&amp;#123;	List&amp;lt;Double&amp;gt; ret new ArrayList&amp;lt;&amp;gt;();		&#x2F;&#x2F;ret用来存储每层节点的平均数	if (root == null)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二叉树类算法题2">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;18&#x2F;%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="title:二叉树类算法题categories:数据结构与算法刷题  层次遍历：求一棵树每层节点的平均数 public List&amp;lt;Double&amp;gt; averageOfLevels(TreeNode root){     List&amp;lt;Double&amp;gt; ret new ArrayList&amp;lt;&amp;gt;();         &#x2F;&#x2F;ret用来存储每层节点的平均数     if (ro">
+<meta property="og:description" content="层次遍历：求一棵树每层节点的平均数 12345678910111213141516171819202122public List&amp;lt;Double&amp;gt; averageOfLevels(TreeNode root)&amp;#123;	List&amp;lt;Double&amp;gt; ret new ArrayList&amp;lt;&amp;gt;();		&#x2F;&#x2F;ret用来存储每层节点的平均数	if (root == null)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-29T06:33:37.428Z">
+<meta property="og:updated_time" content="2020-04-29T06:56:04.753Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -307,94 +307,16 @@
       
 
       
-        <hr>
-<p>title:二叉树类算法题<br>categories:数据结构与算法刷题</p>
-<hr>
-<h2 id="层次遍历："><a href="#层次遍历：" class="headerlink" title="层次遍历："></a>层次遍历：</h2><p>求一棵树每层节点的平均数</p>
-<pre><code>public List&lt;Double&gt; averageOfLevels(TreeNode root){
-    List&lt;Double&gt; ret new ArrayList&lt;&gt;();
-        //ret用来存储每层节点的平均数
-    if (root == null) return ret;
-    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
-        //用一个队列queue来存储当前层的所有节点
-    queue.add(root);
-    while(!queue.isEmpty()){
-        int cnt = queue.size();
-        //当前层节点压入队列之后，队列大小即节点数
-        double sum = 0;//用来累加当前层的节点和
-        for(int i = 0 ; i &lt; cnt ; i++){
-            TreeNode node = queue.poll();
-            sum += node.val;
-            if(node.left != null) queue.add(node.left);
-            if(node.right != null) queue.add(node.right);
-        }
-        ret.add(sum/cnt);
-        //sum/cnt即某层的节点平均数，压入ret中
-    }
-    return ret;
-}</code></pre><h2 id="求二叉树最下层的最左边的结点。"><a href="#求二叉树最下层的最左边的结点。" class="headerlink" title="求二叉树最下层的最左边的结点。"></a>求二叉树最下层的最左边的结点。</h2><p>层序遍历时，从右往左的向队列中压入一整层的节点,再出队列。则最后一个出队列的节点是最底层的最左边节点。</p>
-<pre><code>public int findBottomLeftValue(TreeNode root){
-    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
-    queue.add(root);
-    while(!queue.isEmpty()){
-        root = queue.poll();
-        if(root.right!=null) queue.add(root.right);
-        if(root.left!=null) queue.add(root.left);
-    }
-    return root.val;
-}</code></pre><h2 id="二叉树前序遍历："><a href="#二叉树前序遍历：" class="headerlink" title="二叉树前序遍历："></a>二叉树前序遍历：</h2><p>需要借助栈，因为前序遍历是  root -&gt; left -&gt; right<br>而栈是后进先出，所以为达到遍历过程中的先左后右，必须要使得压栈过程先右后左。</p>
-<pre><code>public List&lt;Integer&gt; preorderTraversal(TreeNode root){
-    List&lt;Integer&gt; ret = new ArrayList&lt;&gt;();
-    Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
-    stack.push(root);
-    while(!stack.isEmpty()){
-        TreeNode node = stack.pop();
-        if(node == null) continue;
-        //空节点不记录入ret中，它无左右节点，也不需要将左右节点压栈
-        //当空节点被压入栈中时，说明上一次出栈操作的root为叶子节点或只有左右节点中的一个。
-        //若无这一步，不对node做null判断，每次常规的压栈操作，会将叶子节点的左右节点(均为空)
-        //或只有一个孩子节点的节点的左右节点(有一个为空)均压入栈中后记录,即在最终的遍历结果中出现很多null且无法退出遍历。
-        //有了这一步判断，仍然会在上一层循环中压入null，但进行一次判断后，null节点的左右孩子节点(仍为null)不会再压入栈中，
-        //null节点也不会计入ret中。而是遇到null之后做弹栈操作。弹到非null节点为止。
-        ret.add(node.val);
-        stack.push(root.right);//顺序很重要
-        stack.push(root.left);//顺序很重要
-    }
-    return ret;
-}</code></pre><h2 id="二叉树的后序遍历："><a href="#二叉树的后序遍历：" class="headerlink" title="二叉树的后序遍历："></a>二叉树的后序遍历：</h2><p>后序遍历可以通过前序遍历修改。<br>前序遍历是  root -&gt; left -&gt; right<br>后序遍历是  left -&gt; right -&gt; root<br>将前序遍历改为 root -&gt; right -&gt; left 再逆序即可。</p>
-<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root){
-    List&lt;Integer&gt; ret = new ArrayList&lt;&gt;();
-    Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
-    stack.push(root);
-    while(!stack.isEmpty()){
-        TreeNode node = stack.pop();
-        if(node == null) continue;
-        ret.add(node.val);
-        stack.push(root.left);
-        //前序遍历时先压右节点再压左节点保证先出左节点后出右节点
-        stack.push(root.right);
-        //后序遍历时，与之相反，最后要将结果逆置
-    }
-    Collections.reverse(ret);
-    return ret;
-}</code></pre><h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><pre><code>public List&lt;Integer&gt; inorderTraversal(TreeNode root){
-    List&lt;Integer&gt; ret = new ArrayList&lt;&gt;();
-    if(root == null) return ret;
-    Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();
-    TreeNode cur = root;
-    while(cur!=null || !stack.isEmpty()){
-        while(cur != null){
-        stack.push(cur);
-        cur = cur.left;
-        }
-        //中序遍历 left -&gt; root -&gt; right，所以每次压栈要将left压到底为止
-        TreeNode node = stack.pop();
-        ret.add(node.val);
-        cur = node.right;
-        //压栈完，进行弹栈操作并记录后再压入node.right，即在root之后记录right
-    }
-    return ret;
-}</code></pre>
+        <h2 id="层次遍历："><a href="#层次遍历：" class="headerlink" title="层次遍历："></a>层次遍历：</h2><p>求一棵树每层节点的平均数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Double&gt; <span class="title">averageOfLevels</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Double&gt; ret <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		<span class="comment">//ret用来存储每层节点的平均数</span></span><br><span class="line">	<span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> ret;</span><br><span class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">		<span class="comment">//用一个队列queue来存储当前层的所有节点</span></span><br><span class="line">	queue.add(root);</span><br><span class="line">	<span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">		<span class="keyword">int</span> cnt = queue.size();</span><br><span class="line">		<span class="comment">//当前层节点压入队列之后，队列大小即节点数</span></span><br><span class="line">		<span class="keyword">double</span> sum = <span class="number">0</span>;<span class="comment">//用来累加当前层的节点和</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cnt ; i++)&#123;</span><br><span class="line">			TreeNode node = queue.poll();</span><br><span class="line">			sum += node.val;</span><br><span class="line">			<span class="keyword">if</span>(node.left != <span class="keyword">null</span>) queue.add(node.left);</span><br><span class="line">			<span class="keyword">if</span>(node.right != <span class="keyword">null</span>) queue.add(node.right);</span><br><span class="line">		&#125;</span><br><span class="line">		ret.add(sum/cnt);</span><br><span class="line">		<span class="comment">//sum/cnt即某层的节点平均数，压入ret中</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="求二叉树最下层的最左边的结点。"><a href="#求二叉树最下层的最左边的结点。" class="headerlink" title="求二叉树最下层的最左边的结点。"></a>求二叉树最下层的最左边的结点。</h2><p>层序遍历时，从右往左的向队列中压入一整层的节点,再出队列。则最后一个出队列的节点是最底层的最左边节点。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findBottomLeftValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">	queue.add(root);</span><br><span class="line">	<span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">		root = queue.poll();</span><br><span class="line">		<span class="keyword">if</span>(root.right!=<span class="keyword">null</span>) queue.add(root.right);</span><br><span class="line">		<span class="keyword">if</span>(root.left!=<span class="keyword">null</span>) queue.add(root.left);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> root.val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树前序遍历："><a href="#二叉树前序遍历：" class="headerlink" title="二叉树前序遍历："></a>二叉树前序遍历：</h2><p>需要借助栈，因为前序遍历是  root -&gt; left -&gt; right<br>而栈是后进先出，所以为达到遍历过程中的先左后右，必须要使得压栈过程先右后左。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">	stack.push(root);</span><br><span class="line">	<span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">		TreeNode node = stack.pop();</span><br><span class="line">		<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="comment">//空节点不记录入ret中，它无左右节点，也不需要将左右节点压栈</span></span><br><span class="line">		<span class="comment">//当空节点被压入栈中时，说明上一次出栈操作的root为叶子节点或只有左右节点中的一个。</span></span><br><span class="line">		<span class="comment">//若无这一步，不对node做null判断，每次常规的压栈操作，会将叶子节点的左右节点(均为空)</span></span><br><span class="line">		<span class="comment">//或只有一个孩子节点的节点的左右节点(有一个为空)均压入栈中后记录,即在最终的遍历结果中出现很多null且无法退出遍历。</span></span><br><span class="line">		<span class="comment">//有了这一步判断，仍然会在上一层循环中压入null，但进行一次判断后，null节点的左右孩子节点(仍为null)不会再压入栈中，</span></span><br><span class="line">		<span class="comment">//null节点也不会计入ret中。而是遇到null之后做弹栈操作。弹到非null节点为止。</span></span><br><span class="line">		ret.add(node.val);</span><br><span class="line">		stack.push(root.right);<span class="comment">//顺序很重要</span></span><br><span class="line">		stack.push(root.left);<span class="comment">//顺序很重要</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树的后序遍历："><a href="#二叉树的后序遍历：" class="headerlink" title="二叉树的后序遍历："></a>二叉树的后序遍历：</h2><p>后序遍历可以通过前序遍历修改。<br>前序遍历是  root -&gt; left -&gt; right<br>后序遍历是  left -&gt; right -&gt; root<br>将前序遍历改为 root -&gt; right -&gt; left 再逆序即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">	stack.push(root);</span><br><span class="line">	<span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">		TreeNode node = stack.pop();</span><br><span class="line">		<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line">		ret.add(node.val);</span><br><span class="line">		stack.push(root.left);</span><br><span class="line">		<span class="comment">//前序遍历时先压右节点再压左节点保证先出左节点后出右节点</span></span><br><span class="line">		stack.push(root.right);</span><br><span class="line">		<span class="comment">//后序遍历时，与之相反，最后要将结果逆置</span></span><br><span class="line">	&#125;</span><br><span class="line">	Collections.reverse(ret);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> ret;</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">	TreeNode cur = root;</span><br><span class="line">	<span class="keyword">while</span>(cur!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">		<span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">		stack.push(cur);</span><br><span class="line">		cur = cur.left;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//中序遍历 left -&gt; root -&gt; right，所以每次压栈要将left压到底为止</span></span><br><span class="line">		TreeNode node = stack.pop();</span><br><span class="line">		ret.add(node.val);</span><br><span class="line">		cur = node.right;</span><br><span class="line">		<span class="comment">//压栈完，进行弹栈操作并记录后再压入node.right，即在root之后记录right</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     

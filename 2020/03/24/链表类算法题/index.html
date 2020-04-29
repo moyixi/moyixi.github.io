@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="title:链表类算法题categories:数据结构与算法刷题  交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=no">
+<meta name="description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="链表类算法题">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;24&#x2F;%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="title:链表类算法题categories:数据结构与算法刷题  交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=no">
+<meta property="og:description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-29T06:33:22.818Z">
+<meta property="og:updated_time" content="2020-04-29T06:55:41.318Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -307,25 +307,11 @@
       
 
       
-        <hr>
-<p>title:链表类算法题<br>categories:数据结构与算法刷题</p>
-<hr>
-<h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
+        <h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
 <p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
 <p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
-<pre><code>ListNode node =new ListNode(-1)
-node.next = head;
-ListNode pre = node;
-While(pre.next!=null &amp;&amp; pre.next.next!=null){
-ListNode l1 = pre.next;
-ListNode l2 = pre.next.next;
-ListNode next = l2.next;
-l1.next = next;
-l2.next = l1;
-pre.next = l2;
-pre = l1
-}
-return node.next </code></pre><h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ListNode node =<span class="keyword">new</span> ListNode(-<span class="number">1</span>)</span><br><span class="line">node.next = head;</span><br><span class="line">ListNode pre = node;</span><br><span class="line">While(pre.next!=<span class="keyword">null</span> &amp;&amp; pre.next.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">ListNode l1 = pre.next;</span><br><span class="line">ListNode l2 = pre.next.next;</span><br><span class="line">ListNode next = l2.next;</span><br><span class="line">l1.next = next;</span><br><span class="line">l2.next = l1;</span><br><span class="line">pre.next = l2;</span><br><span class="line">pre = l1</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> node.next</span><br></pre></td></tr></table></figure>
+<h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
 
       
     </div>
