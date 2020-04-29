@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="分配饼干每个孩子都有一个满足度grid，每个饼干都有一个大小size，只有饼干的大小大于等于一个孩子的满足度，该孩子才会获得满足。求解最多可以获得满足的孩子数量。即存在 grid 和 size 两个数组，先用小饼干去满足需求小的孩子，以便后面让大饼干满足需求大的孩子，所以要先对数组排序。 12345678910111213public int findContentChildren(int gri">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-04-28T12:00:34.820Z">
+<meta property="og:updated_time" content="2020-04-29T05:32:07.722Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -315,8 +315,64 @@
 <p>给定一个花坛（表示为一个数组包含0和1，其中0表示没种植花，1表示种植了花），和一个数 n 。能否在不打破种植规则的情况下种入 n 朵花？能则返回True，不能则返回False。</p>
 <p>遍历数组，如果数组中出现一个0，且这个位置前后都是0，可种花，需要考虑首尾边界情况。<br>即，若一个数字为0，且它前面的数字为0或它出现在数组头，且它后面的数字为0或它出现在数组尾，即可种花。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canPlaceFlowers</span><span class="params">(<span class="keyword">int</span> [] flowerbed , <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span> ; count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(i &lt; flowerbed.length)&#123;</span><br><span class="line">		<span class="keyword">if</span>(flowerbed[i] == <span class="number">0</span> &amp;&amp; ( i == <span class="number">0</span> || flowerbed[i - <span class="number">1</span>] ==<span class="number">0</span>) &amp;&amp; (i == flowerbed.length - <span class="number">1</span> || flowerbed[i + <span class="number">1</span>] == <span class="number">0</span>))&#123;</span><br><span class="line">			flowerbed[i] = <span class="number">1</span>;</span><br><span class="line">			count++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count &gt;= n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断一个字符串是否为另一个字符串子序列"><a href="#判断一个字符串是否为另一个字符串子序列" class="headerlink" title="判断一个字符串是否为另一个字符串子序列"></a>判断一个字符串是否为另一个字符串子序列</h2><p>判断s是否为t的子序列[注]是子序列而不是子串，子序列可以不连续。</p>
+<h2 id="判断一个字符串是否为另一个字符串子序列"><a href="#判断一个字符串是否为另一个字符串子序列" class="headerlink" title="判断一个字符串是否为另一个字符串子序列"></a>判断一个字符串是否为另一个字符串子序列</h2><p>判断s是否为t的子序列[注]是子序列而不是子串，子序列可以不连续。<br>两层循环逐一对比即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSubsequence</span><span class="params">(String s, String t)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span> ;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">char</span> c : s.toCharArray())&#123;</span><br><span class="line">		<span class="keyword">while</span>(i&lt;t.length() &amp;&amp; t.charAt(i)!= c)&#123;i++;&#125;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> i&lt;=t.length()? <span class="keyword">true</span>:<span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改一个数成为非递减数组"><a href="#修改一个数成为非递减数组" class="headerlink" title="修改一个数成为非递减数组"></a>修改一个数成为非递减数组</h2><p>给出一个数组，判断是否可最多只对数字进行一次修改就将其变为非递减数组</p>
+<p>例： 4，2，3            (1)<br>    -1，4，2，3        (2)<br>    2，3，3，2，4     (3)<br>当后面的数字小于前面的数字时，有时需要修改前面较大的数字，有时需要修改后面较小的数字。<br>具体来看当前数字记为 nums[n],其前面的一位数字记为nums[n-1],其再前面一位数字记为nums[n-2];<br>当nums[n] &lt; nums[n-1]而nums[n-2]不存在时，如(1)、2 &lt; 4,将nums[n-1]变小，修改为nums[n]即可。<br>当nums[n] &lt; nums[n-1]且nums[n-2] &lt; nums[n]时,如(2)、 2 &lt; 4,同样的，将nums[n-1]变小，修改为nums[n]即可。<br>当nums[n] &lt; nums[n-1]且nums[n-2] &gt; nums[n]时,如(3)、2 &lt; 3,3 &gt; 2<br>此时若将nums[n-1]变小修改为nums[n],nums[n-2]依然大于nums[n-1]和nums[n],所以需要将nums[n]变大，修改为nums[n-1]。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkPossibility</span><span class="params">(<span class="keyword">int</span> [] nums)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> cnt = <span class="number">0</span>;<span class="comment">//记录变动次数</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; nums.length &amp;&amp; cnt &lt; <span class="number">2</span> ; i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums[i-<span class="number">1</span>]&lt;=nums[i])&#123;</span><br><span class="line">			<span class="keyword">continue</span>;<span class="comment">//前一位小于后一位，满足不递减，循环继续;</span></span><br><span class="line">		&#125;</span><br><span class="line">		cnt++;<span class="comment">//在if不被满足，即前一位大于后一位时,需要进行一次变动。</span></span><br><span class="line">		<span class="keyword">if</span>(i-<span class="number">2</span> &gt;= <span class="number">0</span> &amp;&amp; nums[i-<span class="number">2</span>]&gt;nums[i])&#123;</span><br><span class="line">			nums[i] = nums[i-<span class="number">1</span>];</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			nums[i-<span class="number">1</span>] = nums[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> cnt &lt;=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最大子序和"><a href="#最大子序和" class="headerlink" title="最大子序和"></a>最大子序和</h2><p>给定一个整数数组nums，找到一个具有最大和的连续子数组，返回其最大和。</p>
+<p>用max记录当前的最大和，累加时，若当前连续子数组和为正则说明其对后面部分数组有正面作用，继续累加。若为负则说明前面部分可丢弃了从下一个正数从头开始累加。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span> [] nums)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> sum = nums[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">int</span> max = nums[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">		sum = sum&gt;<span class="number">0</span> ? sum+nums[i] : nums[i];</span><br><span class="line">		max = Math.max(sum,max);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="划分字母区间"><a href="#划分字母区间" class="headerlink" title="划分字母区间"></a>划分字母区间</h2><p>例子 S = “ababcbacadefegdehijhklij”<br>字符串S由小写字母构成。我们要把这个字符串划分为<strong>尽可能多</strong>的片段，同一个字母只会出现在其中的一个片段。返回一个表示每个字符串片段的长度的列表。<br>因为要把所有相同的字母划分在同一片段，所以在找到首字母’a’后，要找字符串中的最后一个’a’,得到 “ababcbaca”,在此子字符串中出现的任何一个字符，都要找到它在字符串中的最后一个位置，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">char2Index</span><span class="params">(<span class="keyword">char</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> c - <span class="string">'a'</span>;<span class="comment">//用长度为26的数字数组代表26个英文字母的常见操作</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">partitionLabels</span><span class="params">(String S)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] lastIndexsOfChar = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">26</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; S.length(); i++) &#123;</span><br><span class="line">        lastIndexsOfChar[char2Index(S.charAt(i))] = i;<span class="comment">//遍历第一遍，得到每个字母最后一次出现的位置。</span></span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;Integer&gt; partitions = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">int</span> firstIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (firstIndex &lt; S.length()) &#123;</span><br><span class="line">        <span class="keyword">int</span> lastIndex = firstIndex;<span class="comment">//firstIndex和lastIndex分别代表区间起始位置。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = firstIndex; i &lt; S.length() &amp;&amp; i &lt;= lastIndex; i++) &#123;</span><br><span class="line">			<span class="comment">//循环跳出条件，i &lt; S.length()是对整个字符串的限定，而i &lt;= lastIndex 代表了当前循环位置和循环至此其间所有字母出现的最后位置。</span></span><br><span class="line">            <span class="keyword">int</span> index = lastIndexsOfChar[char2Index(S.charAt(i))];</span><br><span class="line">            <span class="keyword">if</span> (index &gt; lastIndex) &#123;</span><br><span class="line">                lastIndex = index;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//上面这几行，index指的是遍历至当前位置i时，此字母出现的最后一个位置</span></span><br><span class="line">            <span class="comment">//用lastIndex对index进行更新，代表的是遍历到当前位置，这中间出现的所有字母出现的最后一个位置。</span></span><br><span class="line">        &#125;</span><br><span class="line">        partitions.add(lastIndex - firstIndex + <span class="number">1</span>);<span class="comment">//确定区间大小</span></span><br><span class="line">        firstIndex = lastIndex + <span class="number">1</span>;<span class="comment">//开始下一个区间</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> partitions;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       
     </div>
     
@@ -462,7 +518,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分配饼干"><span class="nav-number">1.</span> <span class="nav-text">分配饼干</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不重叠的区间个数"><span class="nav-number">2.</span> <span class="nav-text">不重叠的区间个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#投飞镖刺破气球"><span class="nav-number">3.</span> <span class="nav-text">投飞镖刺破气球</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#买卖股票的最大收益"><span class="nav-number">4.</span> <span class="nav-text">买卖股票的最大收益</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#买卖股票的最大收益II"><span class="nav-number">5.</span> <span class="nav-text">买卖股票的最大收益II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#种植花朵"><span class="nav-number">6.</span> <span class="nav-text">种植花朵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断一个字符串是否为另一个字符串子序列"><span class="nav-number">7.</span> <span class="nav-text">判断一个字符串是否为另一个字符串子序列</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分配饼干"><span class="nav-number">1.</span> <span class="nav-text">分配饼干</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不重叠的区间个数"><span class="nav-number">2.</span> <span class="nav-text">不重叠的区间个数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#投飞镖刺破气球"><span class="nav-number">3.</span> <span class="nav-text">投飞镖刺破气球</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#买卖股票的最大收益"><span class="nav-number">4.</span> <span class="nav-text">买卖股票的最大收益</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#买卖股票的最大收益II"><span class="nav-number">5.</span> <span class="nav-text">买卖股票的最大收益II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#种植花朵"><span class="nav-number">6.</span> <span class="nav-text">种植花朵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断一个字符串是否为另一个字符串子序列"><span class="nav-number">7.</span> <span class="nav-text">判断一个字符串是否为另一个字符串子序列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改一个数成为非递减数组"><span class="nav-number">8.</span> <span class="nav-text">修改一个数成为非递减数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大子序和"><span class="nav-number">9.</span> <span class="nav-text">最大子序和</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#划分字母区间"><span class="nav-number">10.</span> <span class="nav-text">划分字母区间</span></a></li></ol></div>
             
 
           </div>
