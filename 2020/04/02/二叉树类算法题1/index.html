@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。 二叉树两节点的最长路径二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1故根结点为root的二叉树的两节点最长路径 = Max(左">
+<meta name="description" content="title:二叉树算法题categories:数据结构与算法刷题  二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。 二叉树两节点的最长路径二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二叉树类算法题1">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;02&#x2F;%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。 二叉树两节点的最长路径二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1故根结点为root的二叉树的两节点最长路径 = Max(左">
+<meta property="og:description" content="title:二叉树算法题categories:数据结构与算法刷题  二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。 二叉树两节点的最长路径二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-28T11:12:23.461Z">
+<meta property="og:updated_time" content="2020-04-29T06:32:29.954Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -184,6 +184,16 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -297,7 +307,10 @@
       
 
       
-        <p>二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。</p>
+        <hr>
+<p>title:二叉树算法题<br>categories:数据结构与算法刷题</p>
+<hr>
+<p>二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。</p>
 <h2 id="二叉树两节点的最长路径"><a href="#二叉树两节点的最长路径" class="headerlink" title="二叉树两节点的最长路径"></a>二叉树两节点的最长路径</h2><p>二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1<br>故根结点为root的二叉树的两节点最长路径 = Max(左子树的最长路径，右子树的最长路径，左子树深度(去根)+右子树深度(去根)+1)即<br>    public class solution {<br>    int max = 0;<br>    public int diameterOfBinaryTree(TreeNode root){<br>        getDepth(root);<br>        return max;<br>    }</p>
 <pre><code>private int getDepth(TreeNode root){//返回树的最大深度
     if(root == null)
@@ -494,8 +507,8 @@ public void helper(TreeNode root){
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/24/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0/" rel="next" title="算法笔记">
-                <i class="fa fa-chevron-left"></i> 算法笔记
+              <a href="/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/" rel="next" title="链表类算法题">
+                <i class="fa fa-chevron-left"></i> 链表类算法题
               </a>
             
           </div>

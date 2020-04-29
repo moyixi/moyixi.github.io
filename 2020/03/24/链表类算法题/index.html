@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集3、针对回归精度不高和小目标检测效果差，提出上采样反向特">
+<meta name="description" content="title:链表类算法题categories:数据结构与算法刷题  交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=no">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSD上采样反向融合笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;12&#x2F;%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88&#x2F;index.html">
+<meta property="og:title" content="链表类算法题">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;24&#x2F;%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集3、针对回归精度不高和小目标检测效果差，提出上采样反向特">
+<meta property="og:description" content="title:链表类算法题categories:数据结构与算法刷题  交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=no">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-13T06:59:16.824Z">
+<meta property="og:updated_time" content="2020-04-29T06:33:22.818Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/12/上采样反向融合/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/24/链表类算法题/"/>
 
 
 
 
 
-  <title>SSD上采样反向融合笔记 | 莫一兮的个人博客</title>
+  <title>链表类算法题 | 莫一兮的个人博客</title>
   
 
 
@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="莫一兮">
@@ -257,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SSD上采样反向融合笔记</h1>
+          <h1 class="post-title" itemprop="name headline">链表类算法题</h1>
         
 
         <div class="post-meta">
@@ -269,8 +269,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T15:30:02+08:00">
-                2019-11-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T23:45:57+08:00">
+                2020-03-24
               </time>
             
 
@@ -307,10 +307,25 @@
       
 
       
-        <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
-<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
-<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
-<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
+        <hr>
+<p>title:链表类算法题<br>categories:数据结构与算法刷题</p>
+<hr>
+<h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
+<p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
+<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
+<pre><code>ListNode node =new ListNode(-1)
+node.next = head;
+ListNode pre = node;
+While(pre.next!=null &amp;&amp; pre.next.next!=null){
+ListNode l1 = pre.next;
+ListNode l2 = pre.next.next;
+ListNode next = l2.next;
+l1.next = next;
+l2.next = l1;
+pre.next = l2;
+pre = l1
+}
+return node.next </code></pre><h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
 
       
     </div>
@@ -335,8 +350,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/12/myFirstBlog/" rel="next" title="多模态论文阅读笔记">
-                <i class="fa fa-chevron-left"></i> 多模态论文阅读笔记
+              <a href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" rel="next" title="SSD上采样反向融合笔记">
+                <i class="fa fa-chevron-left"></i> SSD上采样反向融合笔记
               </a>
             
           </div>
@@ -345,8 +360,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/" rel="prev" title="链表类算法题">
-                链表类算法题 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" rel="prev" title="二叉树类算法题1">
+                二叉树类算法题1 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -399,8 +414,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -442,6 +466,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#交换链表中的相邻结点"><span class="nav-number">1.</span> <span class="nav-text">交换链表中的相邻结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表求和"><span class="nav-number">2.</span> <span class="nav-text">链表求和</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
