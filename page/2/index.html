@@ -79,14 +79,11 @@
 
 
 
-<meta name="description" content="1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集3、针对回归精度不高和小目标检测效果差，提出上采样反向特">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SSD上采样反向融合笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;12&#x2F;%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88&#x2F;index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="莫一兮的个人博客">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;page&#x2F;2&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集3、针对回归精度不高和小目标检测效果差，提出上采样反向特">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-29T07:27:42.059Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +114,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/12/上采样反向融合/"/>
+  <link rel="canonical" href="http://yoursite.com/page/2/"/>
 
 
 
 
 
-  <title>SSD上采样反向融合笔记 | 莫一兮的个人博客</title>
+  <title>莫一兮的个人博客</title>
   
 
 
@@ -142,7 +139,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -225,9 +223,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -257,7 +255,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SSD上采样反向融合笔记</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" itemprop="url">SSD上采样反向融合笔记</a></h1>
         
 
         <div class="post-meta">
@@ -329,11 +329,15 @@
       
 
       
-        <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
+        
+          
+            <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
 <p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
 <p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
 <p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
 
+          
+        
       
     </div>
     
@@ -350,28 +354,12 @@
       
 
       
-      
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/12/myFirstBlog/" rel="prev" title="多模态论文阅读笔记">
-                多模态论文阅读笔记 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -381,11 +369,14 @@
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/">&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -393,10 +384,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -609,10 +596,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
