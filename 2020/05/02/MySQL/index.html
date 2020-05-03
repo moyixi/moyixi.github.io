@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="莫一兮的个人博客">
 <meta property="og:description" content="数据库基础数据库是一个以某种有组织的方式存储的数据集合。可想象为一个文件柜，此文件柜是一个存放数据的物理位置，不管数据是什么以及如何组织的。数据库（database） 保存有组织的数据的容器（通常是一个文件或一组文件）在将资料放入自己的文件柜时，并不是随便将它们扔进某个抽屉就完事了，而是在文件柜中创建文件，然后将相关的资料放入特定的文件中。在数据库领域中，这种文件称为表。表是一种结构化的文件，可用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-03T09:43:27.828Z">
+<meta property="og:updated_time" content="2020-05-03T09:48:22.630Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -369,7 +369,47 @@
 <h2 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h2><p>使用WHERE子句对检索结果进行筛选</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price = 2.50;</span><br></pre></td></tr></table></figure>
 
-<p>WHERE 子句操作符:<br>|操作符        |    含义|<br>|:—|:—|<br>|’=’         |    “等于’|<br>|’&lt;&gt;’        |    “不等于”|<br>|’!=’        |    “不等于”|<br>|’&lt;’        |    “小于”|<br>|’&lt;=’        |    “小于等于”|<br>|’&gt;’        |    “大于”|<br>|’&gt;=’        |    “大于等于”|<br>|’BETWEEN’    |    “在指定的两个值之间”|</p>
+<p>WHERE 子句操作符:</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作符</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">‘=’</td>
+<td align="left">“等于’</td>
+</tr>
+<tr>
+<td align="left">‘&lt;&gt;’</td>
+<td align="left">“不等于”</td>
+</tr>
+<tr>
+<td align="left">‘!=’</td>
+<td align="left">“不等于”</td>
+</tr>
+<tr>
+<td align="left">‘&lt;’</td>
+<td align="left">“小于”</td>
+</tr>
+<tr>
+<td align="left">‘&lt;=’</td>
+<td align="left">“小于等于”</td>
+</tr>
+<tr>
+<td align="left">‘&gt;’</td>
+<td align="left">“大于”</td>
+</tr>
+<tr>
+<td align="left">‘&gt;=’</td>
+<td align="left">“大于等于”</td>
+</tr>
+<tr>
+<td align="left">‘BETWEEN’</td>
+<td align="left">“在指定的两个值之间”</td>
+</tr>
+</tbody></table>
 <p><em>MySQL执行匹配时默认不区分大小写,BETWEEN匹配时包括所指定的值</em><br>BETWEEN 用法:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price BETWEEN 5 AND 10;</span><br></pre></td></tr></table></figure>
 <p>空值检查</p>
