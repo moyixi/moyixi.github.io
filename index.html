@@ -238,6 +238,435 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/MySQL%E7%9A%84SubString%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/03/MySQL%E7%9A%84SubString%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" itemprop="url">MySQL的SubString函数用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T17:15:19+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/" itemprop="url">使用数据处理函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T16:48:52+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h2><p>RTrim()、Trim()、LTrim()处理空格;<br>函数|说明<br>Upper() |将串转换为大写。<br>Lower() |将串转换为小写<br>Left() |返回串左边的字符<br>Right() |返回串右边的字符<br>Length() |返回串的长度<br>Locate() |找出串的一个子串<br>SubString()| 返回子串的字符<br>Soundex() |返回串的SOUNDEX值</p>
+<p><em>SOUNDEX 是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。SOUNDEX考虑了类似的发音字符和音节，使得能对串进行发音比较而不是字母比较。虽然SOUNDEX 不是SQL概念，但MySQL（就像多数DBMS一样）都提供对SOUNDEX 的支持</em></p>
+<h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><p><strong>日期必须为格式yyyy-mm-dd</strong><br>函数|说明<br>AddDate()  |增加一个日期（天、周等）<br>AddTime()  |增加一个时间（时、分等）<br>CurDate()  |返回当前日期<br>CurTime()  |返回当前时间<br>Date()  |返回日期时间的日期部分<br>DateDiff()|  计算两个日期之差<br>Date_Add() | 高度灵活的日期运算函数<br>Date_Format()|  返回一个格式化的日期或时间串<br>Day() | 返回一个日期的天数部分<br>DayOfWeek() | 对于一个日期，返回对应的星期几<br>Hour() | 返回一个时间的小时部分<br>Minute()|  返回一个时间的分钟部分<br>Month()  |返回一个日期的月份部分<br>Now()  |返回当前日期和时间<br>Second()|  返回一个时间的秒部分<br>Time() | 返回一个日期时间的时间部分<br>Year()  |返回一个日期的年份部分<br>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_date = &apos;2005-09-01&apos;;</span><br></pre></td></tr></table></figure>
+<p>进行匹配时，若order_data列包含时间 例如 2005-09-01 11:30:05则会匹配失败。<br>所以要使用 Data()提取列的日期部分即写法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Data(order_date) = &apos;2005-09-01&apos;;</span><br></pre></td></tr></table></figure>
+
+<p>要检索某个日期段之间的内容可使用 BETWEEN 也可使用 WHERE 对Year() Month()加以约束。<br>两种写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Date(order_date) BETWEEN &apos;2005-09-01&apos; AND &apos;2005-09-30&apos;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Year(order_date) = 2005 AND Month(order_date) = 9;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h2><p>函 数  |说 明<br>Abs()  |返回一个数的绝对值<br>Cos()  |返回一个角度的余弦<br>Exp()  |返回一个数的指数值<br>Mod()  |返回除操作的余数<br>Pi()  |返回圆周率<br>Rand() | 返回一个随机数<br>Sin() | 返回一个角度的正弦<br>Sqrt() | 返回一个数的平方根<br>Tan()  |返回一个角度的正切</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/03/%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5/" itemprop="url">'创建计算字段'</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T16:21:02+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>存储在数据库表中的数据一般不是应用程序所需要的格式。下面举几个例子。</p>
+<p>1、如果想在一个字段中既显示公司名，又显示公司的地址，但这两个信息一般包含在不同的表列中。<br>2、城市、州和邮政编码存储在不同的列中（应该这样），但邮件标签打印程序却需要把它们作为一个恰当格式的字段检索出来。<br>3、列数据是大小写混合的，但报表程序需要把所有数据按大写表示出来。<br>4、物品订单表存储物品的价格和数量，但不需要存储每个物品的总价格（用价格乘以数量即可）。为打印发票，需要物品的总价格。<br>5、需要根据表数据进行总数、平均数计算或其他计算</p>
+<p>在上述每个例子中，存储在表中的数据都不是应用程序所需要的。我们需要直接从数据库中检索出转换、计算或格式化过的数据；而不是检索出数据，然后再在客户机应用程序或报告程序中重新格式化。计算字段并不实际存在于数据库表中。计算字段是运行时在 SELECT 语句内创建的。</p>
+<p><strong>Concat</strong><br>使用Concat()对列进行拼接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(vend_name,&apos;(&apos;,vend_country,&apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
+<p><strong>RTrim</strong><br>使用RTrim()函数去掉值右边的所有空格，类似的LTrim()去掉值左边的所有空格、Trim()去掉串两边的所有空格。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
+<p><strong>别名</strong><br>在使用Concat()函数对列进行拼接之后，搜索结果的列名即为SELECT 后的内容,可使用 AS关键字赋予它一个别名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;) AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行算数计算</strong><br>可使用的算术操作符 ‘+’ ‘-‘ ‘ * ‘ ‘/‘ 加减乘除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,quantity,item_price</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+<p>使用以下语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT 	prod_id,</span><br><span class="line">		quantity,</span><br><span class="line">		item_price.</span><br><span class="line">		quantity*item_price AS expanded_price</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+<p>创建了一个名为expanded_price结果为quantity * item_price的计算字段</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/MySQL%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,7 +797,7 @@
 <p><strong>匹配特殊字符</strong><br>‘.’、’[‘、’]’、’|’、’ _ ‘等字符的匹配需要使用转义字符双斜杠 ‘//‘’<br>例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name</span><br><span class="line">FROM vendors</span><br><span class="line">WHERE vend_name REGEXP &apos;\\.&apos;</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
 
-<p><strong>匹配字符类</strong><br>[:alnum:] 任意字母和数字同[a-zA-Z0-9]<br>[:alpha:] 任意字母[a-zA-Z]<br>[:upper:] 任意大写字母[A-Z]<br>[:lower:] 任意小写字母[a-z]<br>[:digit:] 任意数字[0-9]<br>[:xdigit:] 任意十六进制数字[a-fA-F0-9]<br>[:print:] 任意可打印字符<br>[:graph:] 与[:print:]相同，但不包括空格<br>[:cntrl:] ASCII控制字符ASCII 0到31和127<br>[:punct:] 不在[:alnum:] 又不在 [:cntrl:]中的任意字符<br>[:blank:] 空格和制表[\t]<br>[:space:] 包括空格在内的任何空白字符[\f\n\r\t\v]</p>
+<p><strong>匹配字符类</strong><br>类|说明<br>[:alnum:]| 任意字母和数字同[a-zA-Z0-9]<br>[:alpha:] |任意字母[a-zA-Z]<br>[:upper:] |任意大写字母[A-Z]<br>[:lower:] |任意小写字母[a-z]<br>[:digit:] |任意数字[0-9]<br>[:xdigit:] |任意十六进制数字[a-fA-F0-9]<br>[:print:] |任意可打印字符<br>[:graph:] |与[:print:]相同，但不包括空格<br>[:cntrl:] |ASCII控制字符ASCII 0到31和127<br>[:punct:] |不在[:alnum:] 又不在 [:cntrl:]中的任意字符<br>[:blank:] |空格和制表[\t]<br>[:space:] |包括空格在内的任何空白字符[\f\n\r\t\v]</p>
 <p><strong>匹配多个实例</strong><br>重复元字符用于表示正则表达式匹配项的出现次数</p>
 <ul>
 <li>0个或多个匹配</li>
@@ -564,7 +993,7 @@
 <h2 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h2><p>使用WHERE子句对检索结果进行筛选</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price = 2.50;</span><br></pre></td></tr></table></figure>
 
-<p>WHERE 子句操作符:<br>操作符            含义<br>‘=’         :    “等于’<br>‘&lt;&gt;’        :    “不等于”<br>‘!=’        :    “不等于”<br>‘&lt;’            :    “小于”<br>‘&lt;=’        :    “小于等于”<br>‘&gt;’            :    “大于”<br>‘&gt;=’        :    “大于等于”<br>‘BETWEEN    :    “在指定的两个值之间”</p>
+<p>WHERE 子句操作符:<br>操作符        |    含义<br>‘=’         |    “等于’<br>‘&lt;&gt;’        |    “不等于”<br>‘!=’        |    “不等于”<br>‘&lt;’            |    “小于”<br>‘&lt;=’        |    “小于等于”<br>‘&gt;’            |    “大于”<br>‘&gt;=’        |    “大于等于”<br>‘BETWEEN’    |    “在指定的两个值之间”</p>
 <p><em>MySQL执行匹配时默认不区分大小写,BETWEEN匹配时包括所指定的值</em><br>BETWEEN 用法:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price BETWEEN 5 AND 10;</span><br></pre></td></tr></table></figure>
 <p>空值检查</p>
@@ -1464,577 +1893,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" itemprop="url">Markdown写作基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T15:09:30+08:00">
-                2020-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index">
-                    <span itemprop="name">工具使用</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、 普通文本 直接输入<br>例： 普通文本</p>
-<p>2、标题 两种方法 a、#加空格加内容，多级标题就用多个# b、标题下用多个 = [一级标题]或多个 - [二级标题]</p>
-<h1 id="标题"><a href="#标题" class="headerlink" title="标题 "></a>标题 </h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p>3、斜体和粗体(前后加 * 一个是斜体，两个是粗体，三个是粗斜体，星号和内容之间不可加空格)</p>
-<p><em>斜体</em><br><strong>粗体</strong><br><strong><em>粗斜体</em></strong></p>
-<p>4、链接和图片的插入、空格后的英文引号里的内容为鼠标悬停时的title</p>
-<p>链接插入的几种方法：中括号加小括号 或者直接尖括号内输入网址<br>a、<br><a href="https://www.bilibili.com" target="_blank" rel="noopener">哔哩哔哩</a><br><a href="https://www.bilibili.com" target="_blank" rel="noopener" title="bilibili">哔哩哔哩</a><br>b、<br><a href="https://www.bilibili.com" target="_blank" rel="noopener">https://www.bilibili.com</a></p>
-<p>图片插入方法:感叹号加中括号加小括号<br>网络图片：<br><img src="https://p0.ssl.qhimg.com/t010981b15897665b3d.webp" alt="这是网络图片名称"></p>
-<p>本地图片：本地图片也区分为相对位置绝对位置略过不表<br><img src="../../pic/%E6%99%9A%E5%AA%9A.jpg" alt="这是本地的图片" title="这是图片title"></p>
-<p>5、脚注(脚注id必须唯一)<br>我需要一个脚注<a href="我是你的脚注">^er</a></p>
-<p>我也需要一个脚注[^12306]<br>[^12306]:我是第二个脚注</p>
-<p>6、引用段落</p>
-<blockquote>
-<p>第一层引用</p>
-<blockquote>
-<p>第二层引用</p>
-<blockquote>
-<p>第三层引用</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<p>7、代码块儿<br><code>System.out.println(Hello World)</code></p>
-<p>代码区：连打四个空格或 Tab<br>    System.out.println(Hello World)</p>
-<pre><code>System.out.println(Hello World)</code></pre><p>8、下划线：三个* 或三个- 或三个_</p>
-<hr>
-<hr>
-<hr>
-<p>删除线：文字前后加两个~<br><del>被删除了</del></p>
-<p>9、无序列表 在前面加上 * 或- 或+</p>
-<ul>
-<li>111</li>
-</ul>
-<ul>
-<li>222</li>
-</ul>
-<ul>
-<li>333<br>有序列表 数字 点儿[.] 空格</li>
-</ul>
-<p>1.<br>2. </p>
-<p>多级列表</p>
-<ul>
-<li>一级 <ul>
-<li>二级 </li>
-<li>三级 </li>
-</ul>
-</li>
-</ul>
-<p>10、表格<br>列与列与用 | 分开 ,第二行 多个- 加前后的 : 表明对齐方式 :在左左对齐，在右右对齐，左右都有居中</p>
-<table>
-<thead>
-<tr>
-<th align="center">表格</th>
-<th align="left">表格</th>
-<th align="right">表格</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">一</td>
-<td align="left">二</td>
-<td align="right">三</td>
-</tr>
-<tr>
-<td align="center">四</td>
-<td align="left">五</td>
-<td align="right">六</td>
-</tr>
-<tr>
-<td align="center">七</td>
-<td align="left">八</td>
-<td align="right">九</td>
-</tr>
-</tbody></table>
-<p>11、排版:使用html<br>文字中输入回车只是空格</p>
-<p>111<br>222</p>
-<p>两个空格后再输入回车才是换行<br>111<br>222</p>
-<p>段前首行缩进 一个、半个、四分之一字符//&emsp;、&ensp;、&nbsp;<br>一二三<br>&emsp; 四五六<br>&ensp; 七八九<br>&nbsp; 十沟圈</p>
-<p>居中使用//<div align=center> </div></p>
-<div align=center>居中</div>
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" itemprop="url">字典树Trie</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T15:09:30+08:00">
-                2020-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>字典树、前缀树、Trie 用于判断字符串是否存在或是否具有某种字符串前缀</p>
-<p>实现前缀树：<br>插入、查找、查找前缀功能</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	Node[] childs = <span class="keyword">new</span> Node[<span class="number">26</span>];</span><br><span class="line">	<span class="keyword">boolean</span> isWord;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Node root = <span class="keyword">new</span> Node();</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">indexForChar</span><span class="params">(<span class="keyword">char</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> c - <span class="string">'a'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	insert(word,root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word,Node node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">if</span>(word.length == <span class="number">0</span>)&#123;</span><br><span class="line">		node.isWord == <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> index = indexForChar(word.charAt(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">if</span>(node.childs[index] == <span class="keyword">null</span>)&#123;</span><br><span class="line">		node.childs[index] = <span class="keyword">new</span> Node();</span><br><span class="line">	&#125;</span><br><span class="line">	insert(word.substring(<span class="number">1</span>),node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> search(word,root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word,Node node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(word.length()==<span class="number">0</span>) <span class="keyword">return</span> node.isWord;</span><br><span class="line">	<span class="keyword">int</span> index = indexForChar(word.charAt(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">return</span> search(word.substring(<span class="number">1</span>),node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> startWith(prefix, root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">startWith</span><span class="params">(String prefix, Node node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (prefix.length() == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">int</span> index = indexForChar(prefix.charAt(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">return</span> startWith(prefix.substring(<span class="number">1</span>), node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" itemprop="url">二叉查找树</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T15:09:30+08:00">
-                2020-04-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二叉查找树(BST)：根结点大于等于左子树所有节点，小于等于右子树所有节点.<br>特点：中序遍历有序(由小到大)，那么按右 中 左 方式的遍历即由大到小的有序</p>
-<h2 id="修建二叉查找树"><a href="#修建二叉查找树" class="headerlink" title="修建二叉查找树"></a>修建二叉查找树</h2><p>给定一个二叉查找树和左右边界值，修剪二叉查找树，只保留边界值之内的数字。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">trimBST</span><span class="params">(TreeNode root , <span class="keyword">int</span> L ,<span class="keyword">int</span> R)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">if</span>(root.val &lt; L) <span class="keyword">return</span> trimBST(root.right,L,R);</span><br><span class="line">	<span class="comment">//若当前root值小于左边界，则左子树可被抛弃，问题等同于修剪以root.right为根结点的子树</span></span><br><span class="line">	<span class="keyword">if</span>(root.val &gt; R) <span class="keyword">return</span> trimBST(root.left,L,R);</span><br><span class="line">	<span class="comment">//若当前root值大于右边界，则右子树可被抛弃，问题等同于修剪以root.left为根结点的子树</span></span><br><span class="line">	root.left = trimBST(root.left,L,R);</span><br><span class="line">	root.right = trimBST(root.right,L,R);</span><br><span class="line">	<span class="comment">//经过上面两部判断后，root值都在L,R的范围之内，可将问题递归至左右结点。</span></span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="寻找二叉查找树由小到大第k个元素"><a href="#寻找二叉查找树由小到大第k个元素" class="headerlink" title="寻找二叉查找树由小到大第k个元素"></a>寻找二叉查找树由小到大第k个元素</h2><p>因为二叉查找树中序遍历有序，所以中序遍历到第k个即可</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> val;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode root , <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	inOrder(root, k);</span><br><span class="line">	<span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//类比于普通情况下的中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	dfs(root.left);</span><br><span class="line">	visit(root);</span><br><span class="line">	dfs(root.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node,<span class="keyword">int</span> k)</span></span>&#123;<span class="comment">//中序遍历找到第k个元素的过程</span></span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	inOrder(node.left,k);</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">	cnt++;</span><br><span class="line">	<span class="keyword">if</span>(cnt == k)&#123;</span><br><span class="line">		val = node.val;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//上面这一坨就是visit(root);讲的故事</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">	inOrder(node.right,k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="寻找二叉查找树由小到大第k个元素-递归解法"><a href="#寻找二叉查找树由小到大第k个元素-递归解法" class="headerlink" title="寻找二叉查找树由小到大第k个元素,递归解法"></a>寻找二叉查找树由小到大第k个元素,递归解法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// count 函数计算以root为根节点的二叉树上有多少个节点。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">count</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span> + count(root.left)+count(root.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//若以root.left 为根节点的二叉树上有n个结点则 root 是第 n+1个节点。</span></span><br><span class="line"><span class="comment">//那么进入此题判断逻辑，若 root.left 有k-1个节点，则root为所求的第k个节点。</span></span><br><span class="line"><span class="comment">//若root.left上的节点比k-1多，则抛弃右子树</span></span><br><span class="line"><span class="comment">//若root.left上的节点比k-1少，则抛弃左子树，并减去左子树上的节点个数和root节点，在右子树上继续进行本题。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode root , <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> leftcount = count(root.left);</span><br><span class="line">	<span class="keyword">if</span>(leftcount == k - <span class="number">1</span>) <span class="keyword">return</span> root.val;</span><br><span class="line">	<span class="keyword">if</span>(leftcount  &gt; k - <span class="number">1</span>) <span class="keyword">return</span> kthSmallest(root.left , k);</span><br><span class="line">	<span class="keyword">return</span> kthSmallset(root.right , k - leftcount - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="把二叉查找树每个节点的值都加上比它大的节点的值。"><a href="#把二叉查找树每个节点的值都加上比它大的节点的值。" class="headerlink" title="把二叉查找树每个节点的值都加上比它大的节点的值。"></a>把二叉查找树每个节点的值都加上比它大的节点的值。</h2><p>二叉查找树节点值 左 &lt; 中 &lt; 右<br>对于整棵二叉查找树，从大到小排序之后，从 1 到 n,第x个数 需要加上的值 是它前面所有数的和,即0不变，1=0+1 , 2=0+1+2 , 3=0+1+2+3。<br>二叉查找树按照 左 中 右遍历是从小到大,按照 右 中 左遍历是从大到小。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">convertBST</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	traver(root);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">traver</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	traver(node.right);</span><br><span class="line">	sum += node.val;</span><br><span class="line">	node.val = sum;</span><br><span class="line">	traver(node.left);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="二叉树查找树中两个节点的最近公共祖先"><a href="#二叉树查找树中两个节点的最近公共祖先" class="headerlink" title="二叉树查找树中两个节点的最近公共祖先"></a>二叉树查找树中两个节点的最近公共祖先</h2><p>两个节点 p q，值分别为 p.val q.val<br>若当前节点root的值在root.val在p q值之间，即root为p q的公共祖先<br>若root的值比p、q的值都大，则p、q的祖先在root 的左子树上<br>若root的值比p、的值都小，则p、q的祖先在root 的右子树上</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root , TreeNode p , TreeNode q)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root.val &gt; p.val &amp;&amp; root.val &gt; q.val) <span class="keyword">return</span> lowestCommonAncestor(root.left , p , q);</span><br><span class="line">	<span class="keyword">if</span>(root.val &lt; p.val &amp;&amp; root.val &lt; q.val) <span class="keyword">return</span> lowestCommonAncestor(root.right , p , q);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="二叉树中两个两个节点的最低公共祖先"><a href="#二叉树中两个两个节点的最低公共祖先" class="headerlink" title="二叉树中两个两个节点的最低公共祖先"></a>二叉树中两个两个节点的最低公共祖先</h2><p>对于p、q两个节点，从根节点root开始遍历，若root等于p、q中的某个，则其为公共祖先。否则分别递归左右子树，若一个节点在左子树上一个节点在右子树上<br>则root为公共结点，若两个节点都在左子树上，则最低公共祖先在左子树上，右子树同理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root , TreeNode p , TreeNode q)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span> || root == p || root == q) <span class="keyword">return</span> root;</span><br><span class="line">	TreeNode left = lowestCommonAncestor(root.left , p , q);</span><br><span class="line">	TreeNode right = lowestCommonAncestor(root.right , p , q);</span><br><span class="line">	<span class="comment">//以下内容也可写为三目运算符</span></span><br><span class="line">	<span class="keyword">if</span>(left!=<span class="keyword">null</span>&amp;&amp;right!=<span class="keyword">null</span>) <span class="keyword">return</span> root;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(left!=<span class="keyword">null</span>) <span class="keyword">return</span> left;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(right!=<span class="keyword">null</span>) <span class="keyword">return</span> right;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="comment">//以上内容也可写为三目运算符:</span></span><br><span class="line">	<span class="keyword">return</span> left == <span class="keyword">null</span> ? right : right == <span class="keyword">null</span>? left : root;</span><br><span class="line">	<span class="comment">//left为null 时返回right,不为空时判断right是否为null, right为null则返回left 否则返回root;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="将有序数组变为二叉查找树"><a href="#将有序数组变为二叉查找树" class="headerlink" title="将有序数组变为二叉查找树"></a>将有序数组变为二叉查找树</h2><p>把数组中点看做根，讲数组分为左右子树，再对左右子树做同样操作,类似二分查找。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">sortedArraytoBST</span><span class="params">(<span class="keyword">int</span> [] num)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(num == <span class="keyword">null</span>|| num.length == <span class="number">0</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">return</span> help(num , <span class="number">0</span> , num.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> TreeNode <span class="title">helper</span><span class="params">(<span class="keyword">int</span> []num , <span class="keyword">int</span> l , <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l&gt;r) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</span><br><span class="line">	TreeNode root = <span class="keyword">new</span> TreeNode(num[m]);</span><br><span class="line">	root.left = helper(num, l , m-<span class="number">1</span>);</span><br><span class="line">	root.right = helper(num, m+<span class="number">1</span> , r);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="根据有序链表构造平衡的二叉查找树"><a href="#根据有序链表构造平衡的二叉查找树" class="headerlink" title="根据有序链表构造平衡的二叉查找树"></a>根据有序链表构造平衡的二叉查找树</h2><p>取巧解法：先把有序链表转换为有序数组，问题就变成了有序数组构造二叉查找树问题即(6)<br>普通解法：定义函数，使用快慢指针，可以找到链表的中点。有了这个函数就可以和之前的有序数组构造二叉查找树问题类似了。<br>快慢指针找链表的中点有两种写法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ListNode fast = head;</span><br><span class="line">ListNode slow = head;</span><br><span class="line"><span class="keyword">while</span>(fast!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	fast = fast.next;</span><br><span class="line">	slow = slow.next;</span><br><span class="line">	<span class="keyword">if</span>(fast==<span class="keyword">null</span>)<span class="keyword">break</span>;</span><br><span class="line">	fast = fast.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>//上面这种写法偶数个节点时slow指向中点右侧，奇数个节点时slow指向中间节点的下一个节点<br>例： 1 2 3 4 5 6<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:null<br>e: 循环退出</p>
-<p>例： 1 2 3 4 5 6 7<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:7<br>e: fast:null slow:5  fast==null break;循环退出</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ListNode slow = head;</span><br><span class="line">ListNode fast = head.next;</span><br><span class="line"><span class="keyword">while</span>(fast!=<span class="keyword">null</span> &amp;&amp; fast.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	slow = slow.next;</span><br><span class="line">	fast = fast.next.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>//上面这种写法偶数个节点时slow指向中点左侧，奇数个节点时slow指向中间节点<br>例： 1 2 3 4 5 6<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: fast.next==null,循环停止</p>
-<p>例： 1 2 3 4 5 6 7<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: slow:4 fast:null<br>e: fast==null,循环停止</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ListNode <span class="title">getPreMid</span><span class="params">(ListNode node)</span></span>&#123;</span><br><span class="line">	ListNode slow = head;</span><br><span class="line">	ListNode fast = head.next;</span><br><span class="line">	ListNode pre = head;</span><br><span class="line">	<span class="keyword">while</span>(fast!=<span class="keyword">null</span> &amp;&amp; fast.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">		pre = slow;</span><br><span class="line">		slow = slow.next;</span><br><span class="line">		fast = fast.next.next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> pre;<span class="comment">//本题所找到的pre 是slow节点的前一个节点,以便后续操作时同时取到中点和中点前一个节点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">sortedListToBST</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(head == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">if</span>(head.next == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">new</span> TreeNode(head.val);<span class="comment">//若链表只有一个节点，则直接将其变为二叉树节点即可。</span></span><br><span class="line">	ListNode preMid = getPreMid(head);</span><br><span class="line">	ListNode mid = preMid.next;</span><br><span class="line">	preMid.next = <span class="keyword">null</span>;<span class="comment">//调用getPreMid函数获得了有序链表的中点和中点的前一个节点后，将链表从中点断开，问题变为两个链表的子问题，</span></span><br><span class="line">					   <span class="comment">//左边子问题的初始节点仍然为head,将mid转化为二叉树节点,右边子问题的初始节点为mid.next</span></span><br><span class="line">	TreeNode t = <span class="keyword">new</span> TreeNode(mid.val);</span><br><span class="line">	t.left = sortedListToBST(head);</span><br><span class="line">	t.right = sortedListToBST(mid.next);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值"><a href="#判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值" class="headerlink" title="判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值"></a>判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值</h2><p>twosum问题的变体，解题方法是在有序数组中使用双指针，二叉查找树中序遍历即可变为有序数组</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node , List&lt;Integer&gt; nums)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)<span class="keyword">return</span>;</span><br><span class="line">	inOrder(root.left,nums);</span><br><span class="line">	nums.add(root.val);</span><br><span class="line">	inOrder(root.right,nums);</span><br><span class="line">&#125;<span class="comment">//中序遍历把二叉查找树转为有序数组并存于nums中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findTarget</span><span class="params">(TreeNode root, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	inOrder(root , nums);</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span> , j = nums.size() - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i &lt; j)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums.get(i)+nums.get(j)==k) &#123;<span class="keyword">return</span> <span class="keyword">true</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nums.get(i)+nums.get(j)&gt;k)&#123;</span><br><span class="line">		j--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="在二叉查找树中查找两个节点之差的最小绝对值"><a href="#在二叉查找树中查找两个节点之差的最小绝对值" class="headerlink" title="在二叉查找树中查找两个节点之差的最小绝对值"></a>在二叉查找树中查找两个节点之差的最小绝对值</h2><p>中序遍历，遍历时取某一节点和其前一个节点，计算差值，取最小。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> minDiff = Integer.MAX_VALUE;</span><br><span class="line"><span class="keyword">private</span> TreeNode preNode = <span class="keyword">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">	inOrder(node.left);</span><br><span class="line">	<span class="keyword">if</span>(preNode != <span class="keyword">null</span>) minDiff = Math.min(minDiff, node.val - preNode.val);</span><br><span class="line">	preNode = node;</span><br><span class="line">	inOrder(node.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMinimumDifference</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	inOrder(root);</span><br><span class="line">	<span class="keyword">return</span> minDiff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="寻找二叉查找树中出现次数最多的值"><a href="#寻找二叉查找树中出现次数最多的值" class="headerlink" title="寻找二叉查找树中出现次数最多的值"></a>寻找二叉查找树中出现次数最多的值</h2><pre><code class="java"><span class="keyword">private</span> <span class="keyword">int</span> curCnt = <span class="number">1</span>;
-<span class="keyword">private</span> <span class="keyword">int</span> MaxCnt = <span class="number">1</span>;
-<span class="keyword">private</span> TreeNode preNode = <span class="keyword">null</span>;
-<span class="keyword">public</span> <span class="keyword">int</span> [] findMode(TreeNode root){<span class="comment">//中序遍历得到结果存入maxCntNums中再将其转化为数组ret</span>
-    List&lt;Integer&gt; maxCntNums = <span class="keyword">new</span> ArrayList&lt;&gt;();
-    inOrder(root,maxCntNums);
-    <span class="keyword">int</span> [] ret = <span class="keyword">new</span> <span class="keyword">int</span>[maxCntNums.size()];
-    <span class="keyword">int</span> idx = <span class="number">0</span>;
-    <span class="keyword">for</span>(<span class="keyword">int</span> num: maxCntNums){
-    ret[idx++] = num;
-    }
-    <span class="keyword">return</span> ret;
-}
-<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node , List&lt;Integer&gt; nums)</span></span>{
-    <span class="keyword">if</span>(node ==<span class="keyword">null</span> )<span class="keyword">return</span>;
-    inOrder(node.left, nums);
-<span class="comment">//累计相同数字出现次数</span>
-    <span class="keyword">if</span>(preNode != <span class="keyword">null</span>){
-        <span class="keyword">if</span>(preNode.val==node.val) curCnt++;
-        <span class="keyword">else</span> curCnt = <span class="number">1</span>;
-    }
-<span class="comment">//若当前数字出现次数大于最大出现次数，则更新</span>
-    <span class="keyword">if</span>(curCnt &gt; maxCnt){
-        maxCnt = curCnt;
-        nums.clear();
-        nums.add(node.val);
-    }<span class="keyword">else</span> <span class="keyword">if</span> (curCnt == maxCnt){<span class="comment">//若当前数字出现次数等于最大出现次数，则增加一个众数</span>
-        nums.add(node.val);
-    }
-    preNode = node;
-<span class="comment">//</span>
-    inOrder(node.right,nums);
-}</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2085,7 +1943,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

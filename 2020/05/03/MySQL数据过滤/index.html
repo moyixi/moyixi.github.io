@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="莫一兮的个人博客">
 <meta property="og:description" content="AND操作符和OR操作符123SELECT prod_id,prod_price,prod_nameFROM productsWHERE vend_id = 1003 AND prod_price &amp;lt;=10; 123SELECT prod_name,prod_priceFROM productsWHERE vend_id = 1003 OR prod_price &amp;lt;=10; AND在计">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-03T08:16:46.985Z">
+<meta property="og:updated_time" content="2020-05-03T09:19:34.691Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -366,7 +366,7 @@
 <p><strong>匹配特殊字符</strong><br>‘.’、’[‘、’]’、’|’、’ _ ‘等字符的匹配需要使用转义字符双斜杠 ‘//‘’<br>例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name</span><br><span class="line">FROM vendors</span><br><span class="line">WHERE vend_name REGEXP &apos;\\.&apos;</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
 
-<p><strong>匹配字符类</strong><br>[:alnum:] 任意字母和数字同[a-zA-Z0-9]<br>[:alpha:] 任意字母[a-zA-Z]<br>[:upper:] 任意大写字母[A-Z]<br>[:lower:] 任意小写字母[a-z]<br>[:digit:] 任意数字[0-9]<br>[:xdigit:] 任意十六进制数字[a-fA-F0-9]<br>[:print:] 任意可打印字符<br>[:graph:] 与[:print:]相同，但不包括空格<br>[:cntrl:] ASCII控制字符ASCII 0到31和127<br>[:punct:] 不在[:alnum:] 又不在 [:cntrl:]中的任意字符<br>[:blank:] 空格和制表[\t]<br>[:space:] 包括空格在内的任何空白字符[\f\n\r\t\v]</p>
+<p><strong>匹配字符类</strong><br>类|说明<br>[:alnum:]| 任意字母和数字同[a-zA-Z0-9]<br>[:alpha:] |任意字母[a-zA-Z]<br>[:upper:] |任意大写字母[A-Z]<br>[:lower:] |任意小写字母[a-z]<br>[:digit:] |任意数字[0-9]<br>[:xdigit:] |任意十六进制数字[a-fA-F0-9]<br>[:print:] |任意可打印字符<br>[:graph:] |与[:print:]相同，但不包括空格<br>[:cntrl:] |ASCII控制字符ASCII 0到31和127<br>[:punct:] |不在[:alnum:] 又不在 [:cntrl:]中的任意字符<br>[:blank:] |空格和制表[\t]<br>[:space:] |包括空格在内的任何空白字符[\f\n\r\t\v]</p>
 <p><strong>匹配多个实例</strong><br>重复元字符用于表示正则表达式匹配项的出现次数</p>
 <ul>
 <li>0个或多个匹配</li>
@@ -414,6 +414,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/03/%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5/" rel="prev" title="'创建计算字段'">
+                '创建计算字段' <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -490,7 +494,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
