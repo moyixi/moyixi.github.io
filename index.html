@@ -238,147 +238,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/MySQL%E7%9A%84SubString%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/03/MySQL%E7%9A%84SubString%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" itemprop="url">MySQL的SubString函数用法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T17:15:19+08:00">
-                2020-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -516,6 +375,7 @@
 <td align="left">返回串的SOUNDEX值</td>
 </tr>
 </tbody></table>
+<p>SubString(str,pos):SubString(被截取字段，从第几位开始截取)<br>SubString(str,pos,length):SubString(被截取字段，从第几位开始截取，截取长度)<br><em>若pos为负数，则是从后往前截取</em></p>
 <p><em>SOUNDEX 是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。SOUNDEX考虑了类似的发音字符和音节，使得能对串进行发音比较而不是字母比较。虽然SOUNDEX 不是SQL概念，但MySQL（就像多数DBMS一样）都提供对SOUNDEX 的支持</em></p>
 <h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><p><strong>日期必须为格式yyyy-mm-dd</strong></p>
 <table>
@@ -648,6 +508,137 @@
 <td align="left">返回一个角度的正切</td>
 </tr>
 </tbody></table>
+<h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">AVG()</td>
+<td align="left">返回某列的平均值</td>
+</tr>
+<tr>
+<td align="left">COUNT()</td>
+<td align="left">返回某列的行数</td>
+</tr>
+<tr>
+<td align="left">MAX()</td>
+<td align="left">返回某列的最大值</td>
+</tr>
+<tr>
+<td align="left">MIN()</td>
+<td align="left">返回某列的最小值</td>
+</tr>
+<tr>
+<td align="left">SUM()</td>
+<td align="left">返回某列值之和</td>
+</tr>
+</tbody></table>
+<h2 id="创建分组"><a href="#创建分组" class="headerlink" title="创建分组"></a>创建分组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003;</span><br></pre></td></tr></table></figure>
+<p>上述语句计算vend_id = 1003的产品数，若要搜索出所有vend_id的产品数可以使用GROUP BY子句创建分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_id , COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">GROUP BY vend_id;</span><br></pre></td></tr></table></figure>
+<p>按vend_id排序并分组数据，对每个vend_id计算num_prods一次</p>
+<p><em>GROUP BY 子句可以包含任意数目的列。这使得能对分组进行嵌套，为数据分组提供更细致的控制。<br>如果在 GROUP BY 子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算（所以不能从个别的列取回数据）。<br>GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在 SELECT 中使用表达式，则必须在GROUP BY 子句中指定相同的表达式。不能使用别名。<br>除聚集计算语句外， SELECT 语句中的每个列都必须在 GROUP BY 子句中给出。<br>如果分组列中具有 NULL 值，则 NULL 将作为一个分组返回。如果列中有多行 NULL 值，它们将分为一组。<br>GROUP BY 子句必须出现在 WHERE 子句之后， ORDER BY 子句之前。</em></p>
+<p><strong>HAVING 子句过滤分组</strong><br>非常类似于WHERE,但此时WHERE不起作用，因为WHERE过滤指的是行而不是分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id, COUNT(*) AS orders </span><br><span class="line">FROM orders</span><br><span class="line">GROUP BY cust_id</span><br><span class="line">HAVING COUNT(*) &gt;=2;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><table>
+<thead>
+<tr>
+<th align="left">子句</th>
+<th align="left">说明</th>
+<th align="left">是否必须使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SELECT</td>
+<td align="left">要返回的列或表达式</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="left">FROM</td>
+<td align="left">从中检索数据的表</td>
+<td align="left">仅在从表选择数据时使用</td>
+</tr>
+<tr>
+<td align="left">WHERE</td>
+<td align="left">行级过滤</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">GROUP BY</td>
+<td align="left">分组说明</td>
+<td align="left">仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td align="left">HAVING</td>
+<td align="left">组级过滤</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">ORDER BY</td>
+<td align="left">输出排序顺序</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">LIMIT</td>
+<td align="left">要检索的行数</td>
+<td align="left">否</td>
+</tr>
+</tbody></table>
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p>子查询：嵌套在其他查询中的查询</p>
+<p>例如：要列出订购物品 TNT2 的所有客户</p>
+<p>(1) 检索包含物品 TNT2 的所有订单的编号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT order_name </span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE prod_id = &apos;TNT2&apos;;</span><br></pre></td></tr></table></figure>
+<p>结果：<br>order_num<br>20005<br>20007<br>(2) 检索具有前一步骤列出的订单编号的所有客户的ID。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_num in (20005,20007);</span><br></pre></td></tr></table></figure>
+<p>结果：<br>cust_id<br>10001<br>10004</p>
+<p>(3) 检索前一步骤返回的所有客户ID的客户信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(10001,10004);</span><br></pre></td></tr></table></figure>
+<p>使用子查询嵌套：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(SELECT cust_id</span><br><span class="line">				FROM orders</span><br><span class="line">				WHERE order_num IN (SELECT order_name </span><br><span class="line">									FROM orderitems</span><br><span class="line">									WHERE prod_id = &apos;TNT2&apos;));</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           
         
@@ -794,6 +785,16 @@
 <p>在上述每个例子中，存储在表中的数据都不是应用程序所需要的。我们需要直接从数据库中检索出转换、计算或格式化过的数据；而不是检索出数据，然后再在客户机应用程序或报告程序中重新格式化。计算字段并不实际存在于数据库表中。计算字段是运行时在 SELECT 语句内创建的。</p>
 <p><strong>Concat</strong><br>使用Concat()对列进行拼接</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(vend_name,&apos;(&apos;,vend_country,&apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
+<p><em>concat函数在连接字符串的时候，只要其中一个是NULL,那么将返回NULL</em></p>
+<p>Concat_ws() : concat with separator 以分隔符添加<br>Concat_ws(separator , str1,str2,…);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat_ws(&apos;,&apos;,&apos;11&apos;,&apos;22&apos;,&apos;33&apos;);</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">11,22,33</span><br></pre></td></tr></table></figure>
+<p><em>分隔符可以是一个字符也可以是其他参数若分隔符为NULL，则结果为NULL</em></p>
+<p>group_concat(): 以排序字段分组，把要连接的字段分在一行，<br>group_concat([DISTINCT] 要连接的字段 [Order BY ASC/DESC 排序字段] [Separator ‘分隔符’])</p>
+<p>repeat()函数：重复<br>select repeat(‘ab’,2);<br>将ab重复2次</p>
+<p>SubString_index(str,delim,count)<br>SubString_index(被截取字段,关键字,关键字出现的字数)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT substring_index(&quot;a.b.c.d.e.f.g.h&quot;,&quot;.&quot;,3);</span><br><span class="line">结果：</span><br><span class="line">a.b.c</span><br></pre></td></tr></table></figure>
+
+
 <p><strong>RTrim</strong><br>使用RTrim()函数去掉值右边的所有空格，类似的LTrim()去掉值左边的所有空格、Trim()去掉串两边的所有空格。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
 <p><strong>别名</strong><br>在使用Concat()函数对列进行拼接之后，搜索结果的列名即为SELECT 后的内容,可使用 AS关键字赋予它一个别名</p>
@@ -2227,6 +2228,225 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/Markdown%E5%86%99%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/25/Markdown%E5%86%99%E4%BD%9C/" itemprop="url">Markdown写作基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T15:09:30+08:00">
+                2020-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index">
+                    <span itemprop="name">工具使用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1、 普通文本 直接输入<br>例： 普通文本</p>
+<p>2、标题 两种方法 a、#加空格加内容，多级标题就用多个# b、标题下用多个 = [一级标题]或多个 - [二级标题]</p>
+<h1 id="标题"><a href="#标题" class="headerlink" title="标题 "></a>标题 </h1><h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><p>3、斜体和粗体(前后加 * 一个是斜体，两个是粗体，三个是粗斜体，星号和内容之间不可加空格)</p>
+<p><em>斜体</em><br><strong>粗体</strong><br><strong><em>粗斜体</em></strong></p>
+<p>4、链接和图片的插入、空格后的英文引号里的内容为鼠标悬停时的title</p>
+<p>链接插入的几种方法：中括号加小括号 或者直接尖括号内输入网址<br>a、<br><a href="https://www.bilibili.com" target="_blank" rel="noopener">哔哩哔哩</a><br><a href="https://www.bilibili.com" target="_blank" rel="noopener" title="bilibili">哔哩哔哩</a><br>b、<br><a href="https://www.bilibili.com" target="_blank" rel="noopener">https://www.bilibili.com</a></p>
+<p>图片插入方法:感叹号加中括号加小括号<br>网络图片：<br><img src="https://p0.ssl.qhimg.com/t010981b15897665b3d.webp" alt="这是网络图片名称"></p>
+<p>本地图片：本地图片也区分为相对位置绝对位置略过不表<br><img src="../../pic/%E6%99%9A%E5%AA%9A.jpg" alt="这是本地的图片" title="这是图片title"></p>
+<p>5、脚注(脚注id必须唯一)<br>我需要一个脚注<a href="我是你的脚注">^er</a></p>
+<p>我也需要一个脚注[^12306]<br>[^12306]:我是第二个脚注</p>
+<p>6、引用段落</p>
+<blockquote>
+<p>第一层引用</p>
+<blockquote>
+<p>第二层引用</p>
+<blockquote>
+<p>第三层引用</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>7、代码块儿<br><code>System.out.println(Hello World)</code></p>
+<p>代码区：连打四个空格或 Tab<br>    System.out.println(Hello World)</p>
+<pre><code>System.out.println(Hello World)</code></pre><p>8、下划线：三个* 或三个- 或三个_</p>
+<hr>
+<hr>
+<hr>
+<p>删除线：文字前后加两个~<br><del>被删除了</del></p>
+<p>9、无序列表 在前面加上 * 或- 或+</p>
+<ul>
+<li>111</li>
+</ul>
+<ul>
+<li>222</li>
+</ul>
+<ul>
+<li>333<br>有序列表 数字 点儿[.] 空格</li>
+</ul>
+<p>1.<br>2. </p>
+<p>多级列表</p>
+<ul>
+<li>一级 <ul>
+<li>二级 </li>
+<li>三级 </li>
+</ul>
+</li>
+</ul>
+<p>10、表格<br>列与列与用 | 分开 ,第二行 多个- 加前后的 : 表明对齐方式 :在左左对齐，在右右对齐，左右都有居中</p>
+<table>
+<thead>
+<tr>
+<th align="center">表格</th>
+<th align="left">表格</th>
+<th align="right">表格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一</td>
+<td align="left">二</td>
+<td align="right">三</td>
+</tr>
+<tr>
+<td align="center">四</td>
+<td align="left">五</td>
+<td align="right">六</td>
+</tr>
+<tr>
+<td align="center">七</td>
+<td align="left">八</td>
+<td align="right">九</td>
+</tr>
+</tbody></table>
+<p>11、排版:使用html<br>文字中输入回车只是空格</p>
+<p>111<br>222</p>
+<p>两个空格后再输入回车才是换行<br>111<br>222</p>
+<p>段前首行缩进 一个、半个、四分之一字符//&emsp;、&ensp;、&nbsp;<br>一二三<br>&emsp; 四五六<br>&ensp; 七八九<br>&nbsp; 十沟圈</p>
+<p>居中使用//<div align=center> </div></p>
+<div align=center>居中</div>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -2277,7 +2497,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

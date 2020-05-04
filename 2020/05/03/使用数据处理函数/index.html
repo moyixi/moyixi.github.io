@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="文本处理函数   函数 说明    Trim() 去掉串左右的空格   Upper() 将串转换为大写   Lower() 将串转换为小写   Left() 返回串左边的字符   Right() 返回串右边的字符   Length() 返回串的长度   Locate() 找出串的一个子串   SubString() 返回子串的字符   Soundex() 返回串的SOUNDEX值   SOUNDE">
+<meta name="description" content="文本处理函数   函数 说明    Trim() 去掉串左右的空格   Upper() 将串转换为大写   Lower() 将串转换为小写   Left() 返回串左边的字符   Right() 返回串右边的字符   Length() 返回串的长度   Locate() 找出串的一个子串   SubString() 返回子串的字符   Soundex() 返回串的SOUNDEX值   SubStr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用数据处理函数">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;03&#x2F;%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="文本处理函数   函数 说明    Trim() 去掉串左右的空格   Upper() 将串转换为大写   Lower() 将串转换为小写   Left() 返回串左边的字符   Right() 返回串右边的字符   Length() 返回串的长度   Locate() 找出串的一个子串   SubString() 返回子串的字符   Soundex() 返回串的SOUNDEX值   SOUNDE">
+<meta property="og:description" content="文本处理函数   函数 说明    Trim() 去掉串左右的空格   Upper() 将串转换为大写   Lower() 将串转换为小写   Left() 返回串左边的字符   Right() 返回串右边的字符   Length() 返回串的长度   Locate() 找出串的一个子串   SubString() 返回子串的字符   Soundex() 返回串的SOUNDEX值   SubStr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-03T10:02:11.903Z">
+<meta property="og:updated_time" content="2020-05-04T06:22:01.455Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -373,6 +373,7 @@
 <td align="left">返回串的SOUNDEX值</td>
 </tr>
 </tbody></table>
+<p>SubString(str,pos):SubString(被截取字段，从第几位开始截取)<br>SubString(str,pos,length):SubString(被截取字段，从第几位开始截取，截取长度)<br><em>若pos为负数，则是从后往前截取</em></p>
 <p><em>SOUNDEX 是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。SOUNDEX考虑了类似的发音字符和音节，使得能对串进行发音比较而不是字母比较。虽然SOUNDEX 不是SQL概念，但MySQL（就像多数DBMS一样）都提供对SOUNDEX 的支持</em></p>
 <h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><p><strong>日期必须为格式yyyy-mm-dd</strong></p>
 <table>
@@ -505,6 +506,137 @@
 <td align="left">返回一个角度的正切</td>
 </tr>
 </tbody></table>
+<h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">AVG()</td>
+<td align="left">返回某列的平均值</td>
+</tr>
+<tr>
+<td align="left">COUNT()</td>
+<td align="left">返回某列的行数</td>
+</tr>
+<tr>
+<td align="left">MAX()</td>
+<td align="left">返回某列的最大值</td>
+</tr>
+<tr>
+<td align="left">MIN()</td>
+<td align="left">返回某列的最小值</td>
+</tr>
+<tr>
+<td align="left">SUM()</td>
+<td align="left">返回某列值之和</td>
+</tr>
+</tbody></table>
+<h2 id="创建分组"><a href="#创建分组" class="headerlink" title="创建分组"></a>创建分组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003;</span><br></pre></td></tr></table></figure>
+<p>上述语句计算vend_id = 1003的产品数，若要搜索出所有vend_id的产品数可以使用GROUP BY子句创建分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_id , COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">GROUP BY vend_id;</span><br></pre></td></tr></table></figure>
+<p>按vend_id排序并分组数据，对每个vend_id计算num_prods一次</p>
+<p><em>GROUP BY 子句可以包含任意数目的列。这使得能对分组进行嵌套，为数据分组提供更细致的控制。<br>如果在 GROUP BY 子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算（所以不能从个别的列取回数据）。<br>GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在 SELECT 中使用表达式，则必须在GROUP BY 子句中指定相同的表达式。不能使用别名。<br>除聚集计算语句外， SELECT 语句中的每个列都必须在 GROUP BY 子句中给出。<br>如果分组列中具有 NULL 值，则 NULL 将作为一个分组返回。如果列中有多行 NULL 值，它们将分为一组。<br>GROUP BY 子句必须出现在 WHERE 子句之后， ORDER BY 子句之前。</em></p>
+<p><strong>HAVING 子句过滤分组</strong><br>非常类似于WHERE,但此时WHERE不起作用，因为WHERE过滤指的是行而不是分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id, COUNT(*) AS orders </span><br><span class="line">FROM orders</span><br><span class="line">GROUP BY cust_id</span><br><span class="line">HAVING COUNT(*) &gt;=2;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><table>
+<thead>
+<tr>
+<th align="left">子句</th>
+<th align="left">说明</th>
+<th align="left">是否必须使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SELECT</td>
+<td align="left">要返回的列或表达式</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="left">FROM</td>
+<td align="left">从中检索数据的表</td>
+<td align="left">仅在从表选择数据时使用</td>
+</tr>
+<tr>
+<td align="left">WHERE</td>
+<td align="left">行级过滤</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">GROUP BY</td>
+<td align="left">分组说明</td>
+<td align="left">仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td align="left">HAVING</td>
+<td align="left">组级过滤</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">ORDER BY</td>
+<td align="left">输出排序顺序</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">LIMIT</td>
+<td align="left">要检索的行数</td>
+<td align="left">否</td>
+</tr>
+</tbody></table>
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p>子查询：嵌套在其他查询中的查询</p>
+<p>例如：要列出订购物品 TNT2 的所有客户</p>
+<p>(1) 检索包含物品 TNT2 的所有订单的编号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT order_name </span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE prod_id = &apos;TNT2&apos;;</span><br></pre></td></tr></table></figure>
+<p>结果：<br>order_num<br>20005<br>20007<br>(2) 检索具有前一步骤列出的订单编号的所有客户的ID。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_num in (20005,20007);</span><br></pre></td></tr></table></figure>
+<p>结果：<br>cust_id<br>10001<br>10004</p>
+<p>(3) 检索前一步骤返回的所有客户ID的客户信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(10001,10004);</span><br></pre></td></tr></table></figure>
+<p>使用子查询嵌套：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(SELECT cust_id</span><br><span class="line">				FROM orders</span><br><span class="line">				WHERE order_num IN (SELECT order_name </span><br><span class="line">									FROM orderitems</span><br><span class="line">									WHERE prod_id = &apos;TNT2&apos;));</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       
     </div>
@@ -538,10 +670,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/05/03/MySQL%E7%9A%84SubString%E5%87%BD%E6%95%B0%E7%94%A8%E6%B3%95/" rel="prev" title="MySQL的SubString函数用法">
-                MySQL的SubString函数用法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -618,7 +746,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -664,7 +792,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文本处理函数"><span class="nav-number">1.</span> <span class="nav-text">文本处理函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日期和时间处理函数"><span class="nav-number">2.</span> <span class="nav-text">日期和时间处理函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值处理函数"><span class="nav-number">3.</span> <span class="nav-text">数值处理函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#文本处理函数"><span class="nav-number">1.</span> <span class="nav-text">文本处理函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日期和时间处理函数"><span class="nav-number">2.</span> <span class="nav-text">日期和时间处理函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数值处理函数"><span class="nav-number">3.</span> <span class="nav-text">数值处理函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚集函数"><span class="nav-number">4.</span> <span class="nav-text">聚集函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建分组"><span class="nav-number">5.</span> <span class="nav-text">创建分组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT子句顺序"><span class="nav-number">6.</span> <span class="nav-text">SELECT子句顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子查询"><span class="nav-number">7.</span> <span class="nav-text">子查询</span></a></li></ol></div>
             
 
           </div>
