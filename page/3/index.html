@@ -238,6 +238,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/myFirstBlog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/12/myFirstBlog/" itemprop="url">多模态论文阅读笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T15:30:02+08:00">
+                2019-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">论文笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>讨论 多模态数据中普遍存在的失配准问题以及模态间的信息缺失问题。<br>数据集：KAIST<br>    CVC-14<br>1、深度卷积神经网络的不同阶段对两个模态的信息进行融合。<br>Multispectral Deep Neural Networks for Pedestrian Detection</p>
+<p>2、通过映射矩阵的作用，使得网络能够在最后一层得到三个特征图，分别对应于两个模态各自的特征以及两个模态的融合特征，旨在充分融合两个模态信息的基础上，保留各自模态的特有信息。<br>Correlated and Individual Multi-Modal Deep Learning for RGB-D Object Recognition</p>
+<p>3、保留两个模态各自的特有信息，基于概率的思想在网络中加入两个模块，其中一个用来输出当前的输入图像对两个模态各自的特征以及融合特征的依赖程度，另一个模块借助上一个模块的输出作为权重，对来自两个模态各自的输出结果以及基于融合特征输出结果进行加权求和，得到最终的判别概率。<br>Unified Multi-spectral Pedestrain Detection Based on Probabilistic Fusion Networks</p>
+<p>4、多模态的迁移学习、域适应</p>
+<p>不同模态图像的信息缺失：体现出互补性和多模态数据引入的必要性。</p>
+<p>5、双模态数据融合问题可以转化为在哪个特征层进行特征融合的问题<br>四种方法分别为:<br>1、在第一块卷积层之后将来自不同模态的特征图进行融合。融合方式为串接后通过1x1的卷积，将串接后的特征图进行融合并降低到原来的维度。<br>2、在第四个卷积块之后融合。<br>3、在第五个卷积块之后融合。<br>4、在第二个全连接层之后进行融合。</p>
+<p>多尺度目标检测<br>1、基于图像金字塔的多尺度目标检测<br>2、基于特征金字塔的多尺度目标检测<br>结合多个卷积层后的特征图，得到一个包含了来自多个卷积层的特征信息的新的特征图。，之后在这个包含多层特征信息的特征图上进行目标检测。<br>直接在多个卷积层后的特征图上进行目标的检测，最终检测结果为全部检测结果的综合。<br>在多模态目标检测网络中加入多尺度处理的步骤<br>将两个模态各自使用的VGG16的第一个、第三个、第五个卷积块后的特征图进行拼接，之后再将两个模态的特征图进行融合。</p>
+<p>多模态数据的互补性验证(对比试验)</p>
+<p>分步训练方法<br>多模态数据存在信息缺失，使用分步的网络训练方法，<br>1、挑出 Valid-T Valid-RGB两个子数据集</p>
+<p>2、使用两个子数据集分别训练两个单模态的检测网络</p>
+<p>3、将第二步得到的两个单模态网络的卷积层参数加载到多模态融合网络之中。</p>
+<p>展望：从网络结构入手，加入特殊模块，使得多模态检测网络对于数据之间的失配准的敏感性降低。<br>通过网络改进或数据集标注方法的调整来实现便捷的端到端的训练方法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -420,7 +573,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
