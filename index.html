@@ -238,6 +238,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/05/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" itemprop="url">卡特兰数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T16:01:37+08:00">
+                2020-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">卡特兰数</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>卡特兰数是常出现在计数问题中的数列。<br>h(n) = h(0) * h(n-1)+h(1) * h(n-2) + … + h(n-1) * h(0) (n&gt;=2)、(h(0) = 1)<br>可化简为<br>h(n) = h(n-1) * (4n-2)(n+1)<br>通项公式 h(n) = C(2n,n)-C(2n,n+1)<br>可以化为 h(n)=C(2n,n)/(n+1)</p>
+<p>前几项为：<br>1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, …<br>在某些算法问题中得到很好的应用。</p>
+<p>卡特兰数增长速度较快，int型无法满足，对于Java可以使用 BigInteger来计算大整数<br>使用化简后的h(n) = h(n-1) * (4n-2)(n+1)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Catalan</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = <span class="number">20</span>;</span><br><span class="line">		BigInteger ans = BigInteger.valueOf(<span class="number">1</span>);</span><br><span class="line">		System.out.println(<span class="string">"1:"</span>+ans.toString());</span><br><span class="line">		BigInteger  four = BigInteger.valueOf(<span class="number">4</span>);</span><br><span class="line">		BigInteger  one = BigInteger.valueOf(<span class="number">1</span>);</span><br><span class="line">		BigInteger  two = BigInteger.valueOf(<span class="number">2</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">			BigInteger bi = BigInteger.valueOf(i);</span><br><span class="line">			ans = ans.multiply(four.multiply(bi).subtract(two)).divide(bi.add(one));</span><br><span class="line">			System.out.println(i+<span class="string">":"</span>+ans.toString());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进出栈序列"><a href="#进出栈序列" class="headerlink" title="进出栈序列"></a>进出栈序列</h2><p>描述：n个元素进栈序列为：1、2、3、4、…、n,有多少种出栈序列。<br>思路：令n个元素进出栈问题的解为f(n),假设最后一个出栈的元素为K,则在K之前，进栈并出栈的元素有K-1个，这是一个 K-1个元素进出栈的子问题。在K之后进栈并出栈的元素有n-K个，这是一个n-K个元素进出栈的子问题。即在第K个元素是最后一个出栈的元素时，问题的解法有f(K-1) * f(n-K)个<br>因为K的取值可以为1,2,3,…,n中的任何一个。即f(n) = f(0) * f(n-1) + f(1) * f(n-2) + … + f(n-1) * f(0)。是一个显然的卡特兰数问题。</p>
+<h2 id="括号序列"><a href="#括号序列" class="headerlink" title="括号序列"></a>括号序列</h2><p>描述：n对括号，求有多少种匹配的括号序列</p>
+<p>左括号视为进栈，右括号视为出栈，和进出栈问题相同。</p>
+<h2 id="满二叉树数量"><a href="#满二叉树数量" class="headerlink" title="满二叉树数量"></a>满二叉树数量</h2><p>描述：n+1个节点能构成多少个不同的满二叉树。<br>思路：深度优先搜索这棵满二叉树，向左扩展视为进栈，向右扩展视为出栈</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2266,170 +2415,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/2020%E5%BF%AB%E6%89%8B%E7%AC%94%E8%AF%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/30/2020%E5%BF%AB%E6%89%8B%E7%AC%94%E8%AF%95%E9%A2%98/" itemprop="url">2020快手笔试题[动态规划]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T11:19:31+08:00">
-                2020-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>小明最近在做病毒自动检测，他发现，在某些library 的代码段的二进制表示中，如果包含子串并且恰好有k个1，就有可能有潜在的病毒。library的二进制表示可能很大，并且子串可能很多，人工分析不可能，于是他想写个程序来先算算到底有多少个子串满足条件。如果子串内容相同，但是开始或者结束位置不一样，则被认为是不同的子串。 </p>
-<p>注：子串一定是连续的。例如”010”有6个子串，分别是 “0, “1”, “0”, “01”, “10”, “010” </p>
-<p>例：字符串s = “0010101010” , k = 2。<br>思路：每个’1’前后部分的0的个数是共有多少个子串的关键,用滑动窗口辅助思考,在遍历至出现2个’1’,而第三个’1’,尚未出现时。<br>字符串 “0010101010” 包含的子串如下<br>[00101]01010<br>0[0101]01010<br>00[101]01010<br>[001010]1010<br>0[01010]1010<br>00[1010]1010</p>
-<p>001[0101]010<br>0010[101]010<br>001[01010]10<br>0010[1010]10</p>
-<p>00101[0101]0<br>001010[101]0<br>00101[01010]<br>001010[1010]</p>
-<p>在满足条件个数的’1’出现之后，下一个’1’出现之前，即右滑窗’]’，它的第前k个’1’与第前k+1个’1’之间有多少个位数，即左滑窗’[‘就统计多少次。<br>即,遍历过程中,下一个’1’出现之前 每经过一位,就累加一次，所累加的值是这个子串的第一个’1’出现之前的0的个数+1<br>dp[]数组存放的是左滑窗可移动的次数，每两个’1’之间有n个’0’则滑窗可移动n+1次，遍历过程中，会遇到1，即可在遍历到1时也使dp自增来代替遇到了n个0但却可移动n+1次的这个’+1’，而最左端的0前面没有这个额外的’+1’，故dp[0]的初始值要置为1</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num=<span class="number">0</span>,len=s.length();</span><br><span class="line"><span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line"><span class="keyword">long</span> result=<span class="number">0</span>;</span><br><span class="line">dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">char</span> c:s.toCharArray())&#123;</span><br><span class="line">    <span class="keyword">if</span>(c==<span class="string">'1'</span>) num++;</span><br><span class="line">    <span class="keyword">if</span>(num-k&gt;=<span class="number">0</span>) result+=dp[num-k];</span><br><span class="line">    dp[num]++;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(result);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2475,7 +2465,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2486,7 +2476,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
