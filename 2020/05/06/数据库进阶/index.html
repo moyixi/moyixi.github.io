@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="管理事务处理事务处理（transaction processing）可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。若实际使用过程中，由于某种数据库故障，使得两条语句之间发生了中断，则会发生错误，为解决这种问题，使用事务处理机制，用来管理必须成批执行的 MySQL操作以保证数据库不包含不完整的操作。它们会作为整体执行，或完全不执行。若没有错误发生整组语句提交给数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库进阶">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E9%98%B6&#x2F;index.html">
+<meta property="og:site_name" content="莫一兮的个人博客">
+<meta property="og:description" content="管理事务处理事务处理（transaction processing）可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。若实际使用过程中，由于某种数据库故障，使得两条语句之间发生了中断，则会发生错误，为解决这种问题，使用事务处理机制，用来管理必须成批执行的 MySQL操作以保证数据库不包含不完整的操作。它们会作为整体执行，或完全不执行。若没有错误发生整组语句提交给数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-06T10:59:43.501Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/06/数据库进阶/"/>
+
+
+
+
+
+  <title>数据库进阶 | 莫一兮的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">莫一兮的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据库进阶</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T17:57:29+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="管理事务处理"><a href="#管理事务处理" class="headerlink" title="管理事务处理"></a>管理事务处理</h2><p>事务处理（transaction processing）可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。<br>若实际使用过程中，由于某种数据库故障，使得两条语句之间发生了中断，则会发生错误，为解决这种问题，使用事务处理机制，用来管理必须成批执行的 MySQL操作以保证数据库不包含不完整的操作。它们会作为整体执行，或完全不执行。若没有错误发生整组语句提交给数据库表，若发生错误，则进行回退，以恢复数据库到某个已知且安全的状态。</p>
+<p><strong>事务（ transaction ）</strong>指一组SQL语句；<br><strong>回退（ rollback ）</strong>指撤销指定SQL语句的过程；<br><strong>提交（ commit ）</strong>指将未存储的SQL语句结果写入数据库表；<br><strong>保留点（ savepoint ）</strong>指事务处理中设置的临时占位符（place-holder），你可以对它发布回退（与回退整个事务处理不同）。</p>
+<p><strong>事务开始</strong><br>START TRANSACTION</p>
+<p><strong>ROLLBACK回退</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM ordertotals;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">DELETE FROM ordertotals;</span><br><span class="line">SELECT * FROM ordertotals;</span><br><span class="line">ROLLBACK;</span><br><span class="line">SELECT * FROM ordertotals;</span><br></pre></td></tr></table></figure>
+<p>上例先显示ordertotals表，再开始事务处理，用DELETE语句删除 ordertotals 中的所有行。再用SELECT语句验证ordertotals确实为空。此时用ROLLBACK语句回退START TRANSACTION之后的所有语句。最后一条SELECT显示ordertotals不为空。<br><em>ROLLBACK 只能在一个事务处理内使用（在执行一条 START TRANSACTION 命令之后）。</em></p>
+<p><strong>COMMIT提交</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">START TRANSACTION;</span><br><span class="line">DELETE FROM orderitems WHERE order_num = 20010;</span><br><span class="line">DELETE FROM orders WHERE order_num = 20010;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+<p>以上，从orders表和orderitems表中删除order_num = 20010 的内容，涉及到两个数据库表，要使用事务处理保证数据不被部分删除，仅在两条DELETE都执行成功时，COMMIT语句才执行以更改数据库，若第二条DELETE执行失败，则第一条DELETE被自动撤销。</p>
+<p><strong>使用保留点SAVEPOINT</strong><br>对于复杂事物，可能需要部分提交或回退，使用保留点来告诉MySQL要回退到何处，保留点命名需唯一</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SAVEPOINT delete1;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROLLBACK TO delete1;</span><br></pre></td></tr></table></figure>
+<p><strong>更改默认的提交行为</strong><br>默认的MySQL行为是自动提交所有更改。换句话说，任何时候你执行一条MySQL语句，该语句实际上都是针对表执行的，而且所做的更改立即生效。为指示 MySQL不自动提交更改，需要使用以下语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET autocommit = 0;</span><br></pre></td></tr></table></figure>
+<p>autocommit针对每个连接而不是服务器。</p>
+<h2 id="全球化和本地化"><a href="#全球化和本地化" class="headerlink" title="全球化和本地化"></a>全球化和本地化</h2><p>MySQL支持众多的字符集。为查看所支持的字符集完整列表，使用以下语句显示所有可用的字符集以及每个字符集的描述和默认校对。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW CHARACTER SET;</span><br></pre></td></tr></table></figure>
+<p>为了查看所支持校对的完整列表，使用以下语句显示所有可用的校对，以及它们适用的字符集。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW COLLATION;</span><br></pre></td></tr></table></figure>
+<p>为确定所用的字符集和校对，可以使用以下语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &apos;character%&apos;;</span><br><span class="line">SHOW VARIABLES LIKE &apos;collation%&apos;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安全管理"><a href="#安全管理" class="headerlink" title="安全管理"></a>安全管理</h2><p><strong>访问控制</strong><br>(1)多数用户只需要对表进行读和写，但少数用户甚至需要能创建和删除表；<br>(2)某些用户需要读表，但可能不需要更新表；<br>(3)你可能想允许用户添加数据，但不允许他们删除数据；<br>(4)某些用户（管理员）可能需要处理用户账号的权限，但多数用户不需要；<br>(5)你可能想让用户通过存储过程访问数据，但不允许他们直接访问数据；<br>(6)你可能想根据用户登录的地点限制对某些功能的访问。</p>
+<p><strong>创建用户账号</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER ben IDENTIFIED BY &apos;p@$$w0rd&apos;;</span><br></pre></td></tr></table></figure>
+<p><strong>账号重命名</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RENAME USER ben TO bforta;</span><br></pre></td></tr></table></figure>
+<p><strong>删除账号</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER bforta;</span><br></pre></td></tr></table></figure>
+<p><strong>设置访问权限</strong><br>新创建的用户账号没有任何访问权限，需要对其进行设置。<br>查看用户账号访问权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW GRANTS FOR ben;</span><br></pre></td></tr></table></figure>
+<p>上述语句输出<br>+———————————+<br>| Grants for ben@%                |<br>+———————————+<br>| GRANT USAGE ON <em>.</em> TO <code>ben</code>@<code>%</code> |<br>+———————————+<br>代表其在任何数据库上没有任何权限</p>
+<p>给账号ben赋予在数据库crashcourse上的select权限，即只读访问权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT ON crashcourse.* TO ben;</span><br></pre></td></tr></table></figure>
+<p>使用 REVOKE 撤销特定的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE SELECT ON crashcourse.* FROM ben;</span><br></pre></td></tr></table></figure>
+<p><strong>更改口令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD FOR ben =  Password(&apos;n3w p@$$w0rd&apos;);</span><br></pre></td></tr></table></figure>
+<h2 id="数据库维护"><a href="#数据库维护" class="headerlink" title="数据库维护"></a>数据库维护</h2><p><strong>备份数据</strong><br>(1)使用命令行实用程序 mysqldump 转储所有数据库内容到某个外部文件。在进行常规备份前这个实用程序应该正常运行，以便能正确地备份转储文件。<br>(2)可用命令行实用程序 mysqlhotcopy 从一个数据库复制所有数据（并非所有数据库引擎都支持这个实用程序）。<br>(3)可以使用MySQL的 BACKUP TABLE 或 SELECT INTO OUTFILE 转储所有数据到某个外部文件。这两条语句都接受将要创建的系统文件名，此系统文件必须不存在，否则会出错。数据可以用 RESTORETABLE 来复原。</p>
+<p>ANALYZE TABLE ，用来检查表键是否正确。<br>CHECK TABLE 用来针对许多问题对表进行检查。</p>
+<h2 id="改善性能"><a href="#改善性能" class="headerlink" title="改善性能"></a>改善性能</h2><p>(1)    MySQL是用一系列的默认设置预先配置的，从这些设置开始通常是很好的。但过一段时间后你可能需要调整内存分配、缓冲区大小等。（为查看当前设置，可使用 SHOW VARIABLES; 和 SHOW STATUS; 。）<br>(2)    MySQL一个多用户多线程的DBMS，换言之，它经常同时执行多个任务。如果这些任务中的某一个执行缓慢，则所有请求都会执行缓慢。如果你遇到显著的性能不良，可使用 SHOW PROCESSLIST 显示所有活动进程（以及它们的线程ID和执行时间）。你还可以用KILL 命令终结某个特定的进程（使用这个命令需要作为管理员登录）。<br>(3)    总是有不止一种方法编写同一条 SELECT 语句。应该试验联结、并、子查询等，找出最佳的方法。<br>(4)    使用 EXPLAIN 语句让MySQL解释它将如何执行一条 SELECT 语句。<br>(5)    一般来说，存储过程执行得比一条一条地执行其中的各条MySQL语句快。<br>(6) 应该总是使用正确的数据类型。<br>(7)决不要检索比需求还要多的数据。换言之，不要用 SELECT * （除非你真正需要每个列）。<br>(8)有的操作（包括 INSERT ）支持一个可选的 DELAYED 关键字，如果使用它，将把控制立即返回给调用程序，并且一旦有可能就实际执行该操作。<br>(9)在导入数据时，应该关闭自动提交。你可能还想删除索引（包括FULLTEXT 索引），然后在导入完成后再重建它们。<br>(10)必须索引数据库表以改善数据检索的性能。确定索引什么不是一 件微不足道的任务，需要分析使用的 SELECT 语句以找出重复的 WHERE 和 ORDER BY 子句。如果一个简单的 WHERE 子句返回结果所花 的时间太长，则可以断定其中使用的列（或几个列）就是需要索 引的对象。<br>(11)使用多条SELECT 语句和连接它们的 UNION 语句而不是一系列复杂的 OR 条件<br>(12)索引改善数据检索的性能，但损害数据插入、删除和更新的性能。 如果你有一些表，它们收集数据且不经常被搜索，则在有必要之 前不要索引它们。（索引可根据需要添加和删除。）<br>(13) LIKE 很慢。一般来说，最好是使用 FULLTEXT 而不是 LIKE 。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/06/%E6%B8%B8%E6%A0%87%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/" rel="next" title="游标和触发器">
+                <i class="fa fa-chevron-left"></i> 游标和触发器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">莫一兮</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#管理事务处理"><span class="nav-number">1.</span> <span class="nav-text">管理事务处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全球化和本地化"><span class="nav-number">2.</span> <span class="nav-text">全球化和本地化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全管理"><span class="nav-number">3.</span> <span class="nav-text">安全管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库维护"><span class="nav-number">4.</span> <span class="nav-text">数据库维护</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改善性能"><span class="nav-number">5.</span> <span class="nav-text">改善性能</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">莫一兮</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
