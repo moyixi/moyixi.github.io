@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="游标CURSORMySQL检索操作返回一组称为结果集的行。这组返回的行都是与SQL语句相匹配的行。使用简单的 SELECT 语句，例如，没有办法得到第一行、下一行或前10行，也不存在每次一行地处理所有行的简单方法,MySQL游标只能用于存储过程（和函数）。 FETCH在一个游标被打开后，可以使用 FETCH 语句分别访问它的每一行。FETCH 指定检索什么数据（所需的列），检索出来的数据存储在什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游标和触发器">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;06&#x2F;%E6%B8%B8%E6%A0%87%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8&#x2F;index.html">
+<meta property="og:site_name" content="莫一兮的个人博客">
+<meta property="og:description" content="游标CURSORMySQL检索操作返回一组称为结果集的行。这组返回的行都是与SQL语句相匹配的行。使用简单的 SELECT 语句，例如，没有办法得到第一行、下一行或前10行，也不存在每次一行地处理所有行的简单方法,MySQL游标只能用于存储过程（和函数）。 FETCH在一个游标被打开后，可以使用 FETCH 语句分别访问它的每一行。FETCH 指定检索什么数据（所需的列），检索出来的数据存储在什么">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-06T09:49:50.775Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/06/游标和触发器/"/>
+
+
+
+
+
+  <title>游标和触发器 | 莫一兮的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">莫一兮的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E6%B8%B8%E6%A0%87%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">游标和触发器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T16:40:52+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="游标CURSOR"><a href="#游标CURSOR" class="headerlink" title="游标CURSOR"></a>游标CURSOR</h2><p>MySQL检索操作返回一组称为结果集的行。这组返回的行都是与SQL语句相匹配的行。使用简单的 SELECT 语句，例如，没有办法得到第一行、下一行或前10行，也不存在每次一行地处理所有行的简单方法,MySQL游标只能用于存储过程（和函数）。</p>
+<p><strong>FETCH</strong><br>在一个游标被打开后，可以使用 FETCH 语句分别访问它的每一行。FETCH 指定检索什么数据（所需的列），检索出来的数据存储在什么地方。它还向前移动游标中的内部行指针，使下一条 FETCH 语句检索下一行（不重复读取同一行）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE processorders()</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE o INT;</span><br><span class="line">	DECLARE ordernumbers CURSOR</span><br><span class="line">	FOR</span><br><span class="line">	SELECT order_num FROM orders;</span><br><span class="line">	OPEN ordernumbers;</span><br><span class="line">	FETCH ordernumbers INTO o;</span><br><span class="line">	CLOSE ordernumbers;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程，FETCH 用来检索当前行的 order_num 列（将自动从第一行开始）到一个名为 o 的局部变量中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE processorders()</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE done BOOLEAN DEFAULT 0;</span><br><span class="line">	DECLARE o INT;</span><br><span class="line">	DECLARE t DECIMAL(8,2);</span><br><span class="line">	DECLARE ordernumbers CURSOR</span><br><span class="line">	FOR</span><br><span class="line">	SELECT order_num FROM orders;</span><br><span class="line">	DECLARE CONTINUE HANDLER FOR SQLSTATE &apos;02000&apos; SET done = 1;</span><br><span class="line">	CREATE TABLE IF NOT EXISTS ordertotals</span><br><span class="line">		(order_num INT , total DECIMAL(8,2));</span><br><span class="line">	OPEN ordernumbers;</span><br><span class="line">	REPEAT</span><br><span class="line">		FETCH ordernumbers INTO o;</span><br><span class="line">		CALL ordertotal(o,1,t);</span><br><span class="line">		INSERT INTO ordertotals(order_num,total)</span><br><span class="line">		VALUES(o,t);</span><br><span class="line">	UNTIL done END REPEAT;</span><br><span class="line">	CLOSE ordernumbers;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程，增加了变量t，且在运行过程中创建一个新表ordertotals，用于保存存储过程生成的结果。<br>FETCH取每个order_num，再使用CALL取调用 储存过程 ordertotal，ordertotal是使用存储过程中创建的带有布尔型变量taxable的那个。<br>多次调用存储过程ordertotal可以对所有的order_num执行一次ordertotal()并存入ordertotals中。</p>
+<p> CONTINUE HANDLER ，是在条件出现时被执行的代码。这里，它指出当 SQLSTATE ‘02000’ 出现时， SET done=1。SQLSTATE’02000’ 是一个未找到条件，当 REPEAT 由于没有更多的行供循环而不能继续时，出现这个条件。</p>
+<p>执行以下语句查看上述存储过程的执行结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM ordertotals;</span><br></pre></td></tr></table></figure>
+
+<h2 id="触发器TRIGGER"><a href="#触发器TRIGGER" class="headerlink" title="触发器TRIGGER"></a>触发器TRIGGER</h2><p>使用触发器可以让某条语句(或某些语句)在事件发生时自动执行，只响应DELETE、INSERT、UPDATE，或位于BEGIN和END语句之间,<em>只有表才支持触发器</em>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER newproduct AFTER INSERT ON products</span><br><span class="line">FOR EACH ROW SELECT &apos;Product added&apos;</span><br></pre></td></tr></table></figure>
+<p>上述触发器在INSERT语句执行成功后执行，因为指定了 FOR EACH ROW，故对每个插入行显示 Product added 一次。</p>
+<p>删除触发器:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TRIGGER newproduct</span><br></pre></td></tr></table></figure>
+
+<p><em>触发器按每个表每个事件每次地定义，每个表每个事件每次只允许一个触发器。因此，每个表最多支持6个触发器（每条 INSERT 、 UPDATE和 DELETE 的 BEFORE和AFTER）。单一触发器不能与多个事件或多个表关联，所以，若需要一个对 INSERT 和 UPDATE 操作执行的触发器，则应该定义两个触发器。</em></p>
+<p><strong>INSERT 触发器</strong><br>在 INSERT 触发器代码内，可引用一个名为 NEW 的虚拟表，访问被插入的行；在 BEFORE INSERT 触发器中， NEW 中的值也可以被更新（允许更改被插入的值）；对于 AUTO_INCREMENT 列， NEW 在 INSERT 执行之前包含 0 ，在 INSERT执行之后包含新的自动生成值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER neworder AFTER INSERT ON orders</span><br><span class="line">FOR EACH ROW SELECT NEW.order_num;</span><br></pre></td></tr></table></figure>
+<p>以上创建触发器neworder，在INSERT ON orders后执行，在对orders表插入时，生成一个新订单号并保存到order_num中。<br>触发器从NEW.order_num取得这个值并返回。</p>
+<p><strong>DELETE 触发器</strong><br>在 DELETE 触发器代码内，可以引用一个名为 OLD 的虚拟表，访问被删除的行；OLD 中的值全都是只读的，不能更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER deleteorder BEFORE DELETE ON orders</span><br><span class="line">FOR EACH ROW </span><br><span class="line">BEGIN</span><br><span class="line">	INSERT INTO archive_orders(order_num,order_date,cust_id)</span><br><span class="line">	VALUES(OLD.order_num,OLD.order_date,OLD.cust_id);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>以上创建 deleteorder触发器，在任意一条orders被删除时执行，它使用一条INSERT语句将OLD中的值保存到archive_orders中</p>
+<p><strong>UPDATE 触发器</strong><br>在 UPDATE 触发器代码中，你可以引用一个名为 OLD 的虚拟表访问以前（ UPDATE 语句前）的值，引用一个名为 NEW 的虚拟表访问新更新的值；在 BEFORE UPDATE 触发器中， NEW 中的值可能也被更新（允许更改将要用于 UPDATE 语句中的值）； OLD 中的值全都是只读的，不能更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER updatevendor BEFORE UPDATE ON vendors</span><br><span class="line">FOR EACH ROW SET NEW.vend_state = Upper(NEW.vend_state);</span><br></pre></td></tr></table></figure>
+<p>每次UPDATE之前，确保NEW.vend_state为大写。</p>
+<p><em>MySQL触发器中不支持 CALL 语句。这表示不能从触发器内调用存储过程。所需的存储过程代码需要复制到触发器内</em></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/06/%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="next" title="使用存储过程">
+                <i class="fa fa-chevron-left"></i> 使用存储过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">莫一兮</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#游标CURSOR"><span class="nav-number">1.</span> <span class="nav-text">游标CURSOR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器TRIGGER"><span class="nav-number">2.</span> <span class="nav-text">触发器TRIGGER</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">莫一兮</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

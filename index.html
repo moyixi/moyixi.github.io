@@ -238,6 +238,509 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E6%B8%B8%E6%A0%87%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/%E6%B8%B8%E6%A0%87%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/" itemprop="url">游标和触发器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T16:40:52+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="游标CURSOR"><a href="#游标CURSOR" class="headerlink" title="游标CURSOR"></a>游标CURSOR</h2><p>MySQL检索操作返回一组称为结果集的行。这组返回的行都是与SQL语句相匹配的行。使用简单的 SELECT 语句，例如，没有办法得到第一行、下一行或前10行，也不存在每次一行地处理所有行的简单方法,MySQL游标只能用于存储过程（和函数）。</p>
+<p><strong>FETCH</strong><br>在一个游标被打开后，可以使用 FETCH 语句分别访问它的每一行。FETCH 指定检索什么数据（所需的列），检索出来的数据存储在什么地方。它还向前移动游标中的内部行指针，使下一条 FETCH 语句检索下一行（不重复读取同一行）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE processorders()</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE o INT;</span><br><span class="line">	DECLARE ordernumbers CURSOR</span><br><span class="line">	FOR</span><br><span class="line">	SELECT order_num FROM orders;</span><br><span class="line">	OPEN ordernumbers;</span><br><span class="line">	FETCH ordernumbers INTO o;</span><br><span class="line">	CLOSE ordernumbers;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程，FETCH 用来检索当前行的 order_num 列（将自动从第一行开始）到一个名为 o 的局部变量中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE processorders()</span><br><span class="line">BEGIN</span><br><span class="line">	DECLARE done BOOLEAN DEFAULT 0;</span><br><span class="line">	DECLARE o INT;</span><br><span class="line">	DECLARE t DECIMAL(8,2);</span><br><span class="line">	DECLARE ordernumbers CURSOR</span><br><span class="line">	FOR</span><br><span class="line">	SELECT order_num FROM orders;</span><br><span class="line">	DECLARE CONTINUE HANDLER FOR SQLSTATE &apos;02000&apos; SET done = 1;</span><br><span class="line">	CREATE TABLE IF NOT EXISTS ordertotals</span><br><span class="line">		(order_num INT , total DECIMAL(8,2));</span><br><span class="line">	OPEN ordernumbers;</span><br><span class="line">	REPEAT</span><br><span class="line">		FETCH ordernumbers INTO o;</span><br><span class="line">		CALL ordertotal(o,1,t);</span><br><span class="line">		INSERT INTO ordertotals(order_num,total)</span><br><span class="line">		VALUES(o,t);</span><br><span class="line">	UNTIL done END REPEAT;</span><br><span class="line">	CLOSE ordernumbers;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程，增加了变量t，且在运行过程中创建一个新表ordertotals，用于保存存储过程生成的结果。<br>FETCH取每个order_num，再使用CALL取调用 储存过程 ordertotal，ordertotal是使用存储过程中创建的带有布尔型变量taxable的那个。<br>多次调用存储过程ordertotal可以对所有的order_num执行一次ordertotal()并存入ordertotals中。</p>
+<p> CONTINUE HANDLER ，是在条件出现时被执行的代码。这里，它指出当 SQLSTATE ‘02000’ 出现时， SET done=1。SQLSTATE’02000’ 是一个未找到条件，当 REPEAT 由于没有更多的行供循环而不能继续时，出现这个条件。</p>
+<p>执行以下语句查看上述存储过程的执行结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT *</span><br><span class="line">FROM ordertotals;</span><br></pre></td></tr></table></figure>
+
+<h2 id="触发器TRIGGER"><a href="#触发器TRIGGER" class="headerlink" title="触发器TRIGGER"></a>触发器TRIGGER</h2><p>使用触发器可以让某条语句(或某些语句)在事件发生时自动执行，只响应DELETE、INSERT、UPDATE，或位于BEGIN和END语句之间,<em>只有表才支持触发器</em>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER newproduct AFTER INSERT ON products</span><br><span class="line">FOR EACH ROW SELECT &apos;Product added&apos;</span><br></pre></td></tr></table></figure>
+<p>上述触发器在INSERT语句执行成功后执行，因为指定了 FOR EACH ROW，故对每个插入行显示 Product added 一次。</p>
+<p>删除触发器:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TRIGGER newproduct</span><br></pre></td></tr></table></figure>
+
+<p><em>触发器按每个表每个事件每次地定义，每个表每个事件每次只允许一个触发器。因此，每个表最多支持6个触发器（每条 INSERT 、 UPDATE和 DELETE 的 BEFORE和AFTER）。单一触发器不能与多个事件或多个表关联，所以，若需要一个对 INSERT 和 UPDATE 操作执行的触发器，则应该定义两个触发器。</em></p>
+<p><strong>INSERT 触发器</strong><br>在 INSERT 触发器代码内，可引用一个名为 NEW 的虚拟表，访问被插入的行；在 BEFORE INSERT 触发器中， NEW 中的值也可以被更新（允许更改被插入的值）；对于 AUTO_INCREMENT 列， NEW 在 INSERT 执行之前包含 0 ，在 INSERT执行之后包含新的自动生成值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER neworder AFTER INSERT ON orders</span><br><span class="line">FOR EACH ROW SELECT NEW.order_num;</span><br></pre></td></tr></table></figure>
+<p>以上创建触发器neworder，在INSERT ON orders后执行，在对orders表插入时，生成一个新订单号并保存到order_num中。<br>触发器从NEW.order_num取得这个值并返回。</p>
+<p><strong>DELETE 触发器</strong><br>在 DELETE 触发器代码内，可以引用一个名为 OLD 的虚拟表，访问被删除的行；OLD 中的值全都是只读的，不能更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER deleteorder BEFORE DELETE ON orders</span><br><span class="line">FOR EACH ROW </span><br><span class="line">BEGIN</span><br><span class="line">	INSERT INTO archive_orders(order_num,order_date,cust_id)</span><br><span class="line">	VALUES(OLD.order_num,OLD.order_date,OLD.cust_id);</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>以上创建 deleteorder触发器，在任意一条orders被删除时执行，它使用一条INSERT语句将OLD中的值保存到archive_orders中</p>
+<p><strong>UPDATE 触发器</strong><br>在 UPDATE 触发器代码中，你可以引用一个名为 OLD 的虚拟表访问以前（ UPDATE 语句前）的值，引用一个名为 NEW 的虚拟表访问新更新的值；在 BEFORE UPDATE 触发器中， NEW 中的值可能也被更新（允许更改将要用于 UPDATE 语句中的值）； OLD 中的值全都是只读的，不能更新。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE TRIGGER updatevendor BEFORE UPDATE ON vendors</span><br><span class="line">FOR EACH ROW SET NEW.vend_state = Upper(NEW.vend_state);</span><br></pre></td></tr></table></figure>
+<p>每次UPDATE之前，确保NEW.vend_state为大写。</p>
+<p><em>MySQL触发器中不支持 CALL 语句。这表示不能从触发器内调用存储过程。所需的存储过程代码需要复制到触发器内</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" itemprop="url">使用存储过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T15:22:32+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有时，一个完整的操作需要多条语句才能完成，例如：<br>1、为了处理订单，需要核对以保证库存中有相应的物品。<br>2、果库存有物品，这些物品需要预定以便不将它们再卖给别的人，并且要减少可用的物品数量以反映正确的库存量。<br>3、库存中没有的物品需要订购，这需要与供应商进行某种交互。<br>4、关于哪些物品入库（并且可以立即发货）和哪些物品退订，需要通知相应的客户。</p>
+<p>执行上述处理需要有针对许多表的多条MySQL语句，需要执行的具体语句及其次序也不是固定的，可能会根据物品的库存情况而发生变化。<br>我们可以单独编写每条语句，并根据结果有条件地执行另外的语句。可以创建存储过程解决这个问题，即为以后的使用而保存一条或多条MySQL语句的集合。</p>
+<p><strong>创建存储过程</strong><br>创建一个返回产品平均价格的存储过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE productpricing()</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Avg(prod_price) AS priceaverage</span><br><span class="line">	FROM products;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p><strong>使用存储过程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL productpricing();</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除存储过程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DROP PROCEDURE productpricing;</span><br><span class="line">DROP PROCEDURE IF EXISTS productpricing;</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>mysql命令行客户机的分隔符</em></strong><br>mysql 命令行实用程序使用 ‘;’ 作为语句分隔符。如果命令行实用程序要解释存储过程自身内的 ‘;’ 字符，则它们最终不会成为存储过程的成分，这会使存储过程中的SQL出现句法错误。<br>可以临时更改命令行程序的语句分隔符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //</span><br><span class="line">CREATE PROCEDURE productpricing()</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Avg(prod_price) AS priceaverage</span><br><span class="line">	FROM products;</span><br><span class="line">END //</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<p>使用 DELIMITER // 告诉命令行，使用’ // ‘作为新的语句结束符，此时，标志存储过程结束的END定义为 END // 而不是 END; 最后再用DELIMITER; 将语句分隔符恢复。(<em>除\外所有字符都可以用作语句分隔符</em>)</p>
+<p><strong>在存储过程中使用参数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE productpricing(</span><br><span class="line">	OUT pl DECIMAL(8,2),</span><br><span class="line">	OUT ph DECIMAL(8,2),</span><br><span class="line">	OUT pa DECIMAL(8,2) </span><br><span class="line">)</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Min(prod_price)</span><br><span class="line">	INTO pl</span><br><span class="line">	FROM products;</span><br><span class="line">	SELECT Max(prod_price)</span><br><span class="line">	INTO ph</span><br><span class="line">	FROM products;</span><br><span class="line">	SELECT Avg(prod_price)</span><br><span class="line">	INTO pa</span><br><span class="line">	FROM products;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程要求三个参数，调用时需要正好传递三个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CALL productpricing(@pricelow,</span><br><span class="line">					@pricehigh,</span><br><span class="line">					@priceaverage);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE ordertotal(</span><br><span class="line">	IN onumber INT,</span><br><span class="line">	OUT ototal DECIMAL(8,2)</span><br><span class="line">	)</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Sum(item_price*quantity)</span><br><span class="line">	FROM orderitems</span><br><span class="line">	WHERE order_num = onumber</span><br><span class="line">	INTO ototal;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程，onumber定义为IN,即 订单号order_num被传入存储过程，ototal被定义为OUT，是从存储过程中返回。<br>SELECT语句使用参数 onumber 和ototal，WHERE子句为onumber挑选正确的值，INTO使用ototal存储计算出来的合计 Sum(item_price * quantity)</p>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL ordertotal(20005,@total);</span><br></pre></td></tr></table></figure>
+<p>调用上述存储过程。<br>为显示调用结果需要使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @total；</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立智能存储过程"><a href="#建立智能存储过程" class="headerlink" title="建立智能存储过程"></a>建立智能存储过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE ordertotal(</span><br><span class="line">	IN onumber INT,</span><br><span class="line">	IN taxable BOLLEAN,</span><br><span class="line">	OUT ototal DECIMAL(8,2)</span><br><span class="line">	)COMMENT &apos;Obtain order total , optionally adding tax&apos;</span><br><span class="line">	BEGIN </span><br><span class="line">		DECLARE total DECIMAL(8,2);</span><br><span class="line">		DECLARE taxrate INT DEFAULT 6;</span><br><span class="line">		SELECT Sum(item_price*quantity)</span><br><span class="line">		FROM orderitems</span><br><span class="line">		WHERE order_num = onumber</span><br><span class="line">		INTO total;</span><br><span class="line">		IF taxable THEN</span><br><span class="line">			SELECT total+(total/100*taxrate) INTO total;</span><br><span class="line">		END IF;</span><br><span class="line">		SELECT total INTO ototal;</span><br><span class="line">	END;</span><br></pre></td></tr></table></figure>
+<p>在上述存储过程中有一个布尔型参数taxable(若要执行 total+(total/100 * taxrate) INTO total 可令其为真)<br>DECLARE语句定义了两个局部变量total和taxrate,在taxable为真时，可以对total进行改变，再在最后一行使用另一SELECT语句将total保存到ototal</p>
+<p><strong><em>COMMENT 关键字</em></strong> <em>本例子中的存储过程在 CREATE PROCEDURE 语句中包含了一个 COMMENT 值。它不是必需的，但如果给出，将在 SHOW PROCEDURE STATUS 的结果中显示。</em></p>
+<p>调用并显示上述存储过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CALL (20005,0,@total);</span><br><span class="line">SELECT @total;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CALL (20005,1,@total);</span><br><span class="line">SELECT @total;</span><br></pre></td></tr></table></figure>
+<p>会因为传入的taxable参数的不同而影响最终结果。</p>
+<p><strong>检查存储过程</strong><br>显示存储过程ordertotal的详细信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE PROCEDURE ordertotal;</span><br></pre></td></tr></table></figure>
+<p>显示数据库中所有存储过程的存储过程信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW PROCEDURE STATUS ;</span><br></pre></td></tr></table></figure>
+<p>上述语句也可以使用LIKE关键字进行过滤。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/" itemprop="url">使用视图</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T13:55:17+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>视图是虚拟的表，与包含数据的表不一样，视图只包含使用时动态检索数据的查询，它不包含表中应有的任何列或数据，而是一个SQL查询<br><strong>视图的作用</strong><br>(1)重用SQL语句<br>(2)简化复杂的SQL操作，在编写查询后，可以方便地重用它而不必知道它的基本查询细节<br>(3)使用表的组成部分而不是整个表<br>(4)保护数据。给用户授予表的特定部分的访问权限而不是整个表的访问权限<br>(5)更改数据格式和表示。视图可返回与底层表的表示和格式不同的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW productcustomers AS</span><br><span class="line">SELECT cust_name,cust_contact,prod_id</span><br><span class="line">FROM customers,orders,orderitems</span><br><span class="line">WHERE customers.cust_id = order.cust_id</span><br><span class="line">AND orderitems.order_num = order.order_num;</span><br></pre></td></tr></table></figure>
+<p>创建一个名为 productcustomers 的视图，它联结三个表，返回已定个了任意产品的所有客户的列表。</p>
+<p>可在视图中检索订购了产品TNT2的客户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name,cust_contact</span><br><span class="line">FROM productcustomers</span><br><span class="line">WHERE prod_id = &apos;TNT2&apos;;</span><br></pre></td></tr></table></figure>
+<p>由此可见，利用视图可以一次性编写基础的SQL，再根据需要重复使用。<br>也可用视图重新格式化检索出的数据，以供反复使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW vendorlocations AS</span><br><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;)</span><br><span class="line">		AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<p>或对数据进行筛选。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW customeremaillist AS</span><br><span class="line">SELECT cust_id,cust_name,cust_email</span><br><span class="line">FROM costomers</span><br><span class="line">WHERE cust_email IS NOT NULL;</span><br></pre></td></tr></table></figure>
+<p>或简化计算字段的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW orderitemsexpanded AS</span><br><span class="line">SELECT 	order_num,</span><br><span class="line">		prod_id,</span><br><span class="line">		quantity,</span><br><span class="line">		item_price,</span><br><span class="line">		quantity*item_price AS expanded_price</span><br><span class="line">FROM orderitems;</span><br></pre></td></tr></table></figure>
+<p>再要检索详细内容即可直接在视图 orderitemsexpanded 上进行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM orderitemsexpanded</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+
+<p><strong>更新视图</strong><br>视图是可以用INSERT、UPDATE和DELETE进行更新的，但因为视图本身没有数据，所以对视图的增加或删除，是对其基表的增加或删除。<br>并非所有的视图都可以更新，若视图中有以下操作，则无法更新，且一般应将视图用于检索而不是更新。<br>(1)分组(GROUP、HAVING);<br>(2)联结;<br>(3)子查询;<br>(4)并;<br>(5)聚集函数(Min()、Count()、Sum());<br>(6)DISTINCT;<br>(7)导出(计算)列。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92medium/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1781,681 +2284,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/MySQL%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/03/MySQL%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/" itemprop="url">MySQL数据过滤</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T14:13:26+08:00">
-                2020-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="AND操作符和OR操作符"><a href="#AND操作符和OR操作符" class="headerlink" title="AND操作符和OR操作符"></a>AND操作符和OR操作符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_price,prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003 AND prod_price &lt;=10;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003 OR prod_price &lt;=10;</span><br></pre></td></tr></table></figure>
-<p><strong>AND在计算次序中优先级更好，在多个AND和OR操作符组合时，用’(‘、’)’来规定计算次序</strong><br>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1002 OR vend_id = 1003 AND prod_price&gt;=10;</span><br></pre></td></tr></table></figure>
-<p>代表 vend_id = 1002的所有项加上 vend_id = 1003且prod_price &gt;=10的项;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE (vend_id = 1002 OR vend_id = 1003) AND prod_price&gt;=10;</span><br></pre></td></tr></table></figure>
-<p>代表 vend_id = 1002或1003 且 prod_price &gt;= 10的项</p>
-<h2 id="IN操作符"><a href="#IN操作符" class="headerlink" title="IN操作符"></a>IN操作符</h2><p>IN取到括号内被逗号分隔的所有值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id IN (1002,1003)</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>与</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1002 OR vend_id = 1003</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>等价</p>
-<h2 id="NOT操作符"><a href="#NOT操作符" class="headerlink" title="NOT操作符"></a>NOT操作符</h2><p>在WHERE子句中用来否定后跟条件,支持对 IN、BETWEEN、EXISTS取反<br>例: 检索vend_id不等于1002和1003的项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id ONT IN (1002,1003)</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-
-<h2 id="LIKE操作符"><a href="#LIKE操作符" class="headerlink" title="LIKE操作符"></a>LIKE操作符</h2><p>为在搜索子句中使用通配符，必须使用 LIKE 操作符。后跟的搜索模式利用通配符匹配而不是直接相等匹配进行比较<br><strong>_通配符</strong><br>搜索串中’%’表示任何字符出现任意次数。<br><em>%可以匹配0个、1个或多个字符，但是不可以匹配NULL</em><br>例：搜索prod_name中以jet开头的项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;jet%&apos;;</span><br></pre></td></tr></table></figure>
-<p>搜索prod_name中任意位置包含anvil的项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;%anvil%&apos;;</span><br></pre></td></tr></table></figure>
-<p>搜索prod_name中以s开头e结尾的项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;s%e&apos;;</span><br></pre></td></tr></table></figure>
-<p><strong>_通配符</strong><br>与’%’能匹配0个字符不同,搜索串中’ _ ‘表示任何字符出现一次。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;_ ton anvil&apos;;</span><br></pre></td></tr></table></figure>
-<p><em>通配符比其他搜索花费时间更长，尽量不把通配符放在搜索模式开始处，这会导致搜索速度慢</em></p>
-<h2 id="用正则表达式进行搜索"><a href="#用正则表达式进行搜索" class="headerlink" title="用正则表达式进行搜索"></a>用正则表达式进行搜索</h2><p>复杂过滤条件下正则表达式非常有用<br>使用REGEXP关键字，其后所跟的东西作为正则表达式处理。<br>LIKE关键字在不使用通配符时，需要匹配满足所有内容，而REGEXP匹配到部分内容符合即可检索到。<br>MySQL中的所有正则表达式匹配不区分大小写，为区分大小写可以使用BINARY关键词</p>
-<p>‘.’字符表示可以匹配任意一个字符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;.000&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-
-<p><strong>进行OR匹配</strong><br>OR操作符:’|’</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;1000|2000|3000&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p><strong>使用中括号匹配任意单一字符</strong><br>[123]定义一组字符，代表了匹配1或2或3，以下表达式代表匹配了 1 Ton 、2 Ton、 3 Ton 字符串<br>[123] Ton是[1|2|3] Ton的缩写<br>但 若不加中括号则会实现别的匹配<br>1|2|3 Ton 代表匹配的是 1 或者 2 或者 3 Ton</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;[123] Ton&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p><strong>进行NOT操作</strong><br>NOT操作符’^’<br>[123]匹配字符1、2、3<br>[^123]匹配1、2、3之外的所有字符</p>
-<p><strong>进行范围匹配</strong><br>[0-9]与[0123456789]等价<br>[a-z]匹配所有字符</p>
-<p><strong>匹配特殊字符</strong><br>‘.’、’[‘、’]’、’|’、’ _ ‘等字符的匹配需要使用转义字符双斜杠 ‘//‘’<br>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name</span><br><span class="line">FROM vendors</span><br><span class="line">WHERE vend_name REGEXP &apos;\\.&apos;</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
-
-<p><strong>匹配字符类</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">类</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">[:alnum:]</td>
-<td align="left">任意字母和数字同[a-zA-Z0-9]</td>
-</tr>
-<tr>
-<td align="left">[:alpha:]</td>
-<td align="left">任意字母[a-zA-Z]</td>
-</tr>
-<tr>
-<td align="left">[:upper:]</td>
-<td align="left">任意大写字母[A-Z]</td>
-</tr>
-<tr>
-<td align="left">[:lower:]</td>
-<td align="left">任意小写字母[a-z]</td>
-</tr>
-<tr>
-<td align="left">[:digit:]</td>
-<td align="left">任意数字[0-9]</td>
-</tr>
-<tr>
-<td align="left">[:xdigit:]</td>
-<td align="left">任意十六进制数字[a-fA-F0-9]</td>
-</tr>
-<tr>
-<td align="left">[:print:]</td>
-<td align="left">任意可打印字符</td>
-</tr>
-<tr>
-<td align="left">[:graph:]</td>
-<td align="left">与[:print:]相同，但不包括空格</td>
-</tr>
-<tr>
-<td align="left">[:cntrl:]</td>
-<td align="left">ASCII控制字符ASCII 0到31和127</td>
-</tr>
-<tr>
-<td align="left">[:punct:]</td>
-<td align="left">不在[:alnum:] 又不在 [:cntrl:]中的任意字符</td>
-</tr>
-<tr>
-<td align="left">[:blank:]</td>
-<td align="left">空格和制表[\t]</td>
-</tr>
-<tr>
-<td align="left">[:space:]</td>
-<td align="left">包括空格在内的任何空白字符[\f\n\r\t\v]</td>
-</tr>
-</tbody></table>
-<p><strong>匹配多个实例</strong><br>重复元字符用于表示正则表达式匹配项的出现次数</p>
-<table>
-<thead>
-<tr>
-<th align="left">类</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">‘ * ‘</td>
-<td align="left">0个或多个匹配</td>
-</tr>
-<tr>
-<td align="left">‘+’</td>
-<td align="left">1个或多个匹配（等于{1,}）</td>
-</tr>
-<tr>
-<td align="left">‘?’</td>
-<td align="left">0个或1个匹配（等于{0,1}）</td>
-</tr>
-<tr>
-<td align="left">‘{n}’</td>
-<td align="left">指定数目的匹配</td>
-</tr>
-<tr>
-<td align="left">‘{n,}’</td>
-<td align="left">不少于指定数目的匹配</td>
-</tr>
-<tr>
-<td align="left">‘{n,m}’</td>
-<td align="left">匹配数目的范围（m不超过255）</td>
-</tr>
-</tbody></table>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;\\([0-9] sticks?\\)&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>\( 匹配 (<br>[0-9]匹配任意数字<br>sticks? 匹配stick 和 sticks ,s?代表s可以出现也可以不出现<br>\) 匹配 )</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;[[:digit:]]&#123;4&#125;&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>[:digit:]代表匹配任意数字，{4}要求出现4次，即上述表达式匹配连在一起的4位数字</p>
-<p><strong>定位符</strong><br>若要匹配特定位置的文本，使用定位符</p>
-<table>
-<thead>
-<tr>
-<th align="left">定位符</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">^</td>
-<td align="left">文本的开始</td>
-</tr>
-<tr>
-<td align="left">$</td>
-<td align="left">文本的结尾</td>
-</tr>
-<tr>
-<td align="left">[[:&lt;:]]</td>
-<td align="left">词的开始</td>
-</tr>
-<tr>
-<td align="left">[[:&gt;:]]</td>
-<td align="left">词的结尾</td>
-</tr>
-</tbody></table>
-<p><strong><em>^用在集合中[^]时，表示否定该集合，否则指串的开始处</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;^[0-9\\.]&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>匹配以一个数字(包括小数点’.’)开始的所有内容，而如果不加’^’<br>则匹配 包含数字(包括小数点’.’)的所有内容</p>
-<p><strong><em>LIKE 和 REGEXP的不同在于， LIKE 匹配整个串而 REGEXP 匹配子串。利用定位符，通过用 ^ 开始每个表达式，用 $ 结束每个表达式，可以使REGEXP 的作用与 LIKE 一样。</em></strong></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/02/MySQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/02/MySQL/" itemprop="url">数据库基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-02T15:43:55+08:00">
-                2020-05-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="数据库基础"><a href="#数据库基础" class="headerlink" title="数据库基础"></a>数据库基础</h2><p>数据库是一个以某种有组织的方式存储的数据集合。可想象为一个文件柜，此文件柜是一个存放数据的物理位置，不管数据是什么以及如何组织的。<br><strong>数据库（database）</strong> 保存有组织的数据的容器（通常是一个文件或一组文件）<br>在将资料放入自己的文件柜时，并不是随便将它们扔进某个抽屉就完事了，而是在文件柜中创建文件，然后将相关的资料放入特定的文件中。<br>在数据库领域中，这种文件称为表。表是一种结构化的文件，可用来存储某种特定类型的数据。表可以保存顾客清单、产品目录，或者其他信息清单。<br><strong>表（table）</strong>某种特定类型数据的结构化清单。<br><em>存储在表中的数据应当是一种类型的数据或一个清单，为免以后检索访问困难，不应将不同的清单存入同一数据库中。</em><br><strong>列（column）</strong> 表中的一个字段。所有表都是由一个或多个列组成的<br><strong>行（row）</strong> 表中的一个记录。<br><strong>主键（primary key）</strong>一列（或一组列），其值能够<strong>唯一区分</strong>表中每个行。<br>作为主键需要满足两个条件：1、任意两行都不具有不相同的主键值；2、每行都必须有一个主键值(主键列不允许NULL值)<br>作为主键的三个良好习惯：<br>1、不更新主键列中的值；<br>2、不重用主键列的值(即列从表中删除后，其主键不能赋给以后的新行)；很多系统中，业务与主键耦合，重用主键可能会使系统发生业务错误。<br>3、不在主键列中使用可能会更改的值。</p>
-<p><strong>选择数据库</strong><br>为查看拥有哪些数据库，应输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW databases;</span><br></pre></td></tr></table></figure>
-<p>为使用 crashcourse数据库，应输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE crashcourse;</span><br></pre></td></tr></table></figure>
-<p>输出 Database changed<br>为获得一个数据库内的表，应输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES</span><br></pre></td></tr></table></figure>
-<p>show语句也可用于展示 columns，用法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW columns </span><br><span class="line">FROM customers</span><br></pre></td></tr></table></figure>
-<p>customers：表名</p>
-<h2 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h2><p>SELECT语句:<br>从products表中检索名为prod_name的列：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p>从products表中检索多个列，它们的名为 prod_id，prod_name，prod_price :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name,prod_price </span><br><span class="line">FROM products</span><br></pre></td></tr></table></figure>
-<p>从products中检索所有列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p><strong>*检索不需要的列通常会降低检索和应用程序性能，所以最好不使用 *通配符 *</strong></p>
-<p>检索不重复的值使用关键字 DISTINCT </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p><strong>DISTINCT关键字应用于所有列即，所有列的值相同才算重复，即有任意一项不重复都会被检索出来例如：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id , prod_price </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p>使用LIMIT子句限定SELECT的返回结果<br>例：限定返回结果不多于5行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
-<p>例：限定返回结果是从第8行开始的5行（第一行为行0）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 8,5;</span><br></pre></td></tr></table></figure>
-
-<p>使用完全限定的列名和表名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT products.prod_name </span><br><span class="line">FROM crashcourse.products;</span><br></pre></td></tr></table></figure>
-<h2 id="排序检索数据"><a href="#排序检索数据" class="headerlink" title="排序检索数据"></a>排序检索数据</h2><p>使用ORDER BY子句对搜索结果进行排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>按多个列进行排序，用逗号分隔即可。<br>先按照prod_price排序，再在遇到相同的prod_price时按照prod_name排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price, prod_name;</span><br></pre></td></tr></table></figure>
-<p>降序排序使用 DESC关键字<br>升序排序是默认的 关键字 ASC</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC;</span><br></pre></td></tr></table></figure>
-<p>按多个列进行排序，并对其中的某些使用降序排序,DESC紧跟着列，再用逗号和其他列隔开即，DESC只应用于当前列，而DISTINCT应用于所有列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC,prod_name;</span><br></pre></td></tr></table></figure>
-
-<h2 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h2><p>使用WHERE子句对检索结果进行筛选</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price = 2.50;</span><br></pre></td></tr></table></figure>
-
-<p>WHERE 子句操作符:</p>
-<table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">‘=’</td>
-<td align="left">“等于’</td>
-</tr>
-<tr>
-<td align="left">‘&lt;&gt;’</td>
-<td align="left">“不等于”</td>
-</tr>
-<tr>
-<td align="left">‘!=’</td>
-<td align="left">“不等于”</td>
-</tr>
-<tr>
-<td align="left">‘&lt;’</td>
-<td align="left">“小于”</td>
-</tr>
-<tr>
-<td align="left">‘&lt;=’</td>
-<td align="left">“小于等于”</td>
-</tr>
-<tr>
-<td align="left">‘&gt;’</td>
-<td align="left">“大于”</td>
-</tr>
-<tr>
-<td align="left">‘&gt;=’</td>
-<td align="left">“大于等于”</td>
-</tr>
-<tr>
-<td align="left">‘BETWEEN’</td>
-<td align="left">“在指定的两个值之间”</td>
-</tr>
-</tbody></table>
-<p><em>MySQL执行匹配时默认不区分大小写,BETWEEN匹配时包括所指定的值</em><br>BETWEEN 用法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price BETWEEN 5 AND 10;</span><br></pre></td></tr></table></figure>
-<p>空值检查</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price IS NULL;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E9%80%92%E5%BD%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/30/%E9%80%92%E5%BD%92/" itemprop="url">递归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T14:02:17+08:00">
-                2020-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>斐波那契数列的是这样一个数列：1、1、2、3、5、8、13、21、34….，即第一项 f(1) = 1,第二项 f(2) = 1…..,第 n 项目为 f(n) = f(n-1) + f(n-2)。求第 n 项的值是多少。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数fib(),设其功能为求第n项的值</span></span><br><span class="line">	<span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//斐波那契问题的递归出口,f(1) = 1 ,f(2) = 1</span></span><br><span class="line">	<span class="keyword">return</span> fib(n-<span class="number">1</span>)+fib(n-<span class="number">2</span>)<span class="comment">//斐波那契问题的等价关系式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="小青蛙跳台阶"><a href="#小青蛙跳台阶" class="headerlink" title="小青蛙跳台阶"></a>小青蛙跳台阶</h2><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。<br>跳上n级台阶的方法有两种，先跳1级，再跳n-1级，和先跳2级，再跳n-2级，这一点与斐波那契题类似，但需要注意递归出口不同。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ha</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数ha(),设其功能为n级台阶的跳法</span></span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> ha(n-<span class="number">1</span>)+ha(n-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	Node next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node <span class="title">reverseList</span><span class="params">(Node head)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> head;<span class="comment">//递归出口，当节点为空，或只有一个节点时直接返回。</span></span><br><span class="line">	&#125;</span><br><span class="line">	Node reverseExceptHead =reverseList (head.next);<span class="comment">//定义一个除了首节点均逆置完毕的状态，首节点还正常指向它的下一个节点</span></span><br><span class="line">	Node node = head.next <span class="comment">//获得当前首节点的下一个节点，等待逆置</span></span><br><span class="line">	node.next = head;<span class="comment">//完成最后一步逆置</span></span><br><span class="line">	head.next = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">return</span> reverseExceptHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2506,7 +2334,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
