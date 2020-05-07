@@ -1062,151 +1062,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" itemprop="url">SSD上采样反向融合笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T15:30:02+08:00">
-                2019-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">论文笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
-<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
-<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
-<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/myFirstBlog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1312,6 +1167,151 @@
 <p>2、使用两个子数据集分别训练两个单模态的检测网络</p>
 <p>3、将第二步得到的两个单模态网络的卷积层参数加载到多模态融合网络之中。</p>
 <p>展望：从网络结构入手，加入特殊模块，使得多模态检测网络对于数据之间的失配准的敏感性降低。<br>通过网络改进或数据集标注方法的调整来实现便捷的端到端的训练方法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" itemprop="url">SSD上采样反向融合笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T15:30:02+08:00">
+                2019-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">论文笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
+<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
+<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
+<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
 
           
         

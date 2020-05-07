@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。Scanner类  导包：import java.util.Scanner;创建Scanner对象Scanner s = new Scanner(System.in); 获取输入的字符串有next()和nextLine()两种方法,hasNext()与hasNextLine()方法判断是否还有输入的数据,区别在于next()">
+<meta name="description" content="线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。导包：import java.util.Scanner;创建Scanner对象Scanner s = new Scanner(System.in); 获取输入的字符串有next()和nextLine()两种方法,hasNext()与hasNextLine()方法判断是否还有输入的数据,区别在于next()方法不会读取空格及空">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scanner">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;07&#x2F;Scanner&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。Scanner类  导包：import java.util.Scanner;创建Scanner对象Scanner s = new Scanner(System.in); 获取输入的字符串有next()和nextLine()两种方法,hasNext()与hasNextLine()方法判断是否还有输入的数据,区别在于next()">
+<meta property="og:description" content="线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。导包：import java.util.Scanner;创建Scanner对象Scanner s = new Scanner(System.in); 获取输入的字符串有next()和nextLine()两种方法,hasNext()与hasNextLine()方法判断是否还有输入的数据,区别在于next()方法不会读取空格及空">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-07T08:19:00.756Z">
+<meta property="og:updated_time" content="2020-05-07T08:20:54.324Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -329,9 +329,7 @@
       
 
       
-        <p>线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。<br>Scanner类</p>
-<hr>
-<p>导包：<br>import java.util.Scanner;<br>创建Scanner对象<br>Scanner s = new Scanner(System.in);</p>
+        <p>线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。<br>导包：<br>import java.util.Scanner;<br>创建Scanner对象<br>Scanner s = new Scanner(System.in);</p>
 <p>获取输入的字符串有next()和nextLine()两种方法,hasNext()与hasNextLine()方法判断是否还有输入的数据,区别在于next()方法不会读取空格及空格后的字符，而nextLine()方法会读取到。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScannerDemo</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">		Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">		System.out.println(<span class="string">"next()方法的输入"</span>);</span><br><span class="line">		<span class="keyword">if</span>(sc.hasNext())&#123;</span><br><span class="line">			String str1 = sc.next();</span><br><span class="line">			System.out.println(<span class="string">"输入的数据为:"</span>+str1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>输出为：</p>
