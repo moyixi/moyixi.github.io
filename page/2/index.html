@@ -238,6 +238,455 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/" itemprop="url">使用数据处理函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T16:48:52+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h2><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Trim()</td>
+<td align="left">去掉串左右的空格</td>
+</tr>
+<tr>
+<td align="left">Upper()</td>
+<td align="left">将串转换为大写</td>
+</tr>
+<tr>
+<td align="left">Lower()</td>
+<td align="left">将串转换为小写</td>
+</tr>
+<tr>
+<td align="left">Left()</td>
+<td align="left">返回串左边的字符</td>
+</tr>
+<tr>
+<td align="left">Right()</td>
+<td align="left">返回串右边的字符</td>
+</tr>
+<tr>
+<td align="left">Length()</td>
+<td align="left">返回串的长度</td>
+</tr>
+<tr>
+<td align="left">Locate()</td>
+<td align="left">找出串的一个子串</td>
+</tr>
+<tr>
+<td align="left">SubString()</td>
+<td align="left">返回子串的字符</td>
+</tr>
+<tr>
+<td align="left">Soundex()</td>
+<td align="left">返回串的SOUNDEX值</td>
+</tr>
+</tbody></table>
+<p>SubString(str,pos):SubString(被截取字段，从第几位开始截取)<br>SubString(str,pos,length):SubString(被截取字段，从第几位开始截取，截取长度)<br><em>若pos为负数，则是从后往前截取</em></p>
+<p><em>SOUNDEX 是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。SOUNDEX考虑了类似的发音字符和音节，使得能对串进行发音比较而不是字母比较。虽然SOUNDEX 不是SQL概念，但MySQL（就像多数DBMS一样）都提供对SOUNDEX 的支持</em></p>
+<h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><p><strong>日期必须为格式yyyy-mm-dd</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">AddDate()</td>
+<td align="left">增加一个日期（天、周等）</td>
+</tr>
+<tr>
+<td align="left">AddTime()</td>
+<td align="left">增加一个时间（时、分等）</td>
+</tr>
+<tr>
+<td align="left">CurDate()</td>
+<td align="left">返回当前日期</td>
+</tr>
+<tr>
+<td align="left">CurTime()</td>
+<td align="left">返回当前时间</td>
+</tr>
+<tr>
+<td align="left">Date()</td>
+<td align="left">返回日期时间的日期部分</td>
+</tr>
+<tr>
+<td align="left">DateDiff()</td>
+<td align="left">计算两个日期之差</td>
+</tr>
+<tr>
+<td align="left">Date_Add()</td>
+<td align="left">高度灵活的日期运算函数</td>
+</tr>
+<tr>
+<td align="left">Date_Format()</td>
+<td align="left">返回一个格式化的日期或时间串</td>
+</tr>
+<tr>
+<td align="left">Day()</td>
+<td align="left">返回一个日期的天数部分</td>
+</tr>
+<tr>
+<td align="left">DayOfWeek()</td>
+<td align="left">对于一个日期，返回对应的星期几</td>
+</tr>
+<tr>
+<td align="left">Hour()</td>
+<td align="left">返回一个时间的小时部分</td>
+</tr>
+<tr>
+<td align="left">Minute()</td>
+<td align="left">返回一个时间的分钟部分</td>
+</tr>
+<tr>
+<td align="left">Month()</td>
+<td align="left">返回一个日期的月份部分</td>
+</tr>
+<tr>
+<td align="left">Now()</td>
+<td align="left">返回当前日期和时间</td>
+</tr>
+<tr>
+<td align="left">Second()</td>
+<td align="left">返回一个时间的秒部分</td>
+</tr>
+<tr>
+<td align="left">Time()</td>
+<td align="left">返回一个日期时间的时间部分</td>
+</tr>
+<tr>
+<td align="left">Year()</td>
+<td align="left">返回一个日期的年份部分</td>
+</tr>
+</tbody></table>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_date = &apos;2005-09-01&apos;;</span><br></pre></td></tr></table></figure>
+<p>进行匹配时，若order_data列包含时间 例如 2005-09-01 11:30:05则会匹配失败。<br>所以要使用 Data()提取列的日期部分即写法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Data(order_date) = &apos;2005-09-01&apos;;</span><br></pre></td></tr></table></figure>
+
+<p>要检索某个日期段之间的内容可使用 BETWEEN 也可使用 WHERE 对Year() Month()加以约束。<br>两种写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Date(order_date) BETWEEN &apos;2005-09-01&apos; AND &apos;2005-09-30&apos;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Year(order_date) = 2005 AND Month(order_date) = 9;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h2><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Abs()</td>
+<td align="left">返回一个数的绝对值</td>
+</tr>
+<tr>
+<td align="left">Cos()</td>
+<td align="left">返回一个角度的余弦</td>
+</tr>
+<tr>
+<td align="left">Exp()</td>
+<td align="left">返回一个数的指数值</td>
+</tr>
+<tr>
+<td align="left">Mod()</td>
+<td align="left">返回除操作的余数</td>
+</tr>
+<tr>
+<td align="left">Pi()</td>
+<td align="left">返回圆周率</td>
+</tr>
+<tr>
+<td align="left">Rand()</td>
+<td align="left">返回一个随机数</td>
+</tr>
+<tr>
+<td align="left">Sin()</td>
+<td align="left">返回一个角度的正弦</td>
+</tr>
+<tr>
+<td align="left">Sqrt()</td>
+<td align="left">返回一个数的平方根</td>
+</tr>
+<tr>
+<td align="left">Tan()</td>
+<td align="left">返回一个角度的正切</td>
+</tr>
+</tbody></table>
+<h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">AVG()</td>
+<td align="left">返回某列的平均值</td>
+</tr>
+<tr>
+<td align="left">COUNT()</td>
+<td align="left">返回某列的行数</td>
+</tr>
+<tr>
+<td align="left">MAX()</td>
+<td align="left">返回某列的最大值</td>
+</tr>
+<tr>
+<td align="left">MIN()</td>
+<td align="left">返回某列的最小值</td>
+</tr>
+<tr>
+<td align="left">SUM()</td>
+<td align="left">返回某列值之和</td>
+</tr>
+</tbody></table>
+<h2 id="创建分组"><a href="#创建分组" class="headerlink" title="创建分组"></a>创建分组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003;</span><br></pre></td></tr></table></figure>
+<p>上述语句计算vend_id = 1003的产品数，若要搜索出所有vend_id的产品数可以使用GROUP BY子句创建分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_id , COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">GROUP BY vend_id;</span><br></pre></td></tr></table></figure>
+<p>按vend_id排序并分组数据，对每个vend_id计算num_prods一次</p>
+<p><em>GROUP BY 子句可以包含任意数目的列。这使得能对分组进行嵌套，为数据分组提供更细致的控制。<br>如果在 GROUP BY 子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算（所以不能从个别的列取回数据）。<br>GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在 SELECT 中使用表达式，则必须在GROUP BY 子句中指定相同的表达式。不能使用别名。<br>除聚集计算语句外， SELECT 语句中的每个列都必须在 GROUP BY 子句中给出。<br>如果分组列中具有 NULL 值，则 NULL 将作为一个分组返回。如果列中有多行 NULL 值，它们将分为一组。<br>GROUP BY 子句必须出现在 WHERE 子句之后， ORDER BY 子句之前。</em></p>
+<p><strong>HAVING 子句过滤分组</strong><br>非常类似于WHERE,但此时WHERE不起作用，因为WHERE过滤指的是行而不是分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id, COUNT(*) AS orders </span><br><span class="line">FROM orders</span><br><span class="line">GROUP BY cust_id</span><br><span class="line">HAVING COUNT(*) &gt;=2;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><table>
+<thead>
+<tr>
+<th align="left">子句</th>
+<th align="left">说明</th>
+<th align="left">是否必须使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SELECT</td>
+<td align="left">要返回的列或表达式</td>
+<td align="left">是</td>
+</tr>
+<tr>
+<td align="left">FROM</td>
+<td align="left">从中检索数据的表</td>
+<td align="left">仅在从表选择数据时使用</td>
+</tr>
+<tr>
+<td align="left">WHERE</td>
+<td align="left">行级过滤</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">GROUP BY</td>
+<td align="left">分组说明</td>
+<td align="left">仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td align="left">HAVING</td>
+<td align="left">组级过滤</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">ORDER BY</td>
+<td align="left">输出排序顺序</td>
+<td align="left">否</td>
+</tr>
+<tr>
+<td align="left">LIMIT</td>
+<td align="left">要检索的行数</td>
+<td align="left">否</td>
+</tr>
+</tbody></table>
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p>子查询：嵌套在其他查询中的查询</p>
+<p>例如：要列出订购物品 TNT2 的所有客户</p>
+<p>(1) 检索包含物品 TNT2 的所有订单的编号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT order_name </span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE prod_id = &apos;TNT2&apos;;</span><br></pre></td></tr></table></figure>
+<p>结果：<br>order_num<br>20005<br>20007<br>(2) 检索具有前一步骤列出的订单编号的所有客户的ID。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_num in (20005,20007);</span><br></pre></td></tr></table></figure>
+<p>结果：<br>cust_id<br>10001<br>10004</p>
+<p>(3) 检索前一步骤返回的所有客户ID的客户信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(10001,10004);</span><br></pre></td></tr></table></figure>
+<p>使用子查询嵌套：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(SELECT cust_id</span><br><span class="line">				FROM orders</span><br><span class="line">				WHERE order_num IN (SELECT order_name </span><br><span class="line">									FROM orderitems</span><br><span class="line">									WHERE prod_id = &apos;TNT2&apos;));</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1998,158 +2447,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" itemprop="url">字典树Trie</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T15:09:30+08:00">
-                2020-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>字典树、前缀树、Trie 用于判断字符串是否存在或是否具有某种字符串前缀</p>
-<p>实现前缀树：<br>插入、查找、查找前缀功能</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	Node[] childs = <span class="keyword">new</span> Node[<span class="number">26</span>];</span><br><span class="line">	<span class="keyword">boolean</span> isWord;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Node root = <span class="keyword">new</span> Node();</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">indexForChar</span><span class="params">(<span class="keyword">char</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> c - <span class="string">'a'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	insert(word,root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word,Node node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">if</span>(word.length == <span class="number">0</span>)&#123;</span><br><span class="line">		node.isWord == <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> index = indexForChar(word.charAt(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">if</span>(node.childs[index] == <span class="keyword">null</span>)&#123;</span><br><span class="line">		node.childs[index] = <span class="keyword">new</span> Node();</span><br><span class="line">	&#125;</span><br><span class="line">	insert(word.substring(<span class="number">1</span>),node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> search(word,root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word,Node node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(word.length()==<span class="number">0</span>) <span class="keyword">return</span> node.isWord;</span><br><span class="line">	<span class="keyword">int</span> index = indexForChar(word.charAt(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">return</span> search(word.substring(<span class="number">1</span>),node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> startWith(prefix, root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">startWith</span><span class="params">(String prefix, Node node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (prefix.length() == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">int</span> index = indexForChar(prefix.charAt(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">return</span> startWith(prefix.substring(<span class="number">1</span>), node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2200,7 +2497,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2211,7 +2508,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
