@@ -238,6 +238,447 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/08/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8/" itemprop="url">Java常用容器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T12:32:11+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近刷一些深度优先搜索广度优先搜索等题目时，会遇到一些队列、栈、HashMap等的应用，先简单介绍一下常用容器的用法便于刷题。</p>
+<h2 id="队列-Queue-的用法"><a href="#队列-Queue-的用法" class="headerlink" title="队列(Queue)的用法"></a>队列(Queue)的用法</h2><p>LinkedList提供了对Queue的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QueueTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;String&gt;();</span><br><span class="line">		queue.offer(<span class="string">"a"</span>);</span><br><span class="line">		queue.offer(<span class="string">"b"</span>);</span><br><span class="line">		queue.offer(<span class="string">"c"</span>);</span><br><span class="line">		System.out.println(queue.peek());</span><br><span class="line">		System.out.println(queue.peek());</span><br><span class="line">		System.out.println(queue.peek());</span><br><span class="line">		System.out.println(queue.poll());</span><br><span class="line">		System.out.println(queue.poll());</span><br><span class="line">		System.out.println(queue.poll());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>offer(E e)：添加一个元素到队尾<br>peek()：获取队首的元素，但不从队列中移除<br>poll():获取队首的元素，并从队列中移除<br>与以上三个方法对应的有：<br>add(E e)：<br>element():<br>remove()：<br>功能相同，但第一组在操作失败时返回一个特殊值(null或false)，第二组操作失败时直接报错<br>输出:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">a</span><br><span class="line">a</span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br></pre></td></tr></table></figure>
+<h2 id="优先级队列-PriorityQueue"><a href="#优先级队列-PriorityQueue" class="headerlink" title="优先级队列(PriorityQueue)"></a>优先级队列(PriorityQueue)</h2><p>用法和普通队列一样，但区别在于优先级队列会根据排序规则决定谁在队头谁在队尾</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PriorityQueueTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		PriorityQueue&lt;String&gt; pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</span><br><span class="line">		pq.offer(<span class="string">"c"</span>);</span><br><span class="line">		pq.offer(<span class="string">"b"</span>);</span><br><span class="line">		pq.offer(<span class="string">"d"</span>);</span><br><span class="line">		pq.offer(<span class="string">"e"</span>);</span><br><span class="line">		pq.offer(<span class="string">"a"</span>);</span><br><span class="line">		System.out.println(pq.poll());</span><br><span class="line">		System.out.println(pq.poll());</span><br><span class="line">		System.out.println(pq.poll());</span><br><span class="line">		System.out.println(pq.poll());</span><br><span class="line">		System.out.println(pq.poll());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">d</span><br><span class="line">e</span><br></pre></td></tr></table></figure>
+<h2 id="栈-Stack"><a href="#栈-Stack" class="headerlink" title="栈(Stack)"></a>栈(Stack)</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		Stack&lt;Integer&gt; st = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">		st.add(<span class="number">1</span>);</span><br><span class="line">		st.add(<span class="number">2</span>);</span><br><span class="line">		st.push(<span class="number">3</span>);</span><br><span class="line">		st.push(<span class="number">4</span>);</span><br><span class="line">		System.out.println(st.peek());</span><br><span class="line">		System.out.println(st.peek());</span><br><span class="line">		System.out.println(st.pop());</span><br><span class="line">		System.out.println(st.pop());</span><br><span class="line">		System.out.println(st.pop());</span><br><span class="line">		System.out.println(st.pop());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>add()和push()都可以向stack中添加元素，add继承自Vector返回值类型为boolean，push是Stack自身的方法，返回值类型为参数类型<br>peek()返回但不弹出栈顶元素，pop()返回且弹出栈顶元素。<br>输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h2><p>HashMap 是一个散列表，它存储的内容是键值对(key-value)映射。<br>常用方法：<br>put(key,value):往HashMap里放键值对<br>containsKey(key):检查HashMap是否包含Key<br>containsValue(value):检查HashMap里是否包含value<br>get(key):通过键取值<br>isEmpty():判空<br>remove(key):移除键值对,移除成功则返回值，失败则null<br>keySet():HashMap中保存的所有键<br>values():HashMap中保存的所有值<br>entrySet():HashMap中保存的键值对</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMapTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		HashMap&lt;String , String&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">"a"</span>, <span class="string">"1"</span>);</span><br><span class="line">		map.put(<span class="string">"b"</span>, <span class="string">"2"</span>);</span><br><span class="line">		map.put(<span class="string">"c"</span>, <span class="string">"3"</span>);</span><br><span class="line">		map.put(<span class="string">"d"</span>, <span class="string">"4"</span>);</span><br><span class="line">		System.out.println(map.get(<span class="string">"a"</span>));</span><br><span class="line">		System.out.println(map.containsKey(<span class="string">"b"</span>));</span><br><span class="line">		System.out.println(map.size());</span><br><span class="line">		System.out.println(map.isEmpty());</span><br><span class="line">		System.out.println(map.remove(<span class="string">"d"</span>));</span><br><span class="line">		System.out.println(map.remove(<span class="string">"z"</span>));</span><br><span class="line">		System.out.println(map.containsValue(<span class="string">"1"</span>));</span><br><span class="line">		System.out.println(map.keySet());</span><br><span class="line">		System.out.println(map.values());</span><br><span class="line">		System.out.println(map.entrySet());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line">[a, b, c]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">[a=<span class="number">1</span>, b=<span class="number">2</span>, c=<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+<p>对于<br>keySet()、values()、entrySet()可使用如下方法遍历</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">	System.out.println(key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String values : map.values()) &#123;</span><br><span class="line">	System.out.println(values);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Entry&lt;String, String&gt; entry : map.entrySet()) &#123;</span><br><span class="line">	String key = entry.getKey();</span><br><span class="line">	String value = entry.getValue();</span><br><span class="line">	System.out.println(key + <span class="string">","</span> + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2-BFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/08/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2-BFS/" itemprop="url">广度优先搜索(BFS)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T12:03:33+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>广度优先搜搜一层一层地进行遍历，每层遍历以上一层遍历的结果作为起点，遍历一个距离能访问到的所有节点。一般用队列来辅助实现。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2-DFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/08/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2-DFS/" itemprop="url">深度优先搜索(DFS)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T12:03:09+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/String%E3%80%81StringBuilder%E4%B8%8EStringBuffer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1388,546 +1829,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/05/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" itemprop="url">卡特兰数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T16:01:37+08:00">
-                2020-05-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">卡特兰数</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>卡特兰数是常出现在计数问题中的数列。<br>h(n) = h(0) * h(n-1)+h(1) * h(n-2) + … + h(n-1) * h(0) (n&gt;=2)、(h(0) = 1)<br>可化简为<br>h(n) = h(n-1) * (4n-2)(n+1)<br>通项公式 h(n) = C(2n,n)-C(2n,n+1)<br>可以化为 h(n)=C(2n,n)/(n+1)</p>
-<p>前几项为：<br>1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, …<br>在某些算法问题中得到很好的应用。</p>
-<p>卡特兰数增长速度较快，int型无法满足，对于Java可以使用 BigInteger来计算大整数<br>使用化简后的h(n) = h(n-1) * (4n-2)(n+1)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Catalan</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = <span class="number">20</span>;</span><br><span class="line">		BigInteger ans = BigInteger.valueOf(<span class="number">1</span>);</span><br><span class="line">		System.out.println(<span class="string">"1:"</span>+ans.toString());</span><br><span class="line">		BigInteger  four = BigInteger.valueOf(<span class="number">4</span>);</span><br><span class="line">		BigInteger  one = BigInteger.valueOf(<span class="number">1</span>);</span><br><span class="line">		BigInteger  two = BigInteger.valueOf(<span class="number">2</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">			BigInteger bi = BigInteger.valueOf(i);</span><br><span class="line">			ans = ans.multiply(four.multiply(bi).subtract(two)).divide(bi.add(one));</span><br><span class="line">			System.out.println(i+<span class="string">":"</span>+ans.toString());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="进出栈序列"><a href="#进出栈序列" class="headerlink" title="进出栈序列"></a>进出栈序列</h2><p>描述：n个元素进栈序列为：1、2、3、4、…、n,有多少种出栈序列。<br>思路：令n个元素进出栈问题的解为f(n),假设最后一个出栈的元素为K,则在K之前，进栈并出栈的元素有K-1个，这是一个 K-1个元素进出栈的子问题。在K之后进栈并出栈的元素有n-K个，这是一个n-K个元素进出栈的子问题。即在第K个元素是最后一个出栈的元素时，问题的解法有f(K-1) * f(n-K)个<br>因为K的取值可以为1,2,3,…,n中的任何一个。即f(n) = f(0) * f(n-1) + f(1) * f(n-2) + … + f(n-1) * f(0)。是一个显然的卡特兰数问题。</p>
-<h2 id="括号序列"><a href="#括号序列" class="headerlink" title="括号序列"></a>括号序列</h2><p>描述：n对括号，求有多少种匹配的括号序列</p>
-<p>左括号视为进栈，右括号视为出栈，和进出栈问题相同。</p>
-<h2 id="满二叉树数量"><a href="#满二叉树数量" class="headerlink" title="满二叉树数量"></a>满二叉树数量</h2><p>描述：n+1个节点能构成多少个不同的满二叉树。<br>思路：深度优先搜索这棵满二叉树，向左扩展视为进栈，向右扩展视为出栈</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/05/%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/" itemprop="url">插入、更新和删除数据</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T13:51:56+08:00">
-                2020-05-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>插入语句：INSERT</strong><br>INSERT语句有以下几种使用方式<br>(1)插入完整的行<br>(2)插入行的一部分<br>(3)插入多行<br>(4)插入某些查询的结果</p>
-<p>基本的INSERT语法要求制定表名和被插入到新行中的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Customers</span><br><span class="line">VALUES( NULL,</span><br><span class="line">		&apos;Pep E. LaPew&apos;,</span><br><span class="line">		&apos;100 Main Street&apos;,</span><br><span class="line">		&apos;Los Angeles&apos;,</span><br><span class="line">		&apos;CA&apos;,</span><br><span class="line">		&apos;90046&apos;</span><br><span class="line">		&apos;USA&apos;,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL);</span><br></pre></td></tr></table></figure>
-<p>上面写法的第一个cust_id为NULL，因为每次插入一个新行时，该列由MySQL自动增量。你不想给出一个值（这是MySQL的工作），又不能省略此列（如前所述，必须给出每个列），所以指定一个 NULL 值（它被MySQL忽略，MySQL在这里插入下一个可用的 cust_id 值）。<br>更安全的写法明确给出了列名，优点是即使表的结构发生改变，INSERT语句依然能够正确工作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Customers(cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country,</span><br><span class="line">	cust_contact,</span><br><span class="line">	cust_email)</span><br><span class="line">	VALUES(</span><br><span class="line">		&apos;Pep E. LaPew&apos;,</span><br><span class="line">		&apos;100 Main Street&apos;,</span><br><span class="line">		&apos;Los Angeles&apos;,</span><br><span class="line">		&apos;CA&apos;,</span><br><span class="line">		&apos;90046&apos;</span><br><span class="line">		&apos;USA&apos;,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL);</span><br></pre></td></tr></table></figure>
-
-<p>数据库经常被多个客户访问，对处理什么请 求以及用什么次序处理进行管理是MySQL的任务。 INSERT 操作可能很耗时（特别是有很多索引需要更新时），而且它可能 降低等待处理的 SELECT 语句的性能。如果数据检索是最重要的（通常是这样），则你可以通过在 INSERT 和 INTO 之间添加关键字 LOW_PRIORITY ，指示MySQL 降低 INSERT 语句的优先级,即<br>INSERT LOW_PRIORITY INTO</p>
-<p><strong>插入多个行</strong><br>1、使用多条INSERT语句，每条语句用一个分号结束<br>2、若每条INSERT语句中的列名和次序相同，可以直接组合语句,把每组值容易对圆括号括起来,用逗号分割。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Customers(cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country)</span><br><span class="line">	VALUES(</span><br><span class="line">		&apos;Pep E. LaPew&apos;,</span><br><span class="line">		&apos;100 Main Street&apos;,</span><br><span class="line">		&apos;Los Angeles&apos;,</span><br><span class="line">		&apos;CA&apos;,</span><br><span class="line">		&apos;90046&apos;</span><br><span class="line">		&apos;USA&apos;),</span><br><span class="line">		(</span><br><span class="line">		&apos;M. Martian&apos;,</span><br><span class="line">		&apos;42 Galaxy Way&apos;,</span><br><span class="line">		&apos;New York&apos;,</span><br><span class="line">		&apos;NY&apos;,</span><br><span class="line">		&apos;11213&apos;,</span><br><span class="line">		&apos;USA&apos;);</span><br></pre></td></tr></table></figure>
-
-<p><strong>插入检索出的数据</strong><br>将一个名为custnew的表中的数据导入customers表中,cust_id 也可省略，这样MySQL会自动生成新值，不省略则要保证cust_id的值不重复</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO customers(cust_id,</span><br><span class="line">	cust_contact,</span><br><span class="line">	cust_email,</span><br><span class="line">	cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country)</span><br><span class="line">SELECT cust_id,</span><br><span class="line">	cust_contact,</span><br><span class="line">	cust_email,</span><br><span class="line">	cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country</span><br><span class="line">FROM custnew;</span><br></pre></td></tr></table></figure>
-
-<p>为更新(修改)表中的数据，可使用UPDATE语句<br><strong>UPDATE</strong><br>UPDATE语句由三部分组成<br>(1)要更新的表<br>(2)列名和它们的新值<br>(3)确定要更新行的过滤条件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UPDATE customers</span><br><span class="line">SET cust_name = &apos;The Fudds&apos;,</span><br><span class="line">	cust_email = &apos;elmer@fudd.com&apos;</span><br><span class="line">WHERE cust_id = 10005;</span><br></pre></td></tr></table></figure>
-<p><strong><em>IGNORE 关键字</em></strong> <em>如果用 UPDATE 语句更新多行，并且在更新这些行中的一行或多行时出一个现错误，则整个 UPDATE 操作被取消（错误发生前更新的所有行被恢复到它们原来的值）。为即使是发生错误，也继续进行更新，可使用 IGNORE 关键字，如下所示：</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE IGNORE customers…</span><br></pre></td></tr></table></figure>
-
-<p><strong>DELETE FROM</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM customers</span><br><span class="line">WHERE cust_id = 10006;</span><br></pre></td></tr></table></figure>
-<p><em>若想从表中删除所有行，可使用TRUNCATE TABLE，速度更快（ TRUNCATE 实际是删除原来的表并重新创建一个表，而不是逐行删除表中的数据）在对 UPDATE 或 DELETE 语句使用 WHERE 子句前，应该先用 SELECT 进行测试，保证它过滤的是正确的记录，以防编写的 WHERE 子句不正确。</em></p>
-<p><strong>CREATE TABLE</strong><br>创建表需要包含标的名字，列的名字和定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE customers</span><br><span class="line">(</span><br><span class="line">cust_id			int 		NOT NULL AUTO_INCREMENT,</span><br><span class="line">cust_name		char(50)	NOT NULL,	</span><br><span class="line">cust_address 	char(50)	NULL,</span><br><span class="line">cust_city		char(50)	NULL,</span><br><span class="line">cust_state		char(50)	NULL,</span><br><span class="line">cust_zip		char(50)	NULL,</span><br><span class="line">cust_country	char(50)	NULL,</span><br><span class="line">cust_contact	char(50)	NULL,</span><br><span class="line">cust_email		char(255)	NULL,</span><br><span class="line">PRIMARY KEY(cust_id)</span><br><span class="line">)ENGINE = InnoDB;</span><br></pre></td></tr></table></figure>
-<p><strong><em>NULL</em></strong> <em>NULL值是没有值，它不是空串。如果指定’’（两个单引号，其间没有字符），这在 NOT NULL 列中是允许的。空串是一个有效的值，它不是无值。 NULL 值用关键字 NULL 而不是空串指定。</em></p>
-<p><strong><em>主键</em></strong><br><em>主键值必须唯一。即，表中的每个行必须具有唯一的主键值。如果主键使用单个列，则它的值必须唯一。如果使用多个列，则这些列的组合值必须唯一。主键中只能使用不允许 NULL 值的列。允许 NULL 值的列不能作为唯一标识</em></p>
-<p>使用单个列定义主键：<br>PRIMARY KEY(cust_id)</p>
-<p>使用多个列定义主键：<br>PRIMARY KEY(order_num,order_item)</p>
-<p><strong>AUTO_INCREMENT</strong><br>AUTO_INCREMENT 告诉MySQL，本列每当增加一行时自动增量。每次执行一个 INSERT 操作时，MySQL自动对该列增量（从而才有这个关键字AUTO_INCREMENT ），给该列赋予下一个可用的值。这样给每个行分配一个唯一的 cust_id ，从而可以用作主键值。每个表只允许一个 AUTO_INCREMENT 列，而且它必须被索引（如，通过使它成为主键）</p>
-<p><em>DEFAULT 关键字指定默认值,只支持常量，不支持函数</em></p>
-<p><strong>更新表</strong><br>给vendors表增加一个vend_phone列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE vendors</span><br><span class="line">ADD vend_phone CHAR(20);</span><br></pre></td></tr></table></figure>
-<p>删除刚才添加的列</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> vendors</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">COLUMN</span> vend_phone;</span><br></pre></td></tr></table></figure>
-<p>ALTER TABLE 常见用途是定义外键</p>
-<p><strong>删除表</strong><br>DROP TABLE</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE customers2;</span><br></pre></td></tr></table></figure>
-<p><strong>重命名表</strong><br>RENAME TABLE</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE customers2 TO customers;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/%E5%85%A8%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/04/%E5%85%A8%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2/" itemprop="url">全文本搜索</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-04T15:56:07+08:00">
-                2020-05-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>通过数值比较、范围过滤可以完成精确的查询，而使用 LIKE + % 可以实现模糊匹配，但LIKE + %在大量文本的数据检索中非常慢所以需要引入全文本搜索(FULLTEXT)的概念(全文本搜索会出现精度问题)，基本原理和搜索引擎类似。<br>在使用全文本搜索时，MySQL不需要分别查看每个行，不需要分别分析和处理每个词。MySQL创建指定列中各词的一个索引，搜索可以针对这些词进<br>行。这样，MySQL可以快速有效地决定哪些词匹配（哪些行包含它们），哪些词不匹配，它们匹配的频率，等等。</p>
-<p><strong>版本支持</strong><br>MySQL 5.6 以前的版本，只有 MyISAM 存储引擎支持全文索引；<br>MySQL 5.6 及以后的版本，MyISAM 和 InnoDB 存储引擎均支持全文索引;<br>只有字段的数据类型为 char、varchar、text 及其系列才可以建全文索引。</p>
-<p>创建表时启用全文本搜索</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE productnotes</span><br><span class="line">(</span><br><span class="line">	note_id		int 		NOT NULL AUTO_INCREMENT,</span><br><span class="line">	prod_id		char(10)	NOT NULL,</span><br><span class="line">	note_date	datetime	NOT NULL,</span><br><span class="line">	note_text	note_text 	NULL,</span><br><span class="line">	PRIMARY KEY(note_id),</span><br><span class="line">	FULLTEXT(note_text)</span><br><span class="line">)ENGINE = MyISAM;</span><br></pre></td></tr></table></figure>
-<p>为了进行全文本搜索，MySQL根据子句 FULLTEXT(note_text) 的指示对它进行索引。这里的FULLTEXT 索引单个列，如果需要也可以指定多个列。<br>在定义之后，MySQL自动维护该索引。在增加、更新或删除行时，索引随之自动更新。在索引之后，使用两个函数 Match() 和 Against()执行全文本搜索，其中 Match() 指定被搜索的列， Against() 指定要使用的搜索表达式。<br><em>传递给Match()的值必须与FULLTEXT()定义中的相同，全文本搜索不区分大小写</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos;rabbit&apos;);</span><br></pre></td></tr></table></figure>
-
-<p><strong>使用查询扩展</strong><br>查询扩展用来设法放宽所返回的全文本搜索结果的范围。你想找出所有提到 anvils 的注释。只有一个注释包含词 anvils ，但你还想找出可能与你的搜索有关的所有其他行，即使它们不包含词anvils。这也是查询扩展的一项任务。在使用查询扩展时，MySQL对数据和索引进行两遍扫描来完成搜索：</p>
-<p>(1)首先，进行一个基本的全文本搜索，找出与搜索条件匹配的所有行；<br>(2)其次，MySQL检查这些匹配行并选择所有有用的词<br>(3)再其次，MySQL再次进行全文本搜索，这次不仅使用原来的条件，而且还使用所有有用的词。</p>
-<p>利用查询扩展，能找出可能相关的结果，即使它们并不精确包含所查找的词。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos;anvils&apos; WITH QUERY EXPANSION);</span><br></pre></td></tr></table></figure>
-
-<p><strong>布尔文本搜索</strong><br>MySQL支持全文本搜索的另外一种形式，称为布尔方式（boolean mode）。<br>布尔方式不同于迄今为止使用的全文本搜索语法的地方在于，即使没有定义FULLTEXT 索引，也可以使用它。但这是一种非常缓慢的操作（其性能将随着数据量的增加而降低）<br>在布尔方式中，只排列而不排序，不按等级值降序排序返回的行。</p>
-<p>以布尔方式，可以提供关于如下内容的细节：<br>(1)要匹配的词；<br>(2)要排斥的词(如果某行包含这个词，则不返回该行，即使它包含其他指定的词也是如此)；<br>(3)排列提示(指定某些词比其他词更重要，更重要的词等级更高)；<br>(4)表达式分组<br>等</p>
-<p><strong>全文本布尔操作符</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">布尔操作符</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">+</td>
-<td align="left">包含，词必须存在</td>
-</tr>
-<tr>
-<td align="left">-</td>
-<td align="left">排除，词必须不出现</td>
-</tr>
-<tr>
-<td align="left">&gt;</td>
-<td align="left">包含，而且增加等级值</td>
-</tr>
-<tr>
-<td align="left">&lt;</td>
-<td align="left">包含，且减少等级值</td>
-</tr>
-<tr>
-<td align="left">()</td>
-<td align="left">把词组成子表达式（允许这些子表达式作为一个组被包含、排除、排列等）</td>
-</tr>
-<tr>
-<td align="left">~</td>
-<td align="left">取消一个词的排序值</td>
-</tr>
-<tr>
-<td align="left">*</td>
-<td align="left">词尾的通配符</td>
-</tr>
-<tr>
-<td align="left">“”</td>
-<td align="left">定义一个短语（与单个词的列表不一样，它匹配整个短语以便包含或排除这个短语）</td>
-</tr>
-</tbody></table>
-<p>例如：匹配包含heavy但不包含任意以rope开始的词</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos;heavy  -rope*&apos; WITH QUERY EXPANSION);</span><br></pre></td></tr></table></figure>
-
-<p>匹配包含词rabbit和bait的行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos; +rabbit +bait &apos; IN BOOLEAN MODE);</span><br></pre></td></tr></table></figure>
-<p>匹配包含rabbit或bait中的至少一个词的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos;rabbit bait&apos; IN BOOLEAN MODE);</span><br></pre></td></tr></table></figure>
-
-<p>匹配短语 rabbit bait 而不是 rabbit和bait这两个词</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos; &quot;rabbit bait&quot; &apos; IN BOOLEAN MODE);</span><br></pre></td></tr></table></figure>
-
-<p>匹配rabbit 和carrot ，增加前者的等级，降低后者的等级</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos;&gt;rabbit &lt;carrot&apos; IN BOOLEAN MODE);</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1973,7 +1879,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
