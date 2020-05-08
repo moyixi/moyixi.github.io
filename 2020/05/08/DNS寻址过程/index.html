@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
+<meta name="description" content="计算机在网络中进行通讯只能识别IP地址，而无法识别域名，在访问网站时，在浏览器中输入域名，然后DNS(Domain Name System)服务器将域名翻译为IP地址，并调出IP地址所对应的网页。由于互联网上有大量主机，单一的DNS服务器无法解决单点故障、无法保证通信容量以及无法临近所有的查询主机和维护困难等问题，所以DNS不适合使用单点的集中式设计，而是使用分布式集群的工作方式，通过使用分布式层">
 <meta property="og:type" content="article">
-<meta property="og:title" content="链表">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;24&#x2F;%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98&#x2F;index.html">
+<meta property="og:title" content="DNS寻址过程">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;08&#x2F;DNS%E5%AF%BB%E5%9D%80%E8%BF%87%E7%A8%8B&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
+<meta property="og:description" content="计算机在网络中进行通讯只能识别IP地址，而无法识别域名，在访问网站时，在浏览器中输入域名，然后DNS(Domain Name System)服务器将域名翻译为IP地址，并调出IP地址所对应的网页。由于互联网上有大量主机，单一的DNS服务器无法解决单点故障、无法保证通信容量以及无法临近所有的查询主机和维护困难等问题，所以DNS不适合使用单点的集中式设计，而是使用分布式集群的工作方式，通过使用分布式层">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-29T09:03:51.988Z">
+<meta property="og:updated_time" content="2020-05-08T12:28:13.057Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/24/链表类算法题/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/08/DNS寻址过程/"/>
 
 
 
 
 
-  <title>链表 | 莫一兮的个人博客</title>
+  <title>DNS寻址过程 | 莫一兮的个人博客</title>
   
 
 
@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/DNS%E5%AF%BB%E5%9D%80%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="莫一兮">
@@ -257,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">链表</h1>
+          <h1 class="post-title" itemprop="name headline">DNS寻址过程</h1>
         
 
         <div class="post-meta">
@@ -269,8 +269,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T15:09:30+08:00">
-                2020-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T18:40:58+08:00">
+                2020-05-08
               </time>
             
 
@@ -292,8 +292,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
                   </a>
                 </span>
 
@@ -329,11 +329,16 @@
       
 
       
-        <h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
-<p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
-<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ListNode node =<span class="keyword">new</span> ListNode(-<span class="number">1</span>)</span><br><span class="line">node.next = head;</span><br><span class="line">ListNode pre = node;</span><br><span class="line">While(pre.next!=<span class="keyword">null</span> &amp;&amp; pre.next.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">ListNode l1 = pre.next;</span><br><span class="line">ListNode l2 = pre.next.next;</span><br><span class="line">ListNode next = l2.next;</span><br><span class="line">l1.next = next;</span><br><span class="line">l2.next = l1;</span><br><span class="line">pre.next = l2;</span><br><span class="line">pre = l1</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> node.next</span><br></pre></td></tr></table></figure>
-<h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
+        <p>计算机在网络中进行通讯只能识别IP地址，而无法识别域名，在访问网站时，在浏览器中输入域名，然后DNS(Domain Name System)服务器将域名翻译为IP地址，并调出IP地址所对应的网页。<br>由于互联网上有大量主机，单一的DNS服务器无法解决单点故障、无法保证通信容量以及无法临近所有的查询主机和维护困难等问题，所以DNS不适合使用单点的集中式设计，而是使用分布式集群的工作方式，通过使用分布式层次数据库和缓存方法来解决以上问题。</p>
+<p>根DNS服务器：因特网上有13个根DNS服务器，大部分分布在北美洲，可以将这13个根DNS服务器视为单个的服务器，但是每台服务器实际上是一个冗余的计算机网络以提供安全性和可靠性；<br>顶级域DNS服务器：负责顶级域名，如com，org，net，edu，gov以及各个国家的顶级域名的转换。<br>权威DNS服务器：因特网上，具有公共可访问主机的每个组织机构必须公共可访问的DNS记录，这些记录将主机名映射为IP地址。一个组织的权威DNS服务器收藏了这些DNS记录，多数大学和大公司实现和维护它们自己的基本和辅助（备份）权威DNS服务器；当然，也可以通过付费的方式，将相关的信息插入到其它权威服务器中；<br>本地DNS服务器：本地DNS服务器通常邻近其所在网络的其他主机。当主机发出DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将请求转发到DNS服务器层次结构中。<br>DNS缓存：每当DNS服务器发出请求后收到回答时，就将回答的内容缓存在它自己的主机空间上。这样，如果有相同的请求到达时，就不需要再去发出请求，直接使用缓存即可。</p>
+<h2 id="域名解析为ip："><a href="#域名解析为ip：" class="headerlink" title="域名解析为ip："></a>域名解析为ip：</h2><p>1、在浏览器中输入域名后，浏览器先在自己的缓存中查找是否有该域名对应的IP地址。<br>2、若没有，则操作系统会检查本地hosts文件是否有网址和IP地址的映射关系，若有则调用IP地址完成域名解析。<br>3、若hosts中没有这个域名的映射，则查找本地DNS解析器缓存<br>4、若还找不到，则会找本地DNS服务器，若本地DNS服务器区域没找到则会在本地DNS服务器的缓存中查找。<br>5、若本地DNS服务器区域和缓存都没查找到，则判断本地DNS服务器是否设置转发器。<br>6、若未使用转发模式，则把请求发送到根DNS服务器，根DNS服务器根据所发送来的域名来发送到下一级DNS服务器，递归的找到最终的IP地址。<br>7、若使用转发模式，则把请求发送至上一级DNS服务器，由上一级服务器进行解析并重复操作。<br>8、最终DNS服务器将查询结果返回给客户机，客户机根据所得到的IP信息访问目标主机完成域名解析。</p>
+<p>当DNS寻址完成，把域名解析为IP地址之后。</p>
+<h2 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h2><p>http基于tcp协议，tcp协议建立连接需要经历三次握手。<br>第一次握手：建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）。<br>第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（seq=k），即SYN+ACK包，此时服务器进入SYN_RECV状态。<br>第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<p>若只有两次握手只能确保客户端向服务器发送的消息，而由于服务器没有得到客户端的确认回应，所以服务器向客户端发送消息得不到保证。</p>
+<p>和tcp同属传输层的另一个协议udp 协议不需要建立连接，udp发出包也不用确保是否得到有效响应，故udp协议不可靠，但传输效率更高。<br>故udp协议可被用于一下几个方面：<br>1、包总量较少的通信(譬如上面讲到的DNS)<br>2、对实时性要求性比较高的场景，比如直播、音视频通信。</p>
+<h2 id="服务器响应和返回"><a href="#服务器响应和返回" class="headerlink" title="服务器响应和返回"></a>服务器响应和返回</h2><p>在客户端和服务器建立连接之后，可以互相传送数据，浏览器按照http协议格式将数据组装好向服务器发起请求，服务器收到请求并将处理结果响应给浏览器。</p>
+<h2 id="断开连接"><a href="#断开连接" class="headerlink" title="断开连接"></a>断开连接</h2><p>四次挥手断开连接<br>第一次挥手：主动关闭方发送一个FIN，用来关闭主动方到被动关闭方的数据传送，也就是主动关闭方告诉被动关闭方：我已经不会再给你发数据了(当然，在fin包之前发送出去的数据，如果没有收到对应的ack确认报文，主动关闭方依然会重发这些数据)，但是，此时主动关闭方还可以接受数据。<br>第二次挥手：被动关闭方收到FIN后，可能还有数据没有传完，所以并不会马上向主动关闭方发送FIN，而是先发送一个确认序号ACK，意思是说“你发的断开连接请求我收到了，但是我现在还有数据没有发完，请稍等一下呗”。<br>第三次挥手：被动关闭方方在处理完数据报文后，便发送FIN报文给主动关闭方，也就是告诉对方，我的数据也发送完了，不会再给你发送数据了；发送完FIN报文后，被动方进入LAST_ACK阶段（超时等待）。<br>第四次挥手：主动关闭方收到FIN之后发送ACK给被动关闭方，确认序号为收到序号+1，至此，完成四次挥手。</p>
+<h2 id="补充HTTP与HTTPS的区别"><a href="#补充HTTP与HTTPS的区别" class="headerlink" title="补充HTTP与HTTPS的区别"></a>补充HTTP与HTTPS的区别</h2><p>HTTPS需要用到CA申请证书；<br>HTTP封装的信息是明文的，HTTPS封装的信息是加密的。<br>HTTP使用80端口，HTTPS使用443端口<br>默认的HTTP需要进行跳转，又被劫持的风险，HTTPS更加安全</p>
 
       
     </div>
@@ -358,8 +363,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/12/myFirstBlog/" rel="next" title="多模态论文阅读笔记">
-                <i class="fa fa-chevron-left"></i> 多模态论文阅读笔记
+              <a href="/2020/05/08/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8/" rel="next" title="Java常用容器">
+                <i class="fa fa-chevron-left"></i> Java常用容器
               </a>
             
           </div>
@@ -367,10 +372,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" rel="prev" title="二叉树1">
-                二叉树1 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -493,7 +494,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#交换链表中的相邻结点"><span class="nav-number">1.</span> <span class="nav-text">交换链表中的相邻结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表求和"><span class="nav-number">2.</span> <span class="nav-text">链表求和</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#域名解析为ip："><span class="nav-number">1.</span> <span class="nav-text">域名解析为ip：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立连接"><span class="nav-number">2.</span> <span class="nav-text">建立连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器响应和返回"><span class="nav-number">3.</span> <span class="nav-text">服务器响应和返回</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断开连接"><span class="nav-number">4.</span> <span class="nav-text">断开连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#补充HTTP与HTTPS的区别"><span class="nav-number">5.</span> <span class="nav-text">补充HTTP与HTTPS的区别</span></a></li></ol></div>
             
 
           </div>

@@ -238,6 +238,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/DNS%E5%AF%BB%E5%9D%80%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/08/DNS%E5%AF%BB%E5%9D%80%E8%BF%87%E7%A8%8B/" itemprop="url">DNS寻址过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T18:40:58+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>计算机在网络中进行通讯只能识别IP地址，而无法识别域名，在访问网站时，在浏览器中输入域名，然后DNS(Domain Name System)服务器将域名翻译为IP地址，并调出IP地址所对应的网页。<br>由于互联网上有大量主机，单一的DNS服务器无法解决单点故障、无法保证通信容量以及无法临近所有的查询主机和维护困难等问题，所以DNS不适合使用单点的集中式设计，而是使用分布式集群的工作方式，通过使用分布式层次数据库和缓存方法来解决以上问题。</p>
+<p>根DNS服务器：因特网上有13个根DNS服务器，大部分分布在北美洲，可以将这13个根DNS服务器视为单个的服务器，但是每台服务器实际上是一个冗余的计算机网络以提供安全性和可靠性；<br>顶级域DNS服务器：负责顶级域名，如com，org，net，edu，gov以及各个国家的顶级域名的转换。<br>权威DNS服务器：因特网上，具有公共可访问主机的每个组织机构必须公共可访问的DNS记录，这些记录将主机名映射为IP地址。一个组织的权威DNS服务器收藏了这些DNS记录，多数大学和大公司实现和维护它们自己的基本和辅助（备份）权威DNS服务器；当然，也可以通过付费的方式，将相关的信息插入到其它权威服务器中；<br>本地DNS服务器：本地DNS服务器通常邻近其所在网络的其他主机。当主机发出DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将请求转发到DNS服务器层次结构中。<br>DNS缓存：每当DNS服务器发出请求后收到回答时，就将回答的内容缓存在它自己的主机空间上。这样，如果有相同的请求到达时，就不需要再去发出请求，直接使用缓存即可。</p>
+<h2 id="域名解析为ip："><a href="#域名解析为ip：" class="headerlink" title="域名解析为ip："></a>域名解析为ip：</h2><p>1、在浏览器中输入域名后，浏览器先在自己的缓存中查找是否有该域名对应的IP地址。<br>2、若没有，则操作系统会检查本地hosts文件是否有网址和IP地址的映射关系，若有则调用IP地址完成域名解析。<br>3、若hosts中没有这个域名的映射，则查找本地DNS解析器缓存<br>4、若还找不到，则会找本地DNS服务器，若本地DNS服务器区域没找到则会在本地DNS服务器的缓存中查找。<br>5、若本地DNS服务器区域和缓存都没查找到，则判断本地DNS服务器是否设置转发器。<br>6、若未使用转发模式，则把请求发送到根DNS服务器，根DNS服务器根据所发送来的域名来发送到下一级DNS服务器，递归的找到最终的IP地址。<br>7、若使用转发模式，则把请求发送至上一级DNS服务器，由上一级服务器进行解析并重复操作。<br>8、最终DNS服务器将查询结果返回给客户机，客户机根据所得到的IP信息访问目标主机完成域名解析。</p>
+<p>当DNS寻址完成，把域名解析为IP地址之后。</p>
+<h2 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h2><p>http基于tcp协议，tcp协议建立连接需要经历三次握手。<br>第一次握手：建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）。<br>第二次握手：服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（seq=k），即SYN+ACK包，此时服务器进入SYN_RECV状态。<br>第三次握手：客户端收到服务器的SYN+ACK包，向服务器发送确认包ACK(ack=k+1），此包发送完毕，客户端和服务器进入ESTABLISHED（TCP连接成功）状态，完成三次握手。</p>
+<p>若只有两次握手只能确保客户端向服务器发送的消息，而由于服务器没有得到客户端的确认回应，所以服务器向客户端发送消息得不到保证。</p>
+<p>和tcp同属传输层的另一个协议udp 协议不需要建立连接，udp发出包也不用确保是否得到有效响应，故udp协议不可靠，但传输效率更高。<br>故udp协议可被用于一下几个方面：<br>1、包总量较少的通信(譬如上面讲到的DNS)<br>2、对实时性要求性比较高的场景，比如直播、音视频通信。</p>
+<h2 id="服务器响应和返回"><a href="#服务器响应和返回" class="headerlink" title="服务器响应和返回"></a>服务器响应和返回</h2><p>在客户端和服务器建立连接之后，可以互相传送数据，浏览器按照http协议格式将数据组装好向服务器发起请求，服务器收到请求并将处理结果响应给浏览器。</p>
+<h2 id="断开连接"><a href="#断开连接" class="headerlink" title="断开连接"></a>断开连接</h2><p>四次挥手断开连接<br>第一次挥手：主动关闭方发送一个FIN，用来关闭主动方到被动关闭方的数据传送，也就是主动关闭方告诉被动关闭方：我已经不会再给你发数据了(当然，在fin包之前发送出去的数据，如果没有收到对应的ack确认报文，主动关闭方依然会重发这些数据)，但是，此时主动关闭方还可以接受数据。<br>第二次挥手：被动关闭方收到FIN后，可能还有数据没有传完，所以并不会马上向主动关闭方发送FIN，而是先发送一个确认序号ACK，意思是说“你发的断开连接请求我收到了，但是我现在还有数据没有发完，请稍等一下呗”。<br>第三次挥手：被动关闭方方在处理完数据报文后，便发送FIN报文给主动关闭方，也就是告诉对方，我的数据也发送完了，不会再给你发送数据了；发送完FIN报文后，被动方进入LAST_ACK阶段（超时等待）。<br>第四次挥手：主动关闭方收到FIN之后发送ACK给被动关闭方，确认序号为收到序号+1，至此，完成四次挥手。</p>
+<h2 id="补充HTTP与HTTPS的区别"><a href="#补充HTTP与HTTPS的区别" class="headerlink" title="补充HTTP与HTTPS的区别"></a>补充HTTP与HTTPS的区别</h2><p>HTTPS需要用到CA申请证书；<br>HTTP封装的信息是明文的，HTTPS封装的信息是加密的。<br>HTTP使用80端口，HTTPS使用443端口<br>默认的HTTP需要进行跳转，又被劫持的风险，HTTPS更加安全</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/08/Java%E5%B8%B8%E7%94%A8%E5%AE%B9%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -349,6 +500,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="keyword">false</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">true</span></span><br><span class="line">[a, b, c]</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">[a=<span class="number">1</span>, b=<span class="number">2</span>, c=<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
 <p>对于<br>keySet()、values()、entrySet()可使用如下方法遍历</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(String key : map.keySet())&#123;</span><br><span class="line">	System.out.println(key);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (String values : map.values()) &#123;</span><br><span class="line">	System.out.println(values);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (Entry&lt;String, String&gt; entry : map.entrySet()) &#123;</span><br><span class="line">	String key = entry.getKey();</span><br><span class="line">	String value = entry.getValue();</span><br><span class="line">	System.out.println(key + <span class="string">","</span> + value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="配对-Pair"><a href="#配对-Pair" class="headerlink" title="配对(Pair)"></a>配对(Pair)</h2><p>配对提供了一种处理简单键值关联的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javafx.util.Pair;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PairTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		Pair&lt;Integer,String&gt; pair = <span class="keyword">new</span> Pair&lt;&gt;(<span class="number">1</span>,<span class="string">"One"</span>);</span><br><span class="line">		System.out.println(pair.getKey());</span><br><span class="line">		System.out.println(pair.getValue());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1673,162 +1826,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92medium/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92medium/" itemprop="url">动态规划medium</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T18:32:51+08:00">
-                2020-05-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="leetcode-63-不同路径-II"><a href="#leetcode-63-不同路径-II" class="headerlink" title="leetcode 63. 不同路径 II"></a>leetcode 63. 不同路径 II</h2><p>描述：m * n的网格，其中有障碍物，机器人每次只能向下或向右移动一步，求从左上角走到右下角有多少种可能。</p>
-<p>思路：<br>在第(i,j)格没有障碍物时，状态转移方程dp[i][j] = dp[i-1][j] + dp[i][j-1]，若第(i,j)格有障碍物，则到这一格的可能路径为0<br>即若(0,0)位置有障碍物，则整题的答案为0，若(0,0)位置没有障碍物dp[0][0] = 1;<br>在第一行或第一列，遇到障碍物之前，值为1，遇到一个障碍物之后，后续位置的dp值均为0</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="keyword">int</span>[][] obstacleGrid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = obstacleGrid.length;</span><br><span class="line">        <span class="keyword">if</span>(m == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = obstacleGrid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [m][n];</span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][<span class="number">0</span>] == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[i][<span class="number">0</span>] == <span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][j] == <span class="number">0</span>)&#123;</span><br><span class="line">                dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                dp[<span class="number">0</span>][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(obstacleGrid[i][j] == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][j]+dp[i][j-<span class="number">1</span>];</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="leetcode-474-一和零"><a href="#leetcode-474-一和零" class="headerlink" title="leetcode 474. 一和零"></a>leetcode 474. 一和零</h2><p>在计算机界中，我们总是追求用有限的资源获取最大的收益。<br>现在，假设你分别支配着 m 个 0 和 n 个 1。另外，还有一个仅包含 0 和 1 字符串的数组。<br>你的任务是使用给定的 m 个 0 和 n 个 1 ，找到能拼出存在于数组中的字符串的最大数量。每个 0 和 1 至多被使用一次。</p>
-<p>对于整个数组的每一个数，都可以选择拼这个数或者不拼这个数，若拼这个数，m、n则相应减少。定义dp[m][n]为拥有m个0、n个1时的最大收益<br><strong>补充</strong><br><em>0-1背包问题可以逆序降维,即从k = m,l = n 开始</em><br>普通的背包问题f[i][j]表示前i件物品放入容量为j的背包可以获得的最大价值状态转移方程为<br>f[i][j] = max{f[i-1][j],f[i-1][j-w[i]] + v[i]}<br>f[i][j]要从f[i-1][j]和f[i-1][j-w[i]]+v[i]两个状态转移而来<br>这两个状态是从二维数组中直接取出的，所以正序还是逆序是无所谓的。<br>压缩维度后状态转移方程变为<br>f[j] = max{f[j],f[j-w[i]] + v[i]}<br>f[j]表示执行i次循环后,前i个物体放到容量为j时背包的最大价值,f[j]要重复使用，故会出现第i次循环覆盖第i-1次循环的结果，故需要逆序</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMaxForm</span><span class="params">(String[] strs, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(strs.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; strs.length ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> zeros = <span class="number">0</span>,ones = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; strs[i].length() ; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(strs[i].charAt(j) == <span class="string">'0'</span>)&#123;</span><br><span class="line">                    zeros++;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    ones++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = m ; k &gt;= zeros ; k--)&#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> l = n ; l &gt;= ones ; l--)&#123;</span><br><span class="line">                    dp[k][l] = Math.max(dp[k][l],dp[k-zeros][l-ones]+<span class="number">1</span>);</span><br><span class="line">                    <span class="comment">//max里的dp[k][l]是在上一层循环刚结束时的值</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="leetcode-120-三角形最小路径和"><a href="#leetcode-120-三角形最小路径和" class="headerlink" title="leetcode 120. 三角形最小路径和"></a>leetcode 120. 三角形最小路径和</h2><p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。<br>例如，给定三角形：</p>
-<p>[<br>     [2],<br>    [3,4],<br>   [6,5,7],<br>  [4,1,8,3]<br>]<br>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。<br>思路：<br>[<br>     [2],<br>    [3,4],<br>   [6,5,7],<br>  [4,1,8,3]<br>]<br>变为<br>[<br>[2],<br>[3,4],<br>[6,5,7],<br>[4,1,8,3]<br>]<br>每个数可以走到的数，是它下方和右下方的数。<br>定义dp[i][j]为包含第i行第j列元素的最下路径和<br>状态转移方程：<br>dp[0][0] = triangle[0][0];<br>最左边一列(j == 0 时)，必然经过它的上一个元素，即 dp[i][0] = dp[i-1][0]+triangle[i][0];<br>每一行的最右边元素(i == j 时 )必然经过它左上角的一个元素 dp[i][j] = dp[i-1][j-1]+triangle[i][j];<br>常规情况 dp[i][j] = min(dp[i-1][j],dp[i-1][j-1]) + triangle[i][j];<br>在最后一层(i = row-1时)，所存的dp[i][j]代表着从最后一层的每一个元素作为出口时的最小值，而整题的最小值是这些最小值中最小的一个。<br><strong>补充</strong><br>Java List的用法<br>List<Integer> triangle<br>获取长度 triangle.size()<br>增加元素 triangle.add(e)<br>按索引获取 triangle.get(index)<br>按索引删除元素 triangle.remove(index)<br>按元素内容删除 triangle.remove(Object o)<br>是否包含某元素 triangle.contains(Object o)<br>按索引替换元素值 triangle.set(index,element)</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; triangle)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(triangle == <span class="keyword">null</span> || triangle.size() ==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> row = triangle.size();</span><br><span class="line">    <span class="keyword">int</span> column = triangle.get(row-<span class="number">1</span>).size();</span><br><span class="line">    <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [row][column];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; row ; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt;= i ; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span>&amp;&amp;j==<span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][j] =triangle.get(i).get(j);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)</span><br><span class="line">            &#123;dp[i][j] = dp[i-<span class="number">1</span>][j]+triangle.get(i).get(j);&#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (i == j)</span><br><span class="line">            &#123;dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+triangle.get(i).get(j);&#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j],dp[i-<span class="number">1</span>][j-<span class="number">1</span>])+triangle.get(i).get(j);&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; column ; j++)&#123;</span><br><span class="line">        min = Math.min(min,dp[row-<span class="number">1</span>][j]); </span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> min;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="leetcode-221-最大正方形"><a href="#leetcode-221-最大正方形" class="headerlink" title="leetcode 221. 最大正方形"></a>leetcode 221. 最大正方形</h2><p>在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。<br>示例:<br>输入:<br>1 0 1 0 0<br>1 0 1 1 1<br>1 1 1 1 1<br>1 0 0 1 0<br>输出: 4<br>定义dp[m][n]代表以第m行第n列个元素为右下角的正方形的大小。<br>状态转移方程：<br>第一行，若当前位置值为1则大小为1 ，否则大小为零。<br>第一列，若当前位置值为1则大小为1 ，否则大小为零。<br>普通位置，若当前位置和其上方其右方三个位置的值均为1 ，则其大小为(其左上角、上、左 三个位置中的最小值)+1，否则若该位置值为1，其大小为1，否则大小为零。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximalSquare</span><span class="params">(<span class="keyword">char</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(matrix == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m = matrix.length;</span><br><span class="line">        <span class="keyword">if</span>(m == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> dp [][] = <span class="keyword">new</span> <span class="keyword">int</span> [m][n];</span><br><span class="line">        <span class="keyword">if</span>(matrix[<span class="number">0</span>][<span class="number">0</span>] == <span class="string">'0'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">            max = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = matrix[i][<span class="number">0</span>] == <span class="string">'0'</span> ? <span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">            max = Math.max(max,dp[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = matrix[<span class="number">0</span>][j] == <span class="string">'0'</span> ? <span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">            max = Math.max(max,dp[<span class="number">0</span>][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ;  i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>((matrix[i][j] == <span class="string">'1'</span>)&amp;&amp;(matrix[i-<span class="number">1</span>][j] == <span class="string">'1'</span>)&amp;&amp;(matrix[i][j-<span class="number">1</span>] == <span class="string">'1'</span>))</span><br><span class="line">                    &#123;</span><br><span class="line">                        dp[i][j] = Math.min(Math.min(dp[i-<span class="number">1</span>][j-<span class="number">1</span>],dp[i-<span class="number">1</span>][j]) , dp[i][j-<span class="number">1</span>]) +<span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(matrix[i][j] == <span class="string">'1'</span>) dp[i][j] = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">else</span> dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                    max = Math.max(max,dp[i][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> max*max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="leetcode-152-乘积最大子数组"><a href="#leetcode-152-乘积最大子数组" class="headerlink" title="leetcode 152. 乘积最大子数组"></a>leetcode 152. 乘积最大子数组</h2><p>给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。<br>思路：数组中可能会遇到负数，这时乘积会变为最小，若后续出现另一个负数，则负负得正乘积变为最大。<br>故在数组中维护两个数字 imax 代表遍历至当前位置的最大值和imin代表遍历至当前位置的最小值。<br>若数组中没有负数，只需维护一个imax即可。若数组中存在负数，则imin所存的最小值在与出现的负数相乘时，会变为最大值，故将当前最大值imax和当前最小值imin交换。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">int</span> imax = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> imin = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] &lt;<span class="number">0</span> )&#123;</span><br><span class="line">                <span class="keyword">int</span> temp = imax;</span><br><span class="line">                imax = imin;</span><br><span class="line">                imin = temp;</span><br><span class="line">            &#125;</span><br><span class="line">            imax = Math.max(imax*nums[i],nums[i]);</span><br><span class="line">            imin = Math.min(imin*nums[i],nums[i]);</span><br><span class="line">            max = Math.max(max,imax);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1879,7 +1876,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1890,7 +1887,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
