@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="桶排序是计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。">
+<meta name="description" content="桶排序可看做计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。 1234567891011121314151617181920212223242526import java.util.ArrayList;import java.util.Collection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="桶排序">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;10&#x2F;%E6%A1%B6%E6%8E%92%E5%BA%8F&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="桶排序是计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。">
+<meta property="og:description" content="桶排序可看做计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。 1234567891011121314151617181920212223242526import java.util.ArrayList;import java.util.Collection">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-10T11:30:31.023Z">
+<meta property="og:updated_time" content="2020-05-10T11:55:15.430Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -329,7 +329,8 @@
       
 
       
-        <p>桶排序是计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。<br>先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。</p>
+        <p>桶排序可看做计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。<br>先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BucketSort</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">		<span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">		<span class="keyword">int</span> []arr = &#123;<span class="number">7</span>,<span class="number">9</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">8</span>&#125;;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; arr.length;i++) &#123;</span><br><span class="line">			max = Math.max(max, arr[i]);</span><br><span class="line">			min = Math.min(min, arr[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> bucketNum = (max - min)/arr.length+<span class="number">1</span>;</span><br><span class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; bucketArr = <span class="keyword">new</span> ArrayList&lt;&gt;(bucketNum);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; bucketNum; i++) &#123;</span><br><span class="line">			bucketArr.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; arr.length ; i++) &#123;</span><br><span class="line">			<span class="keyword">int</span> num = (arr[i] - min) / arr.length;</span><br><span class="line">			bucketArr.get(num).add(arr[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; bucketArr.size();i++) &#123;</span><br><span class="line">			Collections.sort(bucketArr.get(i));</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(bucketArr.toString());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
