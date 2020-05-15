@@ -238,6 +238,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url">论文笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-12T12:00:59+08:00">
+                2020-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">论文笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="U-net与Dense-net相结合的视网膜血管提取"><a href="#U-net与Dense-net相结合的视网膜血管提取" class="headerlink" title="U-net与Dense-net相结合的视网膜血管提取"></a>U-net与Dense-net相结合的视网膜血管提取</h2><p>创新部分：<br>1、U-net层次化对称结构和Dense-net稠密连接方式的结合<br>2、白话预处理奇数弱化原始彩色眼底图像中的亮度不均，增强图像中血管区域的对比度<br>3、数据集随即旋转 Gamma变化实现数据增广<br>4、将每幅图像随机分割成若干较小的图块，用于减小模型参数规模，降低训练难度</p>
+<h2 id="采用卷积核金字塔和空洞卷积的单阶段目标检测"><a href="#采用卷积核金字塔和空洞卷积的单阶段目标检测" class="headerlink" title="采用卷积核金字塔和空洞卷积的单阶段目标检测"></a>采用卷积核金字塔和空洞卷积的单阶段目标检测</h2><p>创新部分：<br>1、采用多种方式融合特征信息，先使用逐像素相加方式融合多层不同大小的特征图信息，然后在通道维度拼接不同阶段的特征图。<br>2、在模型的锚框机制中引入卷积核金字塔结构以解决多尺度问题<br>3、采用空洞卷积减少大尺度卷积核增加的参数量，合理降低锚框数量。</p>
+<p>目标检测分为两类，一类是无特征信息融合的例如 FastR-CNN 和Faster R-CNN 以及YOLOv1、YOLOv2<br>一类是有特征信息融合，在多个特征图上进行预测如SSD、MS-CNN(multi-scale CNN)或在单个融合的特征图上进行预测HyperNet和ION(inside-outsidenot)使用拼接方式融合不同层次的特征。或在多个融合的特征图上进行预测如DSSD(deconvolutional single-shot detector)使用逐像素相乘的方式融合信息。YOLOv3、FPN、MaskR-CNN使用逐像素相加的方式融合信息。</p>
+<p>为利用不同深度特征图的优势，本文在两个阶段上融合特征信息。<br>1、在<strong><em>特征提取网络之后</em></strong>添加多个卷积层，对添加的多个卷积层使用<strong><em>逐像素相加</em></strong>的方式从深层到浅层逐层融合特征信息，形成具有丰富语义信息和细节信息的特征图。<br>2、为进一步增强特征信息融合，使用<strong><em>通道拼接的方式</em></strong>为上一步得到的融合特征图<strong><em>拼接不同阶段的特征图</em></strong>，形成语义、细节信息更加丰富的特征图。<br>特征信息融合模块：从原始SSD预测层的最深层开始，先通过双线性插值操作增大特征图的分辨率，再使用逐像素相加的方式和前一层特征图融合，直至原始SSD预测层的最浅层。再拼接不同阶段的特征图。</p>
+<h2 id="多尺度特征融合工件目标语义分割"><a href="#多尺度特征融合工件目标语义分割" class="headerlink" title="多尺度特征融合工件目标语义分割"></a>多尺度特征融合工件目标语义分割</h2><p>创新部分：在ResNet网络的第四个block层后继续多尺度特征提取。而图像金字塔只是简单地进图像分辨率的变化，虽然能获得多尺度信息表达，但ResNet网络的第四个block层的输出已经是一个维度很小的特征图，若继续降分辨率，不利于后续的特征响应，反而会增加网络模型参数计算量，因此使用空洞卷积代替降分辨率操作，在不降低分辨率的前提下，有效增大了滤波器的感受野，又充分获得了上级图像的局部特征信息。<br>故采用三层图像金字塔模式，底层为block4层输出的特征图，中层为使用不同采样率的多个并行空洞卷积，以提取不同尺度的局部特征信息，顶层为中层提取的局部特征信息的融合层。</p>
+<h2 id="多尺度特征图融合的目标检测"><a href="#多尺度特征图融合的目标检测" class="headerlink" title="多尺度特征图融合的目标检测"></a>多尺度特征图融合的目标检测</h2><p>创新部分：利用原始SSD网络提取特征图，通过1 * 1卷积层将提取的特征图统一为256维，通过反卷积操作增加自顶向下特征图的空间分辨率，通过对应元素相加的操作，将两个方向的特征图进行融合，融合后的特征图采用3 * 3的卷积核进行卷积操作，减小特征图融合后的混叠效应。<br>以完全卷积的方式处理任意的单尺度图像，然后特征融合结构将特征提取网络的<strong><em>原始特征图</em></strong>和<strong><em>反卷积后的特征图</em></strong>进行融合操作。</p>
+<h2 id="多模态深度神经网络的固废对象分割"><a href="#多模态深度神经网络的固废对象分割" class="headerlink" title="多模态深度神经网络的固废对象分割"></a>多模态深度神经网络的固废对象分割</h2><p>在颜色退化严重的场景下，把RGB图像和深度图一起作为深度卷积神经网络的输入，<br>创新部分：<br>1、在VGG16网络结构的基础上融合深度信息，把VGG16最后的全连接层改造成3层卷积层，形成一个全卷积网络，进行多模态信息的特征学习。<br>深度神卷积经网络包含2个输入层data1和data2，data1输入RGB图像和对应的标签文件，data2输入对应的深度图。将两者最后一层卷积层输出的特征图进行加权求和后作为输入训练softmax分类器。<br>网络结构改进：<br>1、修改输入，增加一个并列分支data2层用于训练对应深度图<br>2、避免特征图空间分辨率下降，普通池化会缩小图片尺寸，损失精细结构信息，令第四第五个池化层步长为1，再加上1填充，池化核尺寸都为3，这样经过池化后特征图大小不变，由于步长比池化核的尺寸小，输出之间会有重叠和覆盖，提高了特征丰富性，但后层感受野发生了变化，为使感受野不变，后面的卷积层使用空洞卷积，以在不增加参数的前提下，增加感受野。<br>3、修改卷积层滤波器核数，由于进行学习的图片场景较为复杂，包含的信息、特征数相对较多，需要更高维度上的特征学习，全连接层改造的三层卷积核的绿薄荷为1024、1024、4（4为最终的输出数）.</p>
+<h2 id="多特征融合的文档图像版面分析"><a href="#多特征融合的文档图像版面分析" class="headerlink" title="多特征融合的文档图像版面分析"></a>多特征融合的文档图像版面分析</h2><p>采用不同大小的卷积核并行对输入图像进行特征提取，接着将卷积后的特征图进行融合，组成特征融合模块，然后选取DeepLabV3中的串并行空间金字塔策略。并添加图像级特征对提取的特征图进一步优化，最后通过双线性插值法对图像进行恢复。</p>
+<p>DeepLabV3的核心部分，串并行空间金字塔池化模块(ASPP)<br>通过不同感受野的空洞卷积核对特征图进行上采样，捕获多尺度信息，分别为1 * 1以及扩张率为6、12、18的3 * 3空洞卷积核。<br>采样卷积核大小接近特征图大小时，3 * 3的卷积核失去捕捉全图像的信息，退化为1 * 1的卷积核，可以采用平均池化特征图进行处理经过卷积，再融合得出的特征图。最终将经过4种不同卷积核得到的特征图与图像及特征进行融合。</p>
+<h2 id="改进SSD算法在零部件检测中的应用研究"><a href="#改进SSD算法在零部件检测中的应用研究" class="headerlink" title="改进SSD算法在零部件检测中的应用研究"></a>改进SSD算法在零部件检测中的应用研究</h2><p>改进：<br>1、修改backbone为MobileNetV3-Large，移除平均池化层和最后的1 * 1卷积层，<br>2、减小输入图像的尺寸，提高检测速度，变300 * 300为224 * 224<br>3、用特征金字塔网络提高对较小零件检测效果，选取对应尺寸(28,28)(14,14)(7,7)(4,4)(2,2)(1,1)的所有特征层和最后一层组成自底向上的特征金字塔结构。</p>
+<h2 id="改进的YOLOv3红外视频图像行人检测算法"><a href="#改进的YOLOv3红外视频图像行人检测算法" class="headerlink" title="改进的YOLOv3红外视频图像行人检测算法"></a>改进的YOLOv3红外视频图像行人检测算法</h2><p>改进：<br>1、对红外图像数据集的目标候选框进行维度聚类选择最优anchor个数，YOLOv3的anchor个数和维度是有VOC20类和COCO80类数据集聚类得到，不适用于红外行人检测，红外行人检测时，行人在图片中的长宽比始终是一个相对固定的值。<br>2、调整分类网络预训练过程，使用不同分辨率的红外图像作为网络输入，用VOC数据集进行模型的预训练。使用不同分辨率的红外图像作为分类数据集，可以取得比较明显的微调效果。<br>3、网络地铁带过程中，随机改变输入图像的尺寸，进行多尺度网络训练，使模型对不同尺寸图像的检测具有鲁棒性</p>
+<h2 id="改进的YOLOv3算法及其在小目标检测中的应用"><a href="#改进的YOLOv3算法及其在小目标检测中的应用" class="headerlink" title="改进的YOLOv3算法及其在小目标检测中的应用"></a>改进的YOLOv3算法及其在小目标检测中的应用</h2><p>改进：YOLOv3网络利用8倍降采样输出的特征图对小目标进行检测，这意味着当目标小于8×8时网络对目标的预测会出现困难，并且特征图为8倍降采样的目标检测层对小目标位置信息的检测能力是有限的。为了使网络获取更多小目标的特征信息，提高对小目标的检测率。<br>利用原网络中输出的4倍降采样特征图对目标进行检测，对YOLOv3输出的8倍降采样特征图进行2倍上采样，将2倍上采用特征图与Darknet53中第2个残差块输出的4倍降采样特征图进行拼接，建立输出为4倍降采样的特征融合目标检测层以检测小目标。为了获得更多低层的小目标位置信息，在源网络的第2个残差块中增加2个残差单元。</p>
+<h2 id="基于YOLOV3的复杂环境红外弱小目标检测"><a href="#基于YOLOV3的复杂环境红外弱小目标检测" class="headerlink" title="基于YOLOV3的复杂环境红外弱小目标检测"></a>基于YOLOV3的复杂环境红外弱小目标检测</h2><p>红外图像特点：<br>信噪比较低，几何轮廓较为模糊，且与真实形态可能存在较大差异，对其成像特征进行分析，可以提升检测网络对目标的适配能力。</p>
+<p>改进:无，0-0醉了，可能是因为发在航空兵器</p>
+<h2 id="改进的YOLOv3网络在钢板表面缺陷检测研究"><a href="#改进的YOLOv3网络在钢板表面缺陷检测研究" class="headerlink" title="改进的YOLOv3网络在钢板表面缺陷检测研究"></a>改进的YOLOv3网络在钢板表面缺陷检测研究</h2><p>1、使用轻量级网络MobileNet来代替YOLOv3原有网络中的密集连接Darknet-53，适当的减少参数量的提取<br>2、加入空洞卷积，提高网络对小目标缺陷的检测能力，<br>3、在网络结构的最后一层卷积中加入Inception结构。</p>
+<h2 id="基于YOLOv3的红外行人小目标检测技术研究"><a href="#基于YOLOv3的红外行人小目标检测技术研究" class="headerlink" title="基于YOLOv3的红外行人小目标检测技术研究"></a>基于YOLOv3的红外行人小目标检测技术研究</h2><p>借鉴SENet中对特征进行权重重标定的思路，将SE block引入YOLOv3中，提升了网络的特征描述能力。<br>根据SENet的思路，对网络进行改进一般有几种方式<br>1、直接在卷积层后面直接加SENet模块，对所有网络都通用，但是由于现在的网络中都含有大量的卷积层且参数量巨大，且需要大量实验来确定哪些卷积层后面加入新模块。<br>2用加入的SENet的模块替换原有网络中的inception或者residual层，这类替换位置较为明确，在YOLOv3中含有较多的Residual层，于是对网络的改进采取引入SE-Resnet模块的方法。</p>
+<h2 id="基于多尺度特征融合的小目标行人检测"><a href="#基于多尺度特征融合的小目标行人检测" class="headerlink" title="基于多尺度特征融合的小目标行人检测"></a>基于多尺度特征融合的小目标行人检测</h2><p>针对SSD当前存在的小目标漏检及误检问题，结合反卷积与特征融合思想，提出回归SSD模型，将原SSD特征层反卷积后与较浅层特征结合，实现复杂场景下小目标行人检测。</p>
+<h2 id="基于改进Fast-R-CNN的红外图像行人检测研究"><a href="#基于改进Fast-R-CNN的红外图像行人检测研究" class="headerlink" title="基于改进Fast R-CNN的红外图像行人检测研究"></a>基于改进Fast R-CNN的红外图像行人检测研究</h2><p>改进：<br>1、结合红外图像的特点，提出了一种自适应ROI提取算法，在不影响准确率的前提下降低了ROI数量，使得网络的计算量减小。<br>Fast R-CNN用selective search算法在一帧图片中生成约2000个候选框，计算量较大，红外图像不含色彩，对于一帧红外光图片，背景和行人的灰度差值十分明显，先通过图像的局部均值、标准差对局部区域做粗检测，<br>2、提出了一种加权锚点框的定位机制，基于3种不同宽高比锚点框的检测置信度进行坐标加权，获得更准确的定位框。</p>
+<h2 id="基于红外热成像与YOLOv3的夜间目标识别方法"><a href="#基于红外热成像与YOLOv3的夜间目标识别方法" class="headerlink" title="基于红外热成像与YOLOv3的夜间目标识别方法"></a>基于红外热成像与YOLOv3的夜间目标识别方法</h2><p>图像预处理，提高图像对比度，增强图像细节，去除图像噪声。<br>提高图像对比度目的在于突出热源与背景的反差，突出热源目标，采用高反差保留法，该方法主要是将图像中颜色、明暗反差较大两部分的交界处保留下来。表达形式如下：<br>dst = img - R * Blur(img)<br>dst为处理后结果，img为原始图像，R为增益参数：Blur为调用的高斯滤波器。<br>R的取值不同对对比度的提升不同，R取0位原始图像，R取1提高对比度不强，R取6时对比度过高产生早点，因此本文R值取3。<br>增强对比度后，使用高斯高通滤波器对图像进行锐化，在增强边沿、细节的同时，不会丢失源图像的低频成分。<br>图像锐化在增强热成像图像细节特征的同时会引入随机噪声点，因此图像与处理最后一步进行降噪工作，使用高斯低通滤波器平滑，降低图像中的噪点。</p>
+<h2 id="基于显著图融合的无人机载热红外图像目标检测方法。、"><a href="#基于显著图融合的无人机载热红外图像目标检测方法。、" class="headerlink" title="基于显著图融合的无人机载热红外图像目标检测方法。、"></a>基于显著图融合的无人机载热红外图像目标检测方法。、</h2><p>热红外图片对比度低，纹理特征弱，本文使用热红外图像的显著图来进行图像增强，作为目标检测器的注意力机制。<br>使用BASNet生成显著图，通过通道替换和像素级加权融合两种方案将红外热图像与对应的显著图进行融合增强。<br>融合方案：<br>1、用显著图分别替换R、G、B三个通道中的一个，每个替换方式都对应于一个新的融合图像，目标检测性能存在差异。<br>2、将显著图与热红外图像的三个通道亮度值分别在像素级别上直接按各自0.5的权重比例融合，显著图与热红外图像的融合在突出图像中行人及车辆目标的同时保留了图像中的纹理信息。<br>将MobileNetv2的平均池化和最后一个卷积层去掉，使其替换YOLOv3网络中原有的DarkNet53网络，同时分别将分辨率为输入图像8倍和16倍下采样的特征层中的最后一层作为细粒度特征与检测网络中上采样之后的高级语义特征融合。增强目标检测能力，对无人机航拍图像中的小目标检测有重要意义。</p>
+<h2 id="结合改进Deeplab-V3-网络的水岸线检测方法"><a href="#结合改进Deeplab-V3-网络的水岸线检测方法" class="headerlink" title="结合改进Deeplab V3+网络的水岸线检测方法"></a>结合改进Deeplab V3+网络的水岸线检测方法</h2><p>利用伽马函数扩充样本<br>修改deeplab v3+网络，对xception结构进行微调，同时在decoder时增加一路低级特征，增加特征信息然后利用图像信息设定损失权重系数。</p>
+<h2 id="融合多层特征的多尺度行人检测"><a href="#融合多层特征的多尺度行人检测" class="headerlink" title="融合多层特征的多尺度行人检测"></a>融合多层特征的多尺度行人检测</h2><p>针对行人检测问题，删除深度残差网络的一部分，仅采用深度残差网络的3个区域提取特征图，然后采用最邻近上采样法将最后一层提取的特征图放大两倍后再用相加法，将高层语义信息丰富的特征和低层细节信息丰富的特征进行融合。</p>
+<h2 id="针对小目标的深度学习行人检测算法研究"><a href="#针对小目标的深度学习行人检测算法研究" class="headerlink" title="针对小目标的深度学习行人检测算法研究"></a>针对小目标的深度学习行人检测算法研究</h2><p>SSD 算法采用多尺度检测框架来检测不同大小的目标行人，存在两个主要的问题<br>1、多尺度检测框架中各个特征层之间的关联不够密切，特征层之间的上下文信息没有被充分利用<br>2、SSD算法主要采用浅层网络的Conv4_3层来检测小目标行人，而Conv4_3层属于低级特征，语义区分性不强，存在行人特征提取不够充分的问题。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%A8%B3%E5%AE%9A%E6%80%A7%E5%88%86%E6%9E%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1541,165 +1705,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/09/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/" itemprop="url">数据库索引</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-09T11:49:02+08:00">
-                2020-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>索引是帮助MySQL高效获取数据的<strong>排好序</strong>的<strong>数据结构</strong><br>索引数据结构：</p>
-<ul>
-<li>二叉查找树</li>
-<li>红黑树</li>
-<li>Hash表</li>
-<li>B-Tree</li>
-</ul>
-<p>MySQL索引一般不用二叉查找树<br>因为若所插入的数据是单边增长的数据，则二叉查找树演变成链表，查找效率极低。</p>
-<p>红黑树<br>当插入数据左右失衡时，会自动调整的一种二叉树<br>缺点：数据库中存在着动辄百万千万的大量数据，此时红黑树的高度会变得越来越大，在查找叶子结点时，所耗费的时间等于红黑树的高度，效率降低。</p>
-<p>Hash表<br>插入时，把索引的每一个字段做一个Hash运算，将得到的散列值和索引所在的磁盘文件地址指针存入一张Hash映射表中。<br>查找时，对所要查找的元素做一个Hash运算，用得到的散列值在映射表里定位到对应的磁盘文件地址指针，精确查找时速度很快。<br>缺点：无法做到范围查找，且若有大量重复键值的情况，Hash索引效率会由于Hash碰撞问题而变得很低。</p>
-<p>B-Tree<br>给二叉查找树的节点一次性分配更多的容量，让一个节点里存更多的索引元素。<br>叶节点具有相同的深度，叶节点的指针为空，所有索引元素不重复，节点中的数据索引从左到右递增排列<br><img src="../../pic/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/B-Tree.png" alt="B-Tree" title="B-Tree"><br>缺点：范围查找也很麻烦。</p>
-<p>B+Tree(B-Tree变种)<br>非叶子结点不存储data，只存储索引，可以放更多的索引（冗余）。叶子节点包含所有的索引字段。叶子节点用指针连接，提高区间访问的性能<br><img src="../../pic/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/B+Tree.png" alt="B+Tree" title="B+Tree"><br>B+Tree把所有的索引元素都存在叶子节点中，然后把出于中间位置的索引元素提上去，放到非叶子节点，作为冗余存放。<br>通过下面语句，可知MySQL一个节点的默认大小为16384(16KB)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show global status like &apos;Innodb_page_size&apos;;</span><br></pre></td></tr></table></figure>
-<p>优势：<br>B-Tree的非叶子节点存储data，而B+Tree的非叶子节点不存储data，这样B+Tree就可以存入更多的索引。Hash表无法做到范围查找，B-Tree范围查找也很麻烦，而B+Tree在做范围查找时由于叶子节点从左到右依次递增且其间有指针连接，故非常方便。</p>
-<p>MyISAM存储引擎索引实现<br>MyISAM索引文件和数据文件是分离的(非聚集)<br><img src="../../pic/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/MyISAM.png" alt="MyISAM" title="MyISAM"><br>非聚集索引先查找到元素，和与之存储在一起的磁盘文件地址指针，再通过磁盘文件地址指针找到目标。</p>
-<p>InnoDB索引实现(聚集)<br><img src="../../pic/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/InnoDB.png" alt="InnoDB" title="InnoDB"><br>表数据文件本身就是按B+Tree组织的一个索引结构文件<br>聚集(聚簇)索引-叶节点包含了完整的数据记录</p>
-<p>InnoDB的表必须要有主键，并且推荐使用整型的自增主键。原因：整型的主键相互比较时比较快，且占用空间小。若不用自增的主键，出现非递增的情况时，有较大的维护成本。</p>
-<p>联合索引的底层存储结构 ：<br><img src="../../pic/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.png" alt="联合索引" title="联合索引"><br>把几个元素放入一个节点中存储，排序规则按字段逐个比较。<br>联合索引的最左前缀匹配原则即where条件必须有联合索引的第一个字段(联合索引中最左边的索引)，与where条件的顺序无关。因为联合索引的数据存储时，按照第一个字段来进行排序，只有当第一个字段相等，才按照第二个字段排序。所以在整个数据结构中，除第一个字段外都是全局无序，局部有序状态，无法按索引找到。当遇到范围查询(&gt;、&lt;、between、like)就会停止匹配，因为当第一个字段为范围值而第二个字段为确定值时，在第一个字段所查找的范围内，第二个字段不是有序的，无法使用索引。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1750,7 +1755,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
