@@ -238,6 +238,533 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/MySQL%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/03/MySQL%E6%95%B0%E6%8D%AE%E8%BF%87%E6%BB%A4/" itemprop="url">MySQL数据过滤</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T14:13:26+08:00">
+                2020-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="AND操作符和OR操作符"><a href="#AND操作符和OR操作符" class="headerlink" title="AND操作符和OR操作符"></a>AND操作符和OR操作符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_price,prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003 AND prod_price &lt;=10;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003 OR prod_price &lt;=10;</span><br></pre></td></tr></table></figure>
+<p><strong>AND在计算次序中优先级更好，在多个AND和OR操作符组合时，用’(‘、’)’来规定计算次序</strong><br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1002 OR vend_id = 1003 AND prod_price&gt;=10;</span><br></pre></td></tr></table></figure>
+<p>代表 vend_id = 1002的所有项加上 vend_id = 1003且prod_price &gt;=10的项;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE (vend_id = 1002 OR vend_id = 1003) AND prod_price&gt;=10;</span><br></pre></td></tr></table></figure>
+<p>代表 vend_id = 1002或1003 且 prod_price &gt;= 10的项</p>
+<h2 id="IN操作符"><a href="#IN操作符" class="headerlink" title="IN操作符"></a>IN操作符</h2><p>IN取到括号内被逗号分隔的所有值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id IN (1002,1003)</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>与</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1002 OR vend_id = 1003</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>等价</p>
+<h2 id="NOT操作符"><a href="#NOT操作符" class="headerlink" title="NOT操作符"></a>NOT操作符</h2><p>在WHERE子句中用来否定后跟条件,支持对 IN、BETWEEN、EXISTS取反<br>例: 检索vend_id不等于1002和1003的项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id ONT IN (1002,1003)</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+
+<h2 id="LIKE操作符"><a href="#LIKE操作符" class="headerlink" title="LIKE操作符"></a>LIKE操作符</h2><p>为在搜索子句中使用通配符，必须使用 LIKE 操作符。后跟的搜索模式利用通配符匹配而不是直接相等匹配进行比较<br><strong>_通配符</strong><br>搜索串中’%’表示任何字符出现任意次数。<br><em>%可以匹配0个、1个或多个字符，但是不可以匹配NULL</em><br>例：搜索prod_name中以jet开头的项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;jet%&apos;;</span><br></pre></td></tr></table></figure>
+<p>搜索prod_name中任意位置包含anvil的项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;%anvil%&apos;;</span><br></pre></td></tr></table></figure>
+<p>搜索prod_name中以s开头e结尾的项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;s%e&apos;;</span><br></pre></td></tr></table></figure>
+<p><strong>_通配符</strong><br>与’%’能匹配0个字符不同,搜索串中’ _ ‘表示任何字符出现一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;_ ton anvil&apos;;</span><br></pre></td></tr></table></figure>
+<p><em>通配符比其他搜索花费时间更长，尽量不把通配符放在搜索模式开始处，这会导致搜索速度慢</em></p>
+<h2 id="用正则表达式进行搜索"><a href="#用正则表达式进行搜索" class="headerlink" title="用正则表达式进行搜索"></a>用正则表达式进行搜索</h2><p>复杂过滤条件下正则表达式非常有用<br>使用REGEXP关键字，其后所跟的东西作为正则表达式处理。<br>LIKE关键字在不使用通配符时，需要匹配满足所有内容，而REGEXP匹配到部分内容符合即可检索到。<br>MySQL中的所有正则表达式匹配不区分大小写，为区分大小写可以使用BINARY关键词</p>
+<p>‘.’字符表示可以匹配任意一个字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;.000&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+
+<p><strong>进行OR匹配</strong><br>OR操作符:’|’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;1000|2000|3000&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p><strong>使用中括号匹配任意单一字符</strong><br>[123]定义一组字符，代表了匹配1或2或3，以下表达式代表匹配了 1 Ton 、2 Ton、 3 Ton 字符串<br>[123] Ton是[1|2|3] Ton的缩写<br>但 若不加中括号则会实现别的匹配<br>1|2|3 Ton 代表匹配的是 1 或者 2 或者 3 Ton</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;[123] Ton&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p><strong>进行NOT操作</strong><br>NOT操作符’^’<br>[123]匹配字符1、2、3<br>[^123]匹配1、2、3之外的所有字符</p>
+<p><strong>进行范围匹配</strong><br>[0-9]与[0123456789]等价<br>[a-z]匹配所有字符</p>
+<p><strong>匹配特殊字符</strong><br>‘.’、’[‘、’]’、’|’、’ _ ‘等字符的匹配需要使用转义字符双斜杠 ‘//‘’<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name</span><br><span class="line">FROM vendors</span><br><span class="line">WHERE vend_name REGEXP &apos;\\.&apos;</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+
+<p><strong>匹配字符类</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">类</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">[:alnum:]</td>
+<td align="left">任意字母和数字同[a-zA-Z0-9]</td>
+</tr>
+<tr>
+<td align="left">[:alpha:]</td>
+<td align="left">任意字母[a-zA-Z]</td>
+</tr>
+<tr>
+<td align="left">[:upper:]</td>
+<td align="left">任意大写字母[A-Z]</td>
+</tr>
+<tr>
+<td align="left">[:lower:]</td>
+<td align="left">任意小写字母[a-z]</td>
+</tr>
+<tr>
+<td align="left">[:digit:]</td>
+<td align="left">任意数字[0-9]</td>
+</tr>
+<tr>
+<td align="left">[:xdigit:]</td>
+<td align="left">任意十六进制数字[a-fA-F0-9]</td>
+</tr>
+<tr>
+<td align="left">[:print:]</td>
+<td align="left">任意可打印字符</td>
+</tr>
+<tr>
+<td align="left">[:graph:]</td>
+<td align="left">与[:print:]相同，但不包括空格</td>
+</tr>
+<tr>
+<td align="left">[:cntrl:]</td>
+<td align="left">ASCII控制字符ASCII 0到31和127</td>
+</tr>
+<tr>
+<td align="left">[:punct:]</td>
+<td align="left">不在[:alnum:] 又不在 [:cntrl:]中的任意字符</td>
+</tr>
+<tr>
+<td align="left">[:blank:]</td>
+<td align="left">空格和制表[\t]</td>
+</tr>
+<tr>
+<td align="left">[:space:]</td>
+<td align="left">包括空格在内的任何空白字符[\f\n\r\t\v]</td>
+</tr>
+</tbody></table>
+<p><strong>匹配多个实例</strong><br>重复元字符用于表示正则表达式匹配项的出现次数</p>
+<table>
+<thead>
+<tr>
+<th align="left">类</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">‘ * ‘</td>
+<td align="left">0个或多个匹配</td>
+</tr>
+<tr>
+<td align="left">‘+’</td>
+<td align="left">1个或多个匹配（等于{1,}）</td>
+</tr>
+<tr>
+<td align="left">‘?’</td>
+<td align="left">0个或1个匹配（等于{0,1}）</td>
+</tr>
+<tr>
+<td align="left">‘{n}’</td>
+<td align="left">指定数目的匹配</td>
+</tr>
+<tr>
+<td align="left">‘{n,}’</td>
+<td align="left">不少于指定数目的匹配</td>
+</tr>
+<tr>
+<td align="left">‘{n,m}’</td>
+<td align="left">匹配数目的范围（m不超过255）</td>
+</tr>
+</tbody></table>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;\\([0-9] sticks?\\)&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>\( 匹配 (<br>[0-9]匹配任意数字<br>sticks? 匹配stick 和 sticks ,s?代表s可以出现也可以不出现<br>\) 匹配 )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;[[:digit:]]&#123;4&#125;&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>[:digit:]代表匹配任意数字，{4}要求出现4次，即上述表达式匹配连在一起的4位数字</p>
+<p><strong>定位符</strong><br>若要匹配特定位置的文本，使用定位符</p>
+<table>
+<thead>
+<tr>
+<th align="left">定位符</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">^</td>
+<td align="left">文本的开始</td>
+</tr>
+<tr>
+<td align="left">$</td>
+<td align="left">文本的结尾</td>
+</tr>
+<tr>
+<td align="left">[[:&lt;:]]</td>
+<td align="left">词的开始</td>
+</tr>
+<tr>
+<td align="left">[[:&gt;:]]</td>
+<td align="left">词的结尾</td>
+</tr>
+</tbody></table>
+<p><strong><em>^用在集合中[^]时，表示否定该集合，否则指串的开始处</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name REGEXP &apos;^[0-9\\.]&apos;</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>匹配以一个数字(包括小数点’.’)开始的所有内容，而如果不加’^’<br>则匹配 包含数字(包括小数点’.’)的所有内容</p>
+<p><strong><em>LIKE 和 REGEXP的不同在于， LIKE 匹配整个串而 REGEXP 匹配子串。利用定位符，通过用 ^ 开始每个表达式，用 $ 结束每个表达式，可以使REGEXP 的作用与 LIKE 一样。</em></strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/02/MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/02/MySQL/" itemprop="url">数据库基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-02T15:43:55+08:00">
+                2020-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数据库基础"><a href="#数据库基础" class="headerlink" title="数据库基础"></a>数据库基础</h2><p>数据库是一个以某种有组织的方式存储的数据集合。可想象为一个文件柜，此文件柜是一个存放数据的物理位置，不管数据是什么以及如何组织的。<br><strong>数据库（database）</strong> 保存有组织的数据的容器（通常是一个文件或一组文件）<br>在将资料放入自己的文件柜时，并不是随便将它们扔进某个抽屉就完事了，而是在文件柜中创建文件，然后将相关的资料放入特定的文件中。<br>在数据库领域中，这种文件称为表。表是一种结构化的文件，可用来存储某种特定类型的数据。表可以保存顾客清单、产品目录，或者其他信息清单。<br><strong>表（table）</strong>某种特定类型数据的结构化清单。<br><em>存储在表中的数据应当是一种类型的数据或一个清单，为免以后检索访问困难，不应将不同的清单存入同一数据库中。</em><br><strong>列（column）</strong> 表中的一个字段。所有表都是由一个或多个列组成的<br><strong>行（row）</strong> 表中的一个记录。<br><strong>主键（primary key）</strong>一列（或一组列），其值能够<strong>唯一区分</strong>表中每个行。<br>作为主键需要满足两个条件：1、任意两行都不具有不相同的主键值；2、每行都必须有一个主键值(主键列不允许NULL值)<br>作为主键的三个良好习惯：<br>1、不更新主键列中的值；<br>2、不重用主键列的值(即列从表中删除后，其主键不能赋给以后的新行)；很多系统中，业务与主键耦合，重用主键可能会使系统发生业务错误。<br>3、不在主键列中使用可能会更改的值。</p>
+<p><strong>选择数据库</strong><br>为查看拥有哪些数据库，应输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW databases;</span><br></pre></td></tr></table></figure>
+<p>为使用 crashcourse数据库，应输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE crashcourse;</span><br></pre></td></tr></table></figure>
+<p>输出 Database changed<br>为获得一个数据库内的表，应输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES</span><br></pre></td></tr></table></figure>
+<p>show语句也可用于展示 columns，用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW columns </span><br><span class="line">FROM customers</span><br></pre></td></tr></table></figure>
+<p>customers：表名</p>
+<h2 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h2><p>SELECT语句:<br>从products表中检索名为prod_name的列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p>从products表中检索多个列，它们的名为 prod_id，prod_name，prod_price :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name,prod_price </span><br><span class="line">FROM products</span><br></pre></td></tr></table></figure>
+<p>从products中检索所有列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p><strong>*检索不需要的列通常会降低检索和应用程序性能，所以最好不使用 *通配符 *</strong></p>
+<p>检索不重复的值使用关键字 DISTINCT </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p><strong>DISTINCT关键字应用于所有列即，所有列的值相同才算重复，即有任意一项不重复都会被检索出来例如：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id , prod_price </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p>使用LIMIT子句限定SELECT的返回结果<br>例：限定返回结果不多于5行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
+<p>例：限定返回结果是从第8行开始的5行（第一行为行0）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 8,5;</span><br></pre></td></tr></table></figure>
+
+<p>使用完全限定的列名和表名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT products.prod_name </span><br><span class="line">FROM crashcourse.products;</span><br></pre></td></tr></table></figure>
+<h2 id="排序检索数据"><a href="#排序检索数据" class="headerlink" title="排序检索数据"></a>排序检索数据</h2><p>使用ORDER BY子句对搜索结果进行排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>按多个列进行排序，用逗号分隔即可。<br>先按照prod_price排序，再在遇到相同的prod_price时按照prod_name排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price, prod_name;</span><br></pre></td></tr></table></figure>
+<p>降序排序使用 DESC关键字<br>升序排序是默认的 关键字 ASC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC;</span><br></pre></td></tr></table></figure>
+<p>按多个列进行排序，并对其中的某些使用降序排序,DESC紧跟着列，再用逗号和其他列隔开即，DESC只应用于当前列，而DISTINCT应用于所有列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC,prod_name;</span><br></pre></td></tr></table></figure>
+
+<h2 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h2><p>使用WHERE子句对检索结果进行筛选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price = 2.50;</span><br></pre></td></tr></table></figure>
+
+<p>WHERE 子句操作符:</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作符</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">‘=’</td>
+<td align="left">“等于’</td>
+</tr>
+<tr>
+<td align="left">‘&lt;&gt;’</td>
+<td align="left">“不等于”</td>
+</tr>
+<tr>
+<td align="left">‘!=’</td>
+<td align="left">“不等于”</td>
+</tr>
+<tr>
+<td align="left">‘&lt;’</td>
+<td align="left">“小于”</td>
+</tr>
+<tr>
+<td align="left">‘&lt;=’</td>
+<td align="left">“小于等于”</td>
+</tr>
+<tr>
+<td align="left">‘&gt;’</td>
+<td align="left">“大于”</td>
+</tr>
+<tr>
+<td align="left">‘&gt;=’</td>
+<td align="left">“大于等于”</td>
+</tr>
+<tr>
+<td align="left">‘BETWEEN’</td>
+<td align="left">“在指定的两个值之间”</td>
+</tr>
+</tbody></table>
+<p><em>MySQL执行匹配时默认不区分大小写,BETWEEN匹配时包括所指定的值</em><br>BETWEEN 用法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price BETWEEN 5 AND 10;</span><br></pre></td></tr></table></figure>
+<p>空值检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price IS NULL;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E9%80%92%E5%BD%92/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1657,332 +2184,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/" itemprop="url">二叉树2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-18T15:09:30+08:00">
-                2020-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="层次遍历："><a href="#层次遍历：" class="headerlink" title="层次遍历："></a>层次遍历：</h2><p>求一棵树每层节点的平均数</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Double&gt; <span class="title">averageOfLevels</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Double&gt; ret <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">		<span class="comment">//ret用来存储每层节点的平均数</span></span><br><span class="line">	<span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> ret;</span><br><span class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">		<span class="comment">//用一个队列queue来存储当前层的所有节点</span></span><br><span class="line">	queue.add(root);</span><br><span class="line">	<span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">		<span class="keyword">int</span> cnt = queue.size();</span><br><span class="line">		<span class="comment">//当前层节点压入队列之后，队列大小即节点数</span></span><br><span class="line">		<span class="keyword">double</span> sum = <span class="number">0</span>;<span class="comment">//用来累加当前层的节点和</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cnt ; i++)&#123;</span><br><span class="line">			TreeNode node = queue.poll();</span><br><span class="line">			sum += node.val;</span><br><span class="line">			<span class="keyword">if</span>(node.left != <span class="keyword">null</span>) queue.add(node.left);</span><br><span class="line">			<span class="keyword">if</span>(node.right != <span class="keyword">null</span>) queue.add(node.right);</span><br><span class="line">		&#125;</span><br><span class="line">		ret.add(sum/cnt);</span><br><span class="line">		<span class="comment">//sum/cnt即某层的节点平均数，压入ret中</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="求二叉树最下层的最左边的结点。"><a href="#求二叉树最下层的最左边的结点。" class="headerlink" title="求二叉树最下层的最左边的结点。"></a>求二叉树最下层的最左边的结点。</h2><p>层序遍历时，从右往左的向队列中压入一整层的节点,再出队列。则最后一个出队列的节点是最底层的最左边节点。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findBottomLeftValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">	queue.add(root);</span><br><span class="line">	<span class="keyword">while</span>(!queue.isEmpty())&#123;</span><br><span class="line">		root = queue.poll();</span><br><span class="line">		<span class="keyword">if</span>(root.right!=<span class="keyword">null</span>) queue.add(root.right);</span><br><span class="line">		<span class="keyword">if</span>(root.left!=<span class="keyword">null</span>) queue.add(root.left);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> root.val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="二叉树前序遍历："><a href="#二叉树前序遍历：" class="headerlink" title="二叉树前序遍历："></a>二叉树前序遍历：</h2><p>需要借助栈，因为前序遍历是  root -&gt; left -&gt; right<br>而栈是后进先出，所以为达到遍历过程中的先左后右，必须要使得压栈过程先右后左。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">	stack.push(root);</span><br><span class="line">	<span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">		TreeNode node = stack.pop();</span><br><span class="line">		<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line">		<span class="comment">//空节点不记录入ret中，它无左右节点，也不需要将左右节点压栈</span></span><br><span class="line">		<span class="comment">//当空节点被压入栈中时，说明上一次出栈操作的root为叶子节点或只有左右节点中的一个。</span></span><br><span class="line">		<span class="comment">//若无这一步，不对node做null判断，每次常规的压栈操作，会将叶子节点的左右节点(均为空)</span></span><br><span class="line">		<span class="comment">//或只有一个孩子节点的节点的左右节点(有一个为空)均压入栈中后记录,即在最终的遍历结果中出现很多null且无法退出遍历。</span></span><br><span class="line">		<span class="comment">//有了这一步判断，仍然会在上一层循环中压入null，但进行一次判断后，null节点的左右孩子节点(仍为null)不会再压入栈中，</span></span><br><span class="line">		<span class="comment">//null节点也不会计入ret中。而是遇到null之后做弹栈操作。弹到非null节点为止。</span></span><br><span class="line">		ret.add(node.val);</span><br><span class="line">		stack.push(root.right);<span class="comment">//顺序很重要</span></span><br><span class="line">		stack.push(root.left);<span class="comment">//顺序很重要</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="二叉树的后序遍历："><a href="#二叉树的后序遍历：" class="headerlink" title="二叉树的后序遍历："></a>二叉树的后序遍历：</h2><p>后序遍历可以通过前序遍历修改。<br>前序遍历是  root -&gt; left -&gt; right<br>后序遍历是  left -&gt; right -&gt; root<br>将前序遍历改为 root -&gt; right -&gt; left 再逆序即可。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">	stack.push(root);</span><br><span class="line">	<span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">		TreeNode node = stack.pop();</span><br><span class="line">		<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">continue</span>;</span><br><span class="line">		ret.add(node.val);</span><br><span class="line">		stack.push(root.left);</span><br><span class="line">		<span class="comment">//前序遍历时先压右节点再压左节点保证先出左节点后出右节点</span></span><br><span class="line">		stack.push(root.right);</span><br><span class="line">		<span class="comment">//后序遍历时，与之相反，最后要将结果逆置</span></span><br><span class="line">	&#125;</span><br><span class="line">	Collections.reverse(ret);</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; ret = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> ret;</span><br><span class="line">	Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">	TreeNode cur = root;</span><br><span class="line">	<span class="keyword">while</span>(cur!=<span class="keyword">null</span> || !stack.isEmpty())&#123;</span><br><span class="line">		<span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</span><br><span class="line">		stack.push(cur);</span><br><span class="line">		cur = cur.left;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//中序遍历 left -&gt; root -&gt; right，所以每次压栈要将left压到底为止</span></span><br><span class="line">		TreeNode node = stack.pop();</span><br><span class="line">		ret.add(node.val);</span><br><span class="line">		cur = node.right;</span><br><span class="line">		<span class="comment">//压栈完，进行弹栈操作并记录后再压入node.right，即在root之后记录right</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" itemprop="url">二叉树1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-02T15:09:30+08:00">
-                2020-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。</p>
-<h2 id="二叉树两节点的最长路径"><a href="#二叉树两节点的最长路径" class="headerlink" title="二叉树两节点的最长路径"></a>二叉树两节点的最长路径</h2><p>二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1<br>故根结点为root的二叉树的两节点最长路径 = Max(左子树的最长路径，右子树的最长路径，左子树深度(去根)+右子树深度(去根)+1)即</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">diameterOfBinaryTree</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	getDepth(root);</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getDepth</span><span class="params">(TreeNode root)</span></span>&#123;<span class="comment">//返回树的最大深度</span></span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> l = getDepth(root.left);</span><br><span class="line">	<span class="keyword">int</span> r = getDepth(root.right);</span><br><span class="line">	<span class="keyword">int</span> max = Math.max(max , l+r);</span><br><span class="line">	<span class="keyword">return</span> Math.max(l,r)+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="反转二叉树"><a href="#反转二叉树" class="headerlink" title="反转二叉树 "></a>反转二叉树 </h2><p>常见的递归操作题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">invertTree</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	TreeNode left = root.left;<span class="comment">//记录root.left防止丢失</span></span><br><span class="line">	root.left = invertTree(root.right);</span><br><span class="line">	root.right = invertTree(left);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="归并两棵二叉树"><a href="#归并两棵二叉树" class="headerlink" title="归并两棵二叉树"></a>归并两棵二叉树</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">MergeTree</span><span class="params">(TreeNode tree1 , TreeNode tree2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(tree1 == <span class="keyword">null</span> &amp;&amp; tree2 == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">if</span>(tree1 == <span class="keyword">null</span>) <span class="keyword">return</span> tree2;</span><br><span class="line">	<span class="keyword">if</span>(tree2 == <span class="keyword">null</span>) <span class="keyword">return</span> tree1;</span><br><span class="line">	TreeNode root = <span class="keyword">new</span> TreeNode(tree1.val + tree2.val);</span><br><span class="line">	root.left = MergeTree(tree1.left, tree2.left);</span><br><span class="line">	root.right = MergeTree(tree1.right , tree2.right);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径"><a href="#判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径" class="headerlink" title="判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径"></a>判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径</h2><p>路径要么在左子树上，要么在右子树上。<br>走向左右子树后，目标数减去根结点数值，对左右子树做递归。<br>因为必须要走到叶子结点后结束，即当前节点没有左右节点时判断是否为目标数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathsum</span><span class="params">(TreeNode root , <span class="keyword">int</span> sum)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span> &amp;&amp; root.val == sum) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	<span class="keyword">return</span> hasPathsum(root.left,sum-root.val) || hasPathsum(root.right, sum-root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="统计二叉树中路径和等于目标数的路径数量"><a href="#统计二叉树中路径和等于目标数的路径数量" class="headerlink" title="统计二叉树中路径和等于目标数的路径数量"></a>统计二叉树中路径和等于目标数的路径数量</h2><p>不需要从根节点起到叶子节点止，但需要连续。</p>
-<p>整个判断过程，先从根节点开始走路径，然后递归左右子节点。<br>判断过程中，省去了验证最后一个结点为叶子结点的过程。<br>然后再做一次递归，从这个根节点的左右子树开始判断，以左右子树为根结点再判断一次是否符合题意。即本题有两种递归，一种是递归的判断以某点作为起点是否存在路径，一种是递归的找起点。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode root , <span class="keyword">int</span> sum)</span></span>&#123;<span class="comment">//这个函数是递归的找起始节点。</span></span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> result = pathSumStartWithRoot(root,sum)+pathSum(root.left , sum)+pathSum(root.right , sum);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">pathSumStartWithRoot</span><span class="params">(TreeNode root , <span class="keyword">int</span> sum)</span></span>&#123;<span class="comment">//这个函数可以判断出从根节点开始的路径和是否满足目标数</span></span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(root.val == sum) result ++;</span><br><span class="line">	result += pathSumStartWithRoot(root.left , sum - root.val) + pathSumStarrtWithRoot(root.right , sum - root.val);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断A树是否为B树的子树"><a href="#判断A树是否为B树的子树" class="headerlink" title="判断A树是否为B树的子树"></a>判断A树是否为B树的子树</h2><p>若A树是B树的子树，那必和B树的一部分相等,以下为判断两树是否相等<br>方法：若都为null，则相等，若只有一个为null，则不相等，若数值不同则不相等，递归对比他们的左右子树。</p>
-<p>判断A树是否和B树相等之后，再递归比较A树是否和B树的左右子树相等即可判断A树是否是B树的子树,当B树为null时递归退出</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSubtree</span><span class="params">(TreeNode A , TreeNode B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(B==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">return</span> isSame(A,B)||isSubtree(A,B.left)||isSubtree(A,B.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSame</span><span class="params">(TreeNode A,TreeNode B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(A == <span class="keyword">null</span> &amp;&amp; B == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	<span class="keyword">if</span>(A == <span class="keyword">null</span> || B == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="comment">//都为空排除后的或证明了一个为空一个不为空</span></span><br><span class="line">	<span class="keyword">if</span>(A.val != B.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">return</span> isSame(A.left,B.left)&amp;&amp;isSame(A.right,B.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断一个树是否左右对称"><a href="#判断一个树是否左右对称" class="headerlink" title="判断一个树是否左右对称"></a>判断一个树是否左右对称</h2><p>此题和子树判断题类似，可以将左右对称变为判断两个树是否相等</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span><span class="params">(Tree root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//之所以null时返回true是因为比对到null则说明递归到底，比对成功了</span></span><br><span class="line">	<span class="keyword">return</span> isSame(root.left, root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="树的最小路径"><a href="#树的最小路径" class="headerlink" title="树的最小路径"></a>树的最小路径</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//若这个树为空则高度为0</span></span><br><span class="line">	<span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//若这个树左右子树同时为空则高度为1</span></span><br><span class="line">	<span class="keyword">int</span> leftDepth = minDepth(root.left);</span><br><span class="line">	<span class="keyword">int</span> rightDepth = minDepth(root.right);</span><br><span class="line">	<span class="keyword">if</span>(leftDepth == <span class="number">0</span>)</span><br><span class="line">	<span class="comment">//若这个树左子树为空，则长度为右子树长度+1</span></span><br><span class="line">		<span class="keyword">return</span> rightDepth + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(rightDepth == <span class="number">0</span>)</span><br><span class="line">	<span class="comment">//若这个树右子树为空，则长度为左子树长度+1</span></span><br><span class="line">		<span class="keyword">return</span> leftDepth + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> min(leftDepth,rightDepth) + <span class="number">1</span>;</span><br><span class="line"> 	<span class="comment">//若左右子树都不为空，则长度为左右子树的较小值+1</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>以上代码可优化为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> leftDepth = minDepth(root.left);</span><br><span class="line">	<span class="keyword">int</span> rightDepth = minDepth(root.right);</span><br><span class="line">	<span class="keyword">if</span>(leftDepth == <span class="number">0</span> || rightDepth == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> leftDepth+rightDepth+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//leftDepth和rightDepth都不为0才返回下一御酒</span></span><br><span class="line">	<span class="keyword">return</span> Math.min(leftDepth,rightDepth)+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计左叶子节点的和"><a href="#统计左叶子节点的和" class="headerlink" title="统计左叶子节点的和"></a>统计左叶子节点的和</h2><p>//若一个结点的左孩子是叶节点，即他的左孩子是左叶子结点，累加左孩子数值之后再递归判断这个结点的右子树<br>//否则，递归判断这个结点的左右子树</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumOfLeftLeaves</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(isLeaf(root.left))&#123;</span><br><span class="line">		<span class="keyword">return</span> root.left.val + sumOfLeftLeaves(root.right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sumOfLeftLeaves(root.left)+sumOfLeftLeaves(root.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断一个节点是不是叶子节点</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isLeaf</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">return</span> node.left == <span class="keyword">null</span> &amp;&amp; node.right == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="相同结点值的最大路径长度"><a href="#相同结点值的最大路径长度" class="headerlink" title="相同结点值的最大路径长度"></a>相同结点值的最大路径长度</h2><p>需要用到深度优先搜索</p>
-<p>树的递归题目中，写出的左右子节点的递归，可以默认写出时即已经是正确的结果，再进行后续。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> path = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestUnivaluePath</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	dfs(root);</span><br><span class="line">	<span class="keyword">return</span> path;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left = dfs(root.left);</span><br><span class="line">	<span class="keyword">int</span> right = dfs(root.right);</span><br><span class="line">	<span class="comment">//dfs的子函数return的值可从 最外层的dfs看出。</span></span><br><span class="line">	<span class="comment">// Math.max(leftPath,rightPath)即，返回的是 左路径和右路径中的较大值。</span></span><br><span class="line">	<span class="comment">//即 left返回的是 root左节点 的左右路径中的较大值</span></span><br><span class="line">	<span class="comment">// right 返回的是root右节点 的左右路径中的较大值</span></span><br><span class="line">	<span class="keyword">int</span> leftPath = root.left!=<span class="keyword">null</span> &amp;&amp; root.left.val == root.val ? left+<span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> rightPath = root.right!=<span class="keyword">null</span> &amp;&amp; root.right.val == root.val ? right+<span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//获得了左右子节点的左右路径中的较长者之后，对于当前的root节点而言，若root节点的值和左节点相等，则左路径+1，类似的右路径+1。</span></span><br><span class="line">	path = Math.max(path,leftPath + rightPath);</span><br><span class="line">	<span class="comment">//path用来记录并更新一个以root为根结点的树的相同节点最大路径长度</span></span><br><span class="line">	<span class="keyword">return</span> Math.max(leftPath,rightPath);</span><br><span class="line">	<span class="comment">//所返回的值是之前计算过的左右路径中的较大值。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="House-Robber-III"><a href="#House-Robber-III" class="headerlink" title="House Robber III"></a>House Robber III</h2><p>The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the “root.” Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that “all houses in this place forms a binary tree”. It will automatically contact the police if two directly-linked houses were broken into on the same night.</p>
-<p>Determine the maximum amount of money the thief can rob tonight without alerting the police<br>间隔遍历：在二叉树中取点，要求任意两点不相邻，求所取点之和的最大值为多少。</p>
-<p>对于root为根的二叉树，最优解为取根结点+四个孙子节点或 取两个孩子结点之间的较大值。即</p>
-<p>f(root) = max(root.val + f(ll) + f(lr) + f(rl) + f(rr) , f(l)+f(r))</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> val1 = root.val;</span><br><span class="line">	<span class="keyword">if</span>(root.left!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	val1 = val1 + rob(root.left.left) + rob(root.left.right); </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(root.right!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	val1 = val1 + rob(root.right.left) + rob(</span><br><span class="line">	root.right.right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> val2 = rob(root.left)+rob(root.right);</span><br><span class="line">	<span class="keyword">return</span> Math.max(val1,val2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="求二叉树中第二小的值"><a href="#求二叉树中第二小的值" class="headerlink" title="求二叉树中第二小的值"></a>求二叉树中第二小的值</h2><p>给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么这个节点的值不大于它的子节点的值。 给出这样的一个二叉树，你需要输出所有节点中的第二小的值。如果第二小的值不存在的话，输出 -1 。</p>
-<p>定义两个变量，一个保存最小值一个保存次小值。再定义一个flag递归过程中，若找到过次小值则改变flag，返回次小值。若未找到过次小值，则返回-1；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;</span><br><span class="line"><span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findSecondMinimumValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	helper(root);</span><br><span class="line">	<span class="keyword">return</span> flag == <span class="number">0</span> ? -<span class="number">1</span>:second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">if</span>(root.val &lt; first)&#123;</span><br><span class="line">		second = first;</span><br><span class="line">		first = root.val;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt;= second &amp;&amp; root.val &gt; first)&#123;</span><br><span class="line">		flag++;</span><br><span class="line">		second = root.val;</span><br><span class="line">	&#125;</span><br><span class="line">	helper(root.left);</span><br><span class="line">	helper(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为这个二叉树父节点的值必≤子节点的值，故根结点必定为最小值，所以第二小的值必在左右两个子树之中，<br>倘若左右两个子树中的最小值都不和根结点相等，则第二小的值是左右两个子树最小值中的较小值。<br>倘若左(右)子节点和父节点的值相等，则需要在左(右)子树中找出第二小的值来与右(左)子树的最小值一起比较出一个较小值出来。这样才能保证比对出来的是真正的第二小的值。<br>简而言之，要在左右子树中分别找出和根结点不相等的最小值。<br>这两个最小值中的较小者就是第二小的值。</p>
-<p>若左(右)子节点和根节点相等，才需要递归的找左(右)子树的次小值。<br>因为左右子树作为一个单独的树做此题的判断，root.left必定是left树的最小值，递归后找到的次小值也即左子树除根结点外的最小值。<br>否则直接取左右子节点中的较小值即可。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findSecondMinimumValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//递归返回条件 1 节点为空，树没有次小值。</span></span><br><span class="line">	<span class="keyword">if</span>(root.val==<span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//递归返回条件 2 节点没有子节点，树没有次小值。</span></span><br><span class="line">	<span class="keyword">int</span> leftVal = root.left.val;</span><br><span class="line">	<span class="keyword">int</span> rightVal = root.right.val;</span><br><span class="line">	<span class="keyword">if</span>(leftVal == root.val) &#123;</span><br><span class="line">		leftVal == 	findSecondMinimumValue(root.left);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rightVal == root.val)&#123;</span><br><span class="line">		rightVal == findSecondMinimumValue(root.right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(leftVal != -<span class="number">1</span> &amp;&amp; rightVal != -<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.min(leftVal,rightVal);</span><br><span class="line">		<span class="comment">//递归返回条件 3 因为左右节点若与根结点相等则会继续递归，递归到找到没有子节点的节点 返回-1为止。</span></span><br><span class="line">		<span class="comment">//若都不为 -1 则说明两边都没有一直递归到树的末端，而是在中途由于某个子节点不和父节点相等而返回</span></span><br><span class="line">		<span class="comment">//即满足，左右子节点都不和父节点的值相等。</span></span><br><span class="line">		<span class="comment">//那么这两个数值中的较小值就是整个树的次小值。</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(leftVal != -<span class="number">1</span>) <span class="keyword">return</span> leftVal;</span><br><span class="line">	<span class="comment">// 递归返回条件4 在上一步判断完了两个子节点都不和根结点相等之后，再继续执行则说明，必有一个子节点和根结点值相等，此时若 左子节点不为-1，即左子节点不和根结点相等，即右子节点和根节点相等，此时次小值为左子节点。</span></span><br><span class="line">	<span class="keyword">return</span> rightVal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2033,7 +2234,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

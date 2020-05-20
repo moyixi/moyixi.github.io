@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
+<meta name="description" content="leetcode-27. 移除元素给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。 双指针问题：快指针正常遍历数组，慢指针只有遇到不等于val的值时才自增，当遍历数组结束后慢指针的值为数组中不为val的元素个数，即移除后数组的新长度。 12345678">
 <meta property="og:type" content="article">
-<meta property="og:title" content="链表">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;24&#x2F;%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98&#x2F;index.html">
+<meta property="og:title" content="leetcodeing">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;20&#x2F;leetcodeing&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="交换链表中的相邻结点要求：不允许改变结点的数值[1]-&amp;gt;[2]-&amp;gt;[3]-&amp;gt;[4] 变为[2]-&amp;gt;[1]-&amp;gt;[4]-&amp;gt;[3] pre 和 next 用于记录交换中的结点中的前后结点。 在头结点之前申请一个结点：node，用于函数返回再申请pre结点，用于交换操作：ListNode pre=node。需要交换的结点为pre其后一位的结点和其后两位的结点即pre.n">
+<meta property="og:description" content="leetcode-27. 移除元素给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。 双指针问题：快指针正常遍历数组，慢指针只有遇到不等于val的值时才自增，当遍历数组结束后慢指针的值为数组中不为val的元素个数，即移除后数组的新长度。 12345678">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-29T09:03:51.988Z">
+<meta property="og:updated_time" content="2020-05-20T07:17:28.411Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/03/24/链表类算法题/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/20/leetcodeing/"/>
 
 
 
 
 
-  <title>链表 | 莫一兮的个人博客</title>
+  <title>leetcodeing | 莫一兮的个人博客</title>
   
 
 
@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/leetcodeing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="莫一兮">
@@ -257,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">链表</h1>
+          <h1 class="post-title" itemprop="name headline">leetcodeing</h1>
         
 
         <div class="post-meta">
@@ -269,8 +269,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T15:09:30+08:00">
-                2020-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-20T14:11:18+08:00">
+                2020-05-20
               </time>
             
 
@@ -329,11 +329,21 @@
       
 
       
-        <h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
-<p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
-<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ListNode node =<span class="keyword">new</span> ListNode(-<span class="number">1</span>)</span><br><span class="line">node.next = head;</span><br><span class="line">ListNode pre = node;</span><br><span class="line">While(pre.next!=<span class="keyword">null</span> &amp;&amp; pre.next.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">ListNode l1 = pre.next;</span><br><span class="line">ListNode l2 = pre.next.next;</span><br><span class="line">ListNode next = l2.next;</span><br><span class="line">l1.next = next;</span><br><span class="line">l2.next = l1;</span><br><span class="line">pre.next = l2;</span><br><span class="line">pre = l1</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> node.next</span><br></pre></td></tr></table></figure>
-<h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
+        <h2 id="leetcode-27-移除元素"><a href="#leetcode-27-移除元素" class="headerlink" title="leetcode-27. 移除元素"></a>leetcode-27. 移除元素</h2><p>给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</p>
+<p>双指针问题：快指针正常遍历数组，慢指针只有遇到不等于val的值时才自增，当遍历数组结束后慢指针的值为数组中不为val的元素个数，即移除后数组的新长度。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(nums == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">    		<span class="keyword">if</span>(nums[i]!=val)&#123;</span><br><span class="line">    			nums[flag] = nums[i];</span><br><span class="line">    			flag++;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">			<span class="keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="leetcode-33搜索旋转排序数组"><a href="#leetcode-33搜索旋转排序数组" class="headerlink" title="leetcode-33搜索旋转排序数组"></a>leetcode-33搜索旋转排序数组</h2><p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2])。搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。你可以假设数组中不存在重复的元素。你的算法时间复杂度必须是O(logn) 级别。</p>
+<p>看到时间复杂度O(logn)即可知道要使用二分法了。<br>旋转数组数据状况分析：一个升序数组结果旋转之后，变为两个升序数组，其中，右边升序数组的最大值小于左边升序数组的最小值。会因为旋转位置和mid之间的不同而导致不同的数据状况<br>例如：[0,1,2,4,5,6,7,8,9] 可能变为<br>情况A：[4,5,6,7,8,9,0,1,2] 此时left &lt; mid,mid左端是排序数组，mid右端是旋转数组<br>也可能变为<br>情况B：[7,8,9,0,1,2,3,4,5,6] left &gt; mid,此时mid左端是旋转数组，右端是排序数组</p>
+<p>若target = mid则直接返回<br>否则分情况讨论<br>情况A时,若mid &lt; target ,则target必在mid右端的旋转数组中，因为那里才有大于mid的数字<br>若mid &gt; target , 则需要继续判断,left与target之间的关系</p>
+<p>当left &lt; target,target在mid左端,[因为右端有序部分的最大值也小于left值]<br>当left &gt; target,target在mid右端,[因为左端部分最小值都大于target,必须在右端找]</p>
+<p>情况B时, 若mid &gt; target,则target必在mid左端的旋转数组中，<br>若mid &lt; target,则需要继续判断,right与target之间的关系</p>
+<p>当right &gt; target,target在mid右端<br>当right &lt; target,target在mid左端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span>  <span class="title">search</span> <span class="params">(<span class="keyword">int</span> []nums , <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums==<span class="keyword">null</span>||nums.length==<span class="number">0</span>)<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> right = nums.length-<span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">if</span>(nums[left]==target)<span class="keyword">return</span> left;</span><br><span class="line">		<span class="keyword">if</span>(nums[right]==target)<span class="keyword">return</span> right;</span><br><span class="line">		<span class="keyword">while</span>(left+<span class="number">1</span>&lt;right)&#123;</span><br><span class="line">			<span class="keyword">int</span> mid = left + (right - left)/<span class="number">2</span>;</span><br><span class="line">			<span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">				<span class="keyword">return</span> mid;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(nums[left]&lt;nums[mid])&#123;</span><br><span class="line">				<span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">					left = mid;</span><br><span class="line">				&#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[left]&lt;target)&#123;</span><br><span class="line">					right = mid;</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					left = mid;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">				right = mid;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(nums[right]&gt;target)&#123;</span><br><span class="line">				left = mid;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				right = mid;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 
       
     </div>
@@ -358,8 +368,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/12/myFirstBlog/" rel="next" title="多模态论文阅读笔记">
-                <i class="fa fa-chevron-left"></i> 多模态论文阅读笔记
+              <a href="/2020/05/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" rel="next" title="论文笔记">
+                <i class="fa fa-chevron-left"></i> 论文笔记
               </a>
             
           </div>
@@ -368,8 +378,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" rel="prev" title="二叉树1">
-                二叉树1 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/20/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/" rel="prev" title="MySQL逻辑架构">
+                MySQL逻辑架构 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -493,7 +503,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#交换链表中的相邻结点"><span class="nav-number">1.</span> <span class="nav-text">交换链表中的相邻结点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链表求和"><span class="nav-number">2.</span> <span class="nav-text">链表求和</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-27-移除元素"><span class="nav-number">1.</span> <span class="nav-text">leetcode-27. 移除元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-33搜索旋转排序数组"><span class="nav-number">2.</span> <span class="nav-text">leetcode-33搜索旋转排序数组</span></a></li></ol></div>
             
 
           </div>
