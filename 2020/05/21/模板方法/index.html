@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="组件协作类模式  Template Method 模板方法  ：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，  或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现  如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求  定义一个操作中的算法的骨架(稳定)，而将一些步骤延迟(变化)到子类中，Template Method使得子类可以复">
+<meta name="description" content="组件协作类模式 Template Method 模板方法             ：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，                 或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现                 如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求 定义一个操作中的算法的骨架(稳定)，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="模板方法">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;21&#x2F;%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="组件协作类模式  Template Method 模板方法  ：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，  或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现  如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求  定义一个操作中的算法的骨架(稳定)，而将一些步骤延迟(变化)到子类中，Template Method使得子类可以复">
+<meta property="og:description" content="组件协作类模式 Template Method 模板方法             ：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，                 或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现                 如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求 定义一个操作中的算法的骨架(稳定)，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-21T07:54:22.490Z">
+<meta property="og:updated_time" content="2020-05-21T09:57:07.575Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -329,61 +329,11 @@
       
 
       
-        <ul>
-<li><p>组件协作类模式</p>
-</li>
-<li><p>Template Method 模板方法</p>
-</li>
-<li><p>：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，</p>
-</li>
-<li><p>或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现</p>
-</li>
-<li><p>如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求</p>
-</li>
-<li><p><strong>定义一个操作中的算法的骨架(稳定)，而将一些步骤延迟(变化)到子类中，Template Method使得子类可以复用一个算法的结构，</strong></p>
-</li>
-<li><p><strong>同时可以重定义(Override重写)该算法的某些特定步骤。</strong></p>
-</li>
-<li><p>重复代码全部在父类里面，不同业务的，通过抽象方法给子类实现，即在父类中实现骨架，子类中具体实现。</p>
-</li>
-<li><p>Template Method 之前都是App来调用 Lib 早绑定</p>
-</li>
-<li><p>实现之后就是 Lib调用App 晚绑定</p>
-</li>
-<li></li>
-<li></li>
-<li><p>两种写法应用程序流程对比：</p>
-</li>
-<li><p>【Lib】</p>
-</li>
-<li><p>【App】</p>
-</li>
-<li><p>【Lib】</p>
-</li>
-<li><p>【App】</p>
-</li>
-<li><p>【Lib】</p>
-</li>
-<li><p>结构化软件设计流程</p>
-</li>
-<li><p>Lib开发人员： 开发 1、3、5</p>
-</li>
-<li><p>App开发人员： 开发 2、4 和程序主流程</p>
-</li>
-<li></li>
-<li></li>
-<li><p>面向对象设计流程</p>
-</li>
-<li><p>Lib开发人员： 开发 1、3、5和程序主流程</p>
-</li>
-<li><p>App开发人员： 开发 2、4 </p>
-</li>
-<li></li>
-<li><p>普通的开发模式如下：</p>
+        <p> 组件协作类模式<br> Template Method 模板方法<br>             ：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，<br>                 或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现<br>                 如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求<br> <strong>定义一个操作中的算法的骨架(稳定)，而将一些步骤延迟(变化)到子类中，Template Method使得子类可以复用一个算法的结构，</strong><br> <strong>同时可以重定义(Override重写)该算法的某些特定步骤。</strong><br> 重复代码全部在父类里面，不同业务的，通过抽象方法给子类实现，即在父类中实现骨架，子类中具体实现。<br>Template Method 之前都是App来调用 Lib 早绑定<br>实现之后就是 Lib调用App 晚绑定<br> 两种写法应用程序流程对比：<br> 【Lib】<br> 【App】<br> 【Lib】<br> 【App】<br> 【Lib】<br>结构化软件设计流程<br>Lib开发人员： 开发 1、3、5<br>App开发人员： 开发 2、4 和程序主流程</p>
+<p>面向对象设计流程<br>Lib开发人员： 开发 1、3、5和程序主流程<br>App开发人员： 开发 2、4 </p>
+<p>普通的开发模式如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Ordinary</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Library lib = <span class="keyword">new</span> Library();</span><br><span class="line"></span><br><span class="line">		Application app = <span class="keyword">new</span> Application();</span><br><span class="line">		<span class="comment">//在主函数中将步骤按某种顺序串联。流程中需要用到程序库开发人员同时也需要用到应用程序开发人员。</span></span><br><span class="line">		lib.step1();</span><br><span class="line">		<span class="keyword">if</span>(app.step2()==<span class="keyword">true</span>) &#123;</span><br><span class="line">			lib.step3();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">4</span> ; i++) &#123;</span><br><span class="line">			app.step4();</span><br><span class="line">		&#125;</span><br><span class="line">		lib.step5();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Library</span></span>&#123;</span><br><span class="line">		<span class="comment">//程序库开发人员有完成某一项任务的1、3、5步骤</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step1</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step1"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step3</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step3"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step5</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step5"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span></span>&#123;</span><br><span class="line">		<span class="comment">//应用程序开发人员有某项任务的2、4步骤</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">step2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step4"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</li>
-</ul>
 <p>模板方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateMethodLib</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">//稳定 template method</span></span><br><span class="line">		<span class="comment">//前提：run 必须稳定，当做骨架可被重用</span></span><br><span class="line">		step1();</span><br><span class="line">		<span class="keyword">if</span>(step2()) &#123;<span class="comment">//支持变化</span></span><br><span class="line">			step3();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">4</span> ; i++) &#123;</span><br><span class="line">			step4();<span class="comment">//支持变化</span></span><br><span class="line">		&#125;</span><br><span class="line">		step5();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">step1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Lib step1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">step3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Lib step3"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">step5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Lib step5"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">step2</span><span class="params">()</span> </span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">step4</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 

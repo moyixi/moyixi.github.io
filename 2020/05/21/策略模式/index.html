@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="策略模式 组件协作模式的一种 组件协作模式通过晚期绑定，来实现框架与应用程序之间的松耦合  动机： 软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中，将会使对象变得异常复杂，而且有时候 支持不使用的算法也是一个性能负担 如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？  定义一系列算法，把它们一个个封装起来，并且使他们可以互">
+<meta name="description" content="策略模式组件协作模式的一种组件协作模式通过晚期绑定，来实现框架与应用程序之间的松耦合动机：软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中，将会使对象变得异常复杂，而且有时候支持不使用的算法也是一个性能负担如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。该模">
 <meta property="og:type" content="article">
 <meta property="og:title" content="策略模式">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;21&#x2F;%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="策略模式 组件协作模式的一种 组件协作模式通过晚期绑定，来实现框架与应用程序之间的松耦合  动机： 软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中，将会使对象变得异常复杂，而且有时候 支持不使用的算法也是一个性能负担 如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？  定义一系列算法，把它们一个个封装起来，并且使他们可以互">
+<meta property="og:description" content="策略模式组件协作模式的一种组件协作模式通过晚期绑定，来实现框架与应用程序之间的松耦合动机：软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中，将会使对象变得异常复杂，而且有时候支持不使用的算法也是一个性能负担如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。该模">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-21T08:26:25.441Z">
+<meta property="og:updated_time" content="2020-05-21T09:57:09.319Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -329,26 +329,8 @@
       
 
       
-        <ul>
-<li>策略模式</li>
-<li>组件协作模式的一种</li>
-<li>组件协作模式通过晚期绑定，来实现框架与应用程序之间的松耦合</li>
-<li></li>
-<li>动机：</li>
-<li>软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中，将会使对象变得异常复杂，而且有时候</li>
-<li>支持不使用的算法也是一个性能负担</li>
-<li>如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？</li>
-<li></li>
-<li>定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。</li>
-<li>该模式是的算法可独立于使用它的客户程序(稳定)而变化(扩展，子类化)</li>
-<li>Strategy及其子类为组件提供了一系列可重用的算法，从而可以使得类型在运行时方便地根据需要在各个算法之间进行切换</li>
-<li>Strategy模式提供了用条件判断语句以外的另一种选择，消除条件判断语句就是在解耦合。含有许多条件判断语句的代码通常都需要Strategy</li>
-<li>如果Strategy对象没有实例变量，那么各个上下文可以共享同一个Strategy对象(Singleton)，从而节省对象开销。</li>
-<li></li>
-<li>if else 是结构化时代的一种分而治之的设计思维，可以用面向对象的抽象来解决它。</li>
-<li>一般来讲 if else 结构是否穷尽所有 情况，若还有其他情况，则需要扩展，Strategy </li>
-<li>若不使用 Strategy 会存在一直不被使用的代码，有性能负担，使用Strategy代码具有良好的本地性</li>
-</ul>
+        <p>策略模式<br>组件协作模式的一种<br>组件协作模式通过晚期绑定，来实现框架与应用程序之间的松耦合<br>动机：<br>软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中，将会使对象变得异常复杂，而且有时候<br>支持不使用的算法也是一个性能负担<br>如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？<br>定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。<br>该模式是的算法可独立于使用它的客户程序(稳定)而变化(扩展，子类化)<br>Strategy及其子类为组件提供了一系列可重用的算法，从而可以使得类型在运行时方便地根据需要在各个算法之间进行切换<br>Strategy模式提供了用条件判断语句以外的另一种选择，消除条件判断语句就是在解耦合。含有许多条件判断语句的代码通常都需要Strategy<br>如果Strategy对象没有实例变量，那么各个上下文可以共享同一个Strategy对象(Singleton)，从而节省对象开销。</p>
+<p>if else 是结构化时代的一种分而治之的设计思维，可以用面向对象的抽象来解决它。<br>一般来讲 if else 结构是否穷尽所有 情况，若还有其他情况，则需要扩展，Strategy<br>若不使用 Strategy 会存在一直不被使用的代码，有性能负担，使用Strategy代码具有良好的本地性</p>
 <p>不使用策略模式的税法计算：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 问题：以后可能支持其他国家的税法则需要</span></span><br><span class="line"><span class="comment"> * 更改枚举类型，修改主程序内容</span></span><br><span class="line"><span class="comment"> * 违背开闭原则 ，带来很大的复用性负担</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Ordinary</span> </span>&#123;</span><br><span class="line">	<span class="keyword">enum</span> TaxBase&#123;</span><br><span class="line">		CN_Tax,</span><br><span class="line">		US_Tax,</span><br><span class="line">		DE_Tax,</span><br><span class="line">		FR_Tax;</span><br><span class="line">		<span class="comment">//更改</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">SalesOrder</span></span>&#123;</span><br><span class="line">		TaxBase tax;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">CalculateTax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="keyword">if</span>(TaxBase.CN_Tax.equals(tax)) &#123;</span><br><span class="line">				System.out.println(<span class="string">"CN_Tax"</span>);</span><br><span class="line">				<span class="comment">//CN_Tax</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(TaxBase.US_Tax.equals(tax)) &#123;</span><br><span class="line">				<span class="comment">//US_Tax</span></span><br><span class="line">				System.out.println(<span class="string">"US_Tax"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(TaxBase.DE_Tax.equals(tax)) &#123;</span><br><span class="line">				<span class="comment">//DE_Tax</span></span><br><span class="line">				System.out.println(<span class="string">"DE_Tax"</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(TaxBase.FR_Tax.equals(tax)) &#123;<span class="comment">//更改</span></span><br><span class="line">				System.out.println(<span class="string">"FR_Tax"</span>);</span><br><span class="line">				<span class="comment">//FR_Tax</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
