@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="*  编译时依赖：编译时需要你存在我才能编译通过 什么是设计模式： 每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心，这样就能一次又一次地使用该方案而不必做重复劳动 可复用是设计模式的目标。 面向对象是手法 向下：深入理解三大面向对象机制 封装、隐藏内部实现 继承、复用现有代码 多态、改写对象行为 如何解决复杂性： 分解：面对复杂些的常见做法：分而治之，但不好复用 抽象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式介绍">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;20&#x2F;%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D&#x2F;index.html">
+<meta property="og:site_name" content="莫一兮的个人博客">
+<meta property="og:description" content="*  编译时依赖：编译时需要你存在我才能编译通过 什么是设计模式： 每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心，这样就能一次又一次地使用该方案而不必做重复劳动 可复用是设计模式的目标。 面向对象是手法 向下：深入理解三大面向对象机制 封装、隐藏内部实现 继承、复用现有代码 多态、改写对象行为 如何解决复杂性： 分解：面对复杂些的常见做法：分而治之，但不好复用 抽象">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-05-21T07:28:57.250Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/05/20/设计模式介绍/"/>
+
+
+
+
+
+  <title>设计模式介绍 | 莫一兮的个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">莫一兮的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">设计模式介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-20T18:31:35+08:00">
+                2020-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>*</p>
+<ul>
+<li>编译时依赖：编译时需要你存在我才能编译通过</li>
+<li>什么是设计模式：</li>
+<li>每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心，这样就能一次又一次地使用该方案而不必做重复劳动</li>
+<li>可复用是设计模式的目标。</li>
+<li>面向对象是手法</li>
+<li>向下：深入理解三大面向对象机制</li>
+<li>封装、隐藏内部实现</li>
+<li>继承、复用现有代码</li>
+<li>多态、改写对象行为</li>
+<li>如何解决复杂性：</li>
+<li>分解：面对复杂些的常见做法：分而治之，但不好复用</li>
+<li>抽象：忽视非本质细节，而去处理泛化和理想化了的对象模型</li>
+<li></li>
+<li>面向对象设计原则:</li>
+<li>变化是复用的天敌，面向对象设计最大的优势在于抵御变化。</li>
+<li></li>
+<li>重新认识面向对象：</li>
+<li>理解隔离变化：</li>
+<li></li>
+<li>从宏观层面来看，面向对象的够安静方式更能适应软件的变化，能将变化所带来的影响减为最小</li>
+<li></li>
+<li>各司其职：</li>
+<li>从微观层面来看，面向对象的方式更强调各个类的责任，由于需求变化导致的新增类型不应该影响原来类型的实现—是所谓各负其责</li>
+<li></li>
+<li>对象是什么：</li>
+<li>从语言实现层面来看，对象封装了代码和数据。</li>
+<li>从规格层面讲，对象是一系列可被使用的公共接口</li>
+<li>从概念层面讲，对象是某种拥有责任的抽象。</li>
+<li></li>
+<li>面向对象设计原则</li>
+<li>1、依赖倒置原则(DIP)</li>
+<li>高层模块(稳定)不应该依赖于低层模块(变化),二者都应该依赖于抽象(稳定)</li>
+<li></li>
+<li>抽象(稳定)不应该依赖于实现细节(变化)，实现细节应该依赖于抽象(稳定)</li>
+<li></li>
+<li>2、开放封闭原则(OCP)</li>
+<li>对扩展开放，对更改封闭</li>
+<li>类模块应该是可扩展的，但是不可修改</li>
+<li></li>
+<li>3、单一职责原则(SRP)</li>
+<li>一个类应该仅有一个引起它变化的原因</li>
+<li>变化的方向隐含着类的责任</li>
+<li></li>
+<li>4、Liskov[音：丽斯科夫]替换原则(LSP)</li>
+<li>子类必须能够替换它们的基类(IS-A)</li>
+<li>继承表达类型抽象</li>
+<li></li>
+<li>5、接口隔离原则(ISP)</li>
+<li>不应该强迫客户程序依赖它们不用的方法</li>
+<li>接口应该小而完备(不要把不必要的方法 public出去)</li>
+<li></li>
+<li>6、优先使用对象组合，而不是类继承</li>
+<li>类继承通常为“白箱复用”，对象组合通常为“黑箱复用”。</li>
+<li>继承在某种程度上破坏了封装性，子类父类耦合度高。</li>
+<li>而对象组合只要求被组合的对象具有良好定义的接口，耦合度低。</li>
+<li></li>
+<li>7、封装变化点</li>
+<li>使用封装来创建对象之间的分界层，让设计者可以在分界层的一侧进行修改</li>
+<li>而不会对另一侧产生不良的影响，从而实现层次间的松耦合</li>
+<li></li>
+<li>8、针对接口编程，而不是针对实现编程</li>
+<li>不将变量类型声明为某个特定的具体类，而是声明为某个接口</li>
+<li>客户程序无需获知对象的具体类型，只需要知道对象所具有的接口</li>
+<li>减少系统中各部分的依赖关系，从而实现高内聚、松耦合的类型设计方案。</li>
+<li></li>
+<li>面向接口编程，接口标准化是产业强盛的标志</li>
+<li></li>
+<li>GOF-23模式分类</li>
+<li>从目的来看：</li>
+<li></li>
+<li>创建型模式</li>
+<li>解决对象创建的工作</li>
+<li>结构型模式 </li>
+<li>应对需求变化为对象的结构带来的冲击</li>
+<li>行为型模式</li>
+<li>多个类之间交互过程中责任划分的问题</li>
+<li></li>
+<li>从范围来看：</li>
+<li></li>
+<li>类模式：</li>
+<li>类模式倾向类和子类的静态关系，偏重继承方案</li>
+<li></li>
+<li>对象模式：</li>
+<li>对象模式处理对象间的动态关系，偏重组合方案</li>
+<li></li>
+<li>设计模式的要点是：寻找变化点，在变化点处应用设计模式</li>
+<li>重构关键技法：</li>
+<li>静态-&gt;动态</li>
+<li>早绑定-&gt;晚绑定</li>
+<li>继承-&gt;组合</li>
+<li>编译时依赖-&gt;运行时依赖</li>
+<li>紧耦合-&gt;松耦合</li>
+<li></li>
+<li>从封装变化角度对模式分类</li>
+<li>组件协作：</li>
+<li>通过晚期绑定来实现框架与应用之间的松耦合</li>
+<li>典型模式：</li>
+<li>Template Method 模板方法</li>
+<li>某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，</li>
+<li>或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现</li>
+<li>如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求</li>
+<li></li>
+<li>Strategy        策略模式</li>
+<li>动机：</li>
+<li>软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中</li>
+<li>将会使对象变得异常复杂，而且有时候支持不使用的算法也是一个性能负担</li>
+<li>如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？</li>
+<li>定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。</li>
+<li>该模式是的算法可独立于使用它的客户程序(稳定)而变化(扩展，子类化)</li>
+<li>Observer/Event    观察者模式/事件模式</li>
+<li>单一职责：</li>
+<li>在软件组件的设计中，如果责任划分的不清晰，使用继承得到的，结果往往是随着需求的变化，子类急剧膨胀，同时充斥着重复代码</li>
+<li>这时候的关键是划清责任</li>
+<li>典型模式：</li>
+<li>Decorator 装饰器模式</li>
+<li>主体操作和扩展操作分开分支继承</li>
+<li>动机：</li>
+<li>某些情况下可能会过度的使用继承来扩展对象的功能，由于继承为类型引入的静态特质，使得这种扩展方式缺乏灵活性，并且随着子类的增多</li>
+<li>(扩展功能的增多)各种子类的组合(扩展功能的组合)会导致更多子类的膨胀</li>
+<li>动态地给一个对象增加一些额外的职责，就增加功能而言，Decorator模式比生成子类(继承)更为灵活(消除重复代码&amp;减少子类个数)</li>
+<li>通过采用组合而非继承的手法，Decorator模式实现了在运行时动态扩展对象功能的能力，而且可以根据需要扩展多个功能</li>
+<li>避免了使用继承带来的“灵活性差”和“多子类衍生问题”。</li>
+<li>Decorator类在接口上表现为 is-a Component的继承关系，即Decorator类继承了Component类所具有的接口。但在实现上又表现为</li>
+<li>has-a Component的组合关系，即Decorator类又使用了另外一个Component类。</li>
+<li>Decorator 模式的目的并非解决“多子类衍生的多继承”问题，Decorator模式应用的要点在于解决“主体类在多个方向上的扩展功能”—是为装饰的含义</li>
+<li></li>
+<li>Bridge 桥模式</li>
+<li>将抽象部分(业务功能)与实现部分(平台实现)分离，使他们都可以独立地变化。</li>
+<li></li>
+<li>Bridge模式使用“对象间的组合关系”解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。所谓抽象和实现沿着</li>
+<li>各自维度的变化，即”子类化”它们</li>
+<li></li>
+<li>Bridge模式有时候类似于多继承方案，但是多继承方案往往违背单一职责原则(即一个类只有一个变化的原因)，复用性比较差。</li>
+<li>Bridge模式时比多继承方案更好的解决方法。</li>
+<li></li>
+<li>Bridge模式的应用一般在“两个非常强的变化维度”，有时一个类也有多于两个的变化维度，这时可以使用Bridge的扩展模式。</li>
+<li>有时候一个类有多个变化维度，此时可以把某一个聚合的变化维度合在一起，打包成一个基类，用一个抽象指针指向它。有n个变化维度，就打包n个基类，用n个抽象指针指向它。</li>
+<li></li>
+<li></li>
+<li>对象创建：</li>
+<li>通过“对象创建”模式绕开new，来避免对象创建(new)过程中所导致的紧耦合(依赖具体类)，从而支持对象创建的稳定，他是接口抽象之后的第一步工作。</li>
+<li>Factory Method:工厂方法模式</li>
+<li>在软件系统中经常面临着创建对象的工作；由于需求的变化，需要创建的对象的具体类型经常变化。</li>
+<li>定义一个用于创建对象的接口，让子类决定实例化哪一个类，Factory Method 使得一个类的实例化延迟(目的：解耦，手段：虚函数)到子类</li>
+<li>Factory Method模式用于隔离类对象的使用者和具体类型之间的耦合关系，面对一个经常变化的具体类型，紧耦合关系(new)会导致软件的脆弱</li>
+<li>Factory Method模式通过面向对象的手法（多态），将所要创建的具体对象工作延迟到子类，从而实现一种扩展(而非更改)的策略，较好地解决了这种紧耦合关系</li>
+<li>Factory Method模式解决“单个对象”的需求变化。缺点在于要求创建方法/参数相同</li>
+<li></li>
+<li>Abstract Factory:抽象工厂模式，和工厂方法模式是同一类模式</li>
+<li>动机：软件系统中，经常面临着“一系列相互依赖的对象”的创建工作，同时由于需求的变化，往往存在更多系列对象的创建工作</li>
+<li>提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定他们具体的类。</li>
+<li>如果没有应对“多系列对象构建”的需求变化，则没有必要使用Abstract Factory模式，这时候使用简单的工厂完全可以</li>
+<li>系列对象指的是在某一特定系列下的对象之间有相互依赖，或作用的关系，不同系列的对象之间不能相互依赖</li>
+<li>Abstract Factory模式主要在于应对“新系列”的需求变动，其缺点在于难以应对“新对象”的需求变动</li>
+<li>即加新系列很简单，但加新对象比较麻烦</li>
+<li>Prototype ：原型模式</li>
+<li>动机：软件系统装，经常面临着“某些结构复杂的对象”的创建工作，由于需求的变化，这些对象经常面临着剧烈的变化，但他们拥有比较稳定一致的接口</li>
+<li>Prototype模式同样用于隔离类对象的使用者和具体类型(易变类)之间的耦合关系，它同样要求这些易变类拥有稳定的接口</li>
+<li>Prototype模式对于“如何创建易变类的实体对象”采用“原型克隆”的方法来做，它使得我们可以非常灵活地动态创建“拥有某些稳定接口”的新对象</li>
+<li>所需工作仅是注册一个新类的对象(即原型)然后再任何需要的地方Clone</li>
+<li>Prototype模式中的Clone方法可以利用某些框架的序列化来实现深拷贝。</li>
+<li>Builder：构建器</li>
+<li>动机：在软件系统中，有时候面临着“一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成，由于需求的变化，这个复杂对象的各个部分</li>
+<li>经常面临着剧烈的变化，但是将他们组合在一起的算法却异常稳定</li>
+<li>将一个复杂对象的构建与其表示相分离，使得同样的构建过程(稳定)可以创建不同的表示(变化)</li>
+<li>Builder模式主要用于分步骤构建一个复杂的对象，在这其中“分步骤”是一个稳定的算法，而复杂对象的各个部分则经常变化、</li>
+<li>变化点在哪里，封装哪里——Builder模式主要在于应对“复杂对象各个部分”的频繁需求变动，其缺点在于难以应对“分步骤构建算法”的需求变动</li>
+<li>Builder模式中，要注意不同语言中构造器内调用虚函数的差别</li>
+<li>对象性能：    </li>
+<li>面向对象很好地解决了“抽象”的问题，但是必不可免地要付出一定的代价。对于通常情况来讲，面向对象的成本大都可以忽略不计，但是某些情况下</li>
+<li>面向对象带来的成本必须谨慎处理。</li>
+<li>Singleton：单例模式</li>
+<li>动机：在软件系统中，经常有这样一些特殊的类，必须保证它们在系统中只存在一个实例，才能确保他们的逻辑正确性、以及良好的效率</li>
+<li>保证一个类只有一个实例，并提供一个该实例的全局访问点</li>
+<li>Singleton模式中的实例构造器可以设置为protected以允许子类派生</li>
+<li>Singleton模式一般不要支持拷贝后构造函数和Clone接口，因为这有可能导致多个对象实例，与Singleton模式的初衷违背</li>
+<li>多线程环境下安全的Singleton 要注意对双检查锁的正确实现。</li>
+<li>Flyweight：享元模式</li>
+<li>动机：在软件系统采用纯粹对象方案的问题在于大量细粒度的对象会很快充斥在系统中，从而带来很高的运行时代价–主要指内存需求方面的代价</li>
+<li>如何在避免大量细粒度对象问题的同时，让外部客户程序仍然能够透明地使用面向对象的方式来进行操作</li>
+<li>运用共享技术有效地支持大量细粒度的对象。</li>
+<li></li>
+<li></li>
+<li>接口隔离：</li>
+<li>在组件构建过程中，某些接口之间直接的依赖常常会带来很多问题，甚至根本无法实现，采用添加一层间接(稳定)的接口，</li>
+<li>来隔离本来互相紧密关联的接口是一种常见的解决方案。</li>
+<li>Facade:门面模式/界面模式        解耦    系统内和系统外    对象的关联关系</li>
+<li>为子系统中的一组接口提供一个一致(稳定)的界面，Facade模式定义了一个高层接口，这个接口使得这一子系统更加容易使用(复用)</li>
+<li>从客户程序的角度来看，Facade模式简化了整个组件系统的接口，对于组件内部与外部客户程序来说，达到了一种解耦的效果</li>
+<li>内部子系统的任何变化不会影响到Facade接口的变化</li>
+<li>Facade设计模式更注重从架构的层次去看整个系统，而不是单个类的层次，Facade很多时候更是一种架构设计模式</li>
+<li>Facade模式中组件的内部应该是“相互耦合关系比较大的一系列组件”,而不是一个简单的功能集合。</li>
+<li></li>
+<li>Proxy：代理模式                解耦    两个对象间        的关联关系</li>
+<li>在面向对象系统中，由于某种原因(比如对象创建的开销很大，或者某些操作需要安全控制，或者需要进程外的访问等)直接访问会给使用者、或者系统结构带来很多麻烦</li>
+<li>如何在不失去透明操作对象的同时来管理/控制这些对象特有的复杂性？增加一层间接层是软件开发中常见的解决方式。</li>
+<li>为其他对象提供一种代理以控制(隔离，使用接口)对这个对象的访问。</li>
+<li></li>
+<li>Adapter    适配器模式            老接口和新接口</li>
+<li>由于应用环境的变化，常常需要把“一些现存的对象”放在新的环境中应用，但是新环境要求的接口是这些现存现象所不满足的。</li>
+<li>将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作</li>
+<li>Adapter模式主要应用于“希望复用一些现存的类，但是接口又与复用环境要求不一致的情况”在遗留代码复用。类库迁移等方面非常有用</li>
+<li></li>
+<li>Mediator:中介者            解耦    多个对象    </li>
+<li>软件构建过程中，经常会出现多个对象互相关联交互的情况，对象之间常常会维持一种复杂的引用关系，</li>
+<li>如果遇到一些需求的更改，这种直接的引用关系将面临不断地变化。</li>
+<li>可以使用一个“中介对象”来管理对象间的关联关系，避免相互交互的对象之间的紧耦合引用关系，从而更好地抵御变化。</li>
+<li>模式定义：用一个中介者来封装(封装变化)一系列的对象交互。中介者使各对象不需要显示的相互引用(编译时依赖-&gt;运行时依赖)</li>
+<li>从而使其耦合松散(管理变化)，且可以独立地改变它们之间的交互。</li>
+<li>将多个对象间复杂的关联关系解耦，Mediator模式将多个对象间的控制逻辑进行集中管理，变“多个对象互相关联”为</li>
+<li>“多个对象和一个中介者关联”，简化了系统的维护，抵御了可能的变化。</li>
+<li>随着控制逻辑的复杂化，Mediator具体对象的实现可能相当复杂。这时候可以对Mediator对象进行分解处理</li>
+<li>Facade模式是解耦系统间(单向)的对象关联关系，Mediator模式是解耦系统内各个对象之间(双向)的关联关系</li>
+<li>状态变换：</li>
+<li>在组件构建过程中，某些对象的状态经常面临变化，如何对这些变化进行有效的管理，同时又维持高层模块的稳定，“状态变化”</li>
+<li>模式为此问题提供解决方案。</li>
+<li>State    状态模式</li>
+<li>允许一个对象在其内部状态改变时改变它的行为，从而使对象看起来似乎修改了其行为。</li>
+<li>State模式将所有与一个特定状态相关的行为都放入一个State的子类对象中，在对象状态切换时，切换相应的对象</li>
+<li>但同时维持State的接口，这样实现了具体操作与状态转换之间的解耦</li>
+<li>为不同的状态引入不同的对象使得状态转换变得更加明确，而且可以保证不会出现状态不一致的情况，因为转换是原子性的</li>
+<li>即要么彻底转换过来，要么不转换。</li>
+<li>如果State对象没有没有实例对象，那么各个上下文可以共享同一个对象，从而节省对象开销</li>
+<li>Memonto    备忘录模式</li>
+<li>软件构建过程中，某些对象的状态在转换过程中，可能由于某种需要，要求程序能够回溯到对象之前处于某个点时的状态。</li>
+<li>如果使用一些共有借口来让其他对象得到对象的状态，便会暴露对象的实现细节。</li>
+<li>如何实现对象状态的良好保存与恢复，但又不会因此破坏对象本身的封装性</li>
+<li>备忘录(Memento)存储原发器(Originator)对象的内部状态，在需要时恢复原发器状态</li>
+<li>Memento模式的核心是信息隐藏，即Originator需要向外接隐藏信息，保持其封装性。但同时又需要将状态保持到外界(Memento)</li>
+<li>由于现代语言运行时，都具有相当的对象序列化支持，因此往往采用效率高，又较容易正确实现的序列化方案来实现Memento方案</li>
+<li>数据结构：</li>
+<li>常常有一些组件在内部具有特定的数据结构，如果让客户程序依赖这些特定的数据结构，会破坏组件的复用性，这时候如果将这些特定的数据结构封装在内部</li>
+<li>在外部提供统一的接口，来实现与特定数据结构无关的访问，是一种行之有效的解决方案。</li>
+<li>Composite 组合模式</li>
+<li>将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对单个对象和组合对象的使用具有一致性(稳定)</li>
+<li>采用树形结构来实现普遍存在的对象容器，从而将一对多的关系转为一对一的关系，使得客户代码可以一致地(复用)处理对象和对象容器，</li>
+<li>无需关心处理的是单个的对象还是组合的对象容器</li>
+<li>将“客户代码与复杂的对象容器结构”解耦是Composite的核心思想，解耦之后，客户代码将与纯粹的抽象接口–而非对象容器的内部实现结构–发生依赖</li>
+<li>从而更能应对变化。</li>
+<li>Composite模式在具体实现中，可以让父对象的子对象反向追溯；如果父对象有频繁的便利需求，可使用缓存技巧来改善效率。</li>
+<li></li>
+<li>Iterator  迭代器模式</li>
+<li>集合对象内部结构常常变化各异，但对于这些集合对象，我们希望在不暴露其内部结构的同时，可以让外部客户代码透明地访问其中包含的元素，</li>
+<li>同时这种透明遍历也为同一种算法在多种集合对象上进行操作提供了可能。</li>
+<li>提供一种方法，顺序访问一个聚合对象中的各个元素，而又不暴露(稳定)该对象的内部表示</li>
+<li>要点：</li>
+<li>迭代抽象：访问一个聚合对象的内容而无需暴露它的内部表示、</li>
+<li>迭代多态：为遍历不同的集合结构提供一个统一的接口，从而支持同样的算法在不同的集合结构上进行操作</li>
+<li>迭代器健壮性考虑：遍历的同时更改迭代器所在的集合结构，会导致问题</li>
+<li>Chain of Responsibility 职责链模式</li>
+<li>动机：软件构建过程中，一个请求可能会被多个对象处理，但是每个请求在运行时只能有一个接受者，如果显示指定，将必不可少地带来请求发送者与接受者的紧耦合</li>
+<li>模式定义：使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递请求，直到有一个对象处理它为止。</li>
+<li>Chain of Responsibility模式应用场合在于“一个请求可能有多个接受者，但是最后真正的接受者只能有一个”，这时候请求发送者与接受者的耦合有可能出现“变化脆弱”</li>
+<li>的症状，职责链的目的就是将二者解耦，从而更好地应对变化。</li>
+<li>应用了Chain of Responsibility模式后，对象的职责分派将更具灵活性，我们可以在运行时动态添加/修改请求的处理职责。</li>
+<li>如果请求传递到责任链的末尾仍得不到处理，应该有一个合理的缺省机制，这也是每一个接收对象的责任，而不是发出请求的对象的责任。</li>
+<li>行为变化：</li>
+<li>在组件的构建过程中，组件行为的变化经常导致组件本身剧烈的变化，“行为变化”模式将组件的行为和组件本身进行解耦，从而支持组件行为的变化，实现两者之间的松耦合。</li>
+<li>Command 命令模式</li>
+<li>软件构建过程中，“行为请求者”与“行为实现者”通常呈现一种“紧耦合”。但是在某些场合–比如需要对行为进行“记录、撤销/重(undo/redo)、事务”等处理，这种无法抵御变化的紧耦合是不合适的</li>
+<li>将请求(行为)封装为一个对象，从而使你可以用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。</li>
+<li>Command模式的根本目的在于将“行为请求者”与“行为实现者”解耦，在面向对象语言中，常见的实现手段是“将行为抽象为对象”。</li>
+<li>实现Command接口的具体命令对象ConcreteCommand有时候根据需要可能会保存一些额外的状态信息，通过使用Composite模式，可以将多个“命令”封装为一个“复合命令”MacroCommand。</li>
+<li>Command模式与C++中的函数对象有些类似，但两者定义行为接口的规范有所区别：Command以面向对象中的“接口-实现”来定义行为接口规范，更严格，但有性能损失，C++函数对象以函数签名来定义行为接口规范，更灵活</li>
+<li></li>
+<li>Visitor 访问器模式</li>
+<li>软件构建过程中，由于需求的改变，某些类层次结构中常常需要增加新的行为(方法)，如果直接在基类中做这样的改变，将会给子类带来很繁重的变更负担，甚至破坏原有设计</li>
+<li>表示一个作用于某对象结构中的各元素的操作。使得可以在不改变(稳定)各元素的类的前提下定义(扩展)作用于这些元素的新操作(变化)</li>
+<li>Visitor 模式通过所谓双重分发(double dispatch)来实现在不更改(不添加新的操作-编译时)Element类层次结构的前提下，在运行时透明地为类层次结构上的各个类动态添加新的操作(支持变化)</li>
+<li>所谓双重分发即Visitor模式中间包括了两个多态分发(注意其中的多台机制)：第一个为accept方法的多态辨析；第二个为visitElementX方法的多态辨析。</li>
+<li>Visitor模式的最大缺点在于扩展类层次结构(添加新的Element子类)，会导致Visitor类的改变。因此Visitor模式适用于“Element类层次结构稳定，而其中的操作却经常面临频繁改动”</li>
+<li></li>
+<li></li>
+<li>领域问题：    </li>
+<li>软件构建过程中，如果某一特定领域的问题比较复杂，类似的结构不断重复出现，如果使用普遍的编程方式来实现将面临非常频繁的变化。</li>
+<li>在这种情况下，将特定领域的问题表达为某种语法规则下的句子，然后构建一个解释器来解释这样的句子，从而达到解决问题的目的。</li>
+<li>Interpreter 解析器模式</li>
+<li>给定一个语言，定义它的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。</li>
+<li>Interpreter模式的应用场景是Interpreter模式应用中的难点，只有满足“业务规则频繁变化，且类似的结构不断重复出现，并且容易抽象为语法规则的问题”才适合使用Interpreter模式。</li>
+<li>使用Interpreter模式来表示文法规则，从而可以使用面向对象技巧来方便地“扩展”文法。</li>
+<li>Interpreter模式比较适合简单的文法表示，对于复杂的文法表示，Interpreter模式会产生比较大的类层次结构，需要求助于语法分析生成器这样的标准工具。        </li>
+<li></li>
+<li></li>
+<li>模式应用时要分辨出哪些是稳定的哪些是变化的。</li>
+<li>**</li>
+<li></li>
+<li>总结</li>
+<li>一个目标：管理变化，提高复用</li>
+<li>两种手段：分解、抽象</li>
+<li>八大原则：    依赖倒置原则(DIP)</li>
+<li>开放封闭原则(OCP)</li>
+<li>单一职责原则(SRP)</li>
+<li>Liskov替换原则(LSP)</li>
+<li>接口隔离原则(ISP)</li>
+<li>对象组合优于类继承</li>
+<li>封装变化点</li>
+<li>面向接口编程</li>
+<li></li>
+<li>重构技法：    静态-&gt;动态</li>
+<li>早绑定-&gt;晚绑定</li>
+<li>继承-&gt;组合</li>
+<li>编译时依赖-&gt;运行时依赖</li>
+<li>紧耦合-&gt;松耦合</li>
+<li></li>
+<li>什么时候不用模式：代码可读性很差时</li>
+<li>需求理解还很浅时</li>
+<li>变化没有显现时</li>
+<li>不是系统的关键依赖点</li>
+<li>项目没有复用价值时</li>
+<li>项目将要发布时</li>
+<li>经验之谈：    不要为了模式而模式</li>
+<li>关注抽象类&amp;接口</li>
+<li>理清变化点和稳定点</li>
+<li>审视依赖关系</li>
+<li>要有Framework和Application的区隔思维</li>
+<li>良好的设计是演化的结果</li>
+<li></li>
+<li></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/20/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/" rel="next" title="MySQL逻辑架构">
+                <i class="fa fa-chevron-left"></i> MySQL逻辑架构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/21/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/" rel="prev" title="模板方法">
+                模板方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">莫一兮</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">莫一兮</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
