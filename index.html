@@ -238,6 +238,753 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/22/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">原型模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-22T12:18:10+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>原型模式要求对象实现一个可以克隆自身的接口，这样就可以通过复制一个实例对象本身来创建一个新的实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Prototype</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Prototype <span class="title">clone</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcretePrototype1</span> <span class="keyword">implements</span> <span class="title">Prototype</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Prototype <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		ConcretePrototype1 prototype = <span class="keyword">new</span> ConcretePrototype1();</span><br><span class="line">		prototype.setName(<span class="keyword">this</span>.name);</span><br><span class="line">		<span class="keyword">return</span> prototype;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Now in Prototype1 , name = "</span>+ <span class="keyword">this</span>.name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcretePrototype2</span> <span class="keyword">implements</span> <span class="title">Prototype</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Prototype <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		ConcretePrototype2 prototype = <span class="keyword">new</span> ConcretePrototype2();</span><br><span class="line">		prototype.setName(<span class="keyword">this</span>.name);</span><br><span class="line">		<span class="keyword">return</span> prototype;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"Now in Prototype2 , name = "</span>+ <span class="keyword">this</span>.name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeManager</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String,Prototype&gt; map = <span class="keyword">new</span> HashMap&lt;String,Prototype&gt;();</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="title">PrototypeManager</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setPrototype</span><span class="params">(String prototypeId,Prototype prototype)</span> </span>&#123;</span><br><span class="line">		map.put(prototypeId, prototype);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">removePrototype</span><span class="params">(String prototypeId)</span> </span>&#123;</span><br><span class="line">		map.remove(prototypeId);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> Prototype <span class="title">getPrototype</span><span class="params">(String prototypeId)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		Prototype prototype = map.get(prototypeId);</span><br><span class="line">		<span class="keyword">if</span>(prototype == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"您希望获取的原型还没有注册或已被销毁"</span>);</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">return</span> prototype;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Prototype p1 = <span class="keyword">new</span> ConcretePrototype1();</span><br><span class="line">            PrototypeManager.setPrototype(<span class="string">"p1"</span>, p1);</span><br><span class="line">            <span class="comment">//获取原型来创建对象</span></span><br><span class="line">            Prototype p3 = PrototypeManager.getPrototype(<span class="string">"p1"</span>).clone();</span><br><span class="line">            p3.setName(<span class="string">"张三"</span>);</span><br><span class="line">            System.out.println(<span class="string">"第一个实例："</span> + p3);</span><br><span class="line">            <span class="comment">//有人动态的切换了实现</span></span><br><span class="line">            Prototype p2 = <span class="keyword">new</span> ConcretePrototype2();</span><br><span class="line">            PrototypeManager.setPrototype(<span class="string">"p1"</span>, p2);</span><br><span class="line">            <span class="comment">//重新获取原型来创建对象</span></span><br><span class="line">            Prototype p4 = PrototypeManager.getPrototype(<span class="string">"p1"</span>).clone();</span><br><span class="line">            p4.setName(<span class="string">"李四"</span>);</span><br><span class="line">            System.out.println(<span class="string">"第二个实例："</span> + p4);</span><br><span class="line">            <span class="comment">//有人注销了这个原型</span></span><br><span class="line">            PrototypeManager.removePrototype(<span class="string">"p1"</span>);</span><br><span class="line">            <span class="comment">//再次获取原型来创建对象</span></span><br><span class="line">            Prototype p5 = PrototypeManager.getPrototype(<span class="string">"p1"</span>).clone();</span><br><span class="line">            p5.setName(<span class="string">"王五"</span>);</span><br><span class="line">            System.out.println(<span class="string">"第三个实例："</span> + p5);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/22/%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82/" itemprop="url">抽象工厂</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-22T11:38:43+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Vector;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 问题：这三个对象必须是同系列的，若IDBConnectionFactory、IDBCommandFactory、IDataReaderFactory</span></span><br><span class="line"><span class="comment"> * 源自不同对象则报错</span></span><br><span class="line"><span class="comment"> * 由此引出抽象工厂	</span></span><br><span class="line"><span class="comment"> * 或称之为家族工厂</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EmployeeDAO</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	IDBFactory dbfactoryFactory = <span class="keyword">new</span> IDBFactory();</span><br><span class="line">	<span class="keyword">public</span> Vector &lt;EmployeeDAO&gt; GetEmployees()&#123;</span><br><span class="line">		IDBConnection connectionFactory = dbfactoryFactory.CreateDBConnection();</span><br><span class="line">		IDBCommand commandFactory = dbfactoryFactory.CreateDBCommand();</span><br><span class="line">		IDataReader dataReaderFactory = dbfactoryFactory.CreateDataReader();</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//数据库访问有关的基类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IDBConnection</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IDBCommand</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IDataReader</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IDBFactory</span></span>&#123;</span><br><span class="line">	<span class="comment">//三个方法塞到一个类里</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> IDBConnection <span class="title">CreateDBConnection</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> IDBCommand <span class="title">CreateDBCommand</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> IDataReader <span class="title">CreateDataReader</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//支持SQL Server相关的类型</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SqlConnection</span> <span class="keyword">extends</span> <span class="title">IDBConnection</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SqlCommand</span> <span class="keyword">extends</span> <span class="title">IDBCommand</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SqlDataReader</span> <span class="keyword">extends</span> <span class="title">IDataReader</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SqlConnectionFactory</span> <span class="keyword">extends</span> <span class="title">IDBFactory</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//支持Oracle相关的类型</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OracleConnection</span> <span class="keyword">extends</span> <span class="title">IDBConnection</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OracleCommand</span> <span class="keyword">extends</span> <span class="title">IDBCommand</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OracleDataReader</span> <span class="keyword">extends</span> <span class="title">IDataReader</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/22/%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95/" itemprop="url">工厂方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-22T11:24:19+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一个类型要看到未来变化的需求，做抽象类或接口，即面向接口的编程，一个对象的类型往往应该声明为抽象类或接口，而不应该声明为具体的类否则没有办法进行变化。<br>即实现面向接口编程的模式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainForm</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span> <span class="params">(String []args)</span></span>&#123;</span><br><span class="line">		<span class="comment">//多态 new</span></span><br><span class="line">		SplitterFactory factory = <span class="keyword">new</span> BinarySplitterFactory();<span class="comment">//SplitterFactory 抽象基类</span></span><br><span class="line">		ISplitter splitter = factory.CreateISplitter();<span class="comment">//ISplitter 变量要声明成抽象基类</span></span><br><span class="line">		splitter.split();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *	每个类都有对应的自己的工厂</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FactoryMethod</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//抽象类</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">ISplitter</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">split</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//工厂基类</span></span><br><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SplitterFactory</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> ISplitter <span class="title">CreateISplitter</span><span class="params">()</span></span>; </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//具体类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinarySplitter</span> <span class="keyword">extends</span> <span class="title">ISplitter</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">split</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"BinarySplitter"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TxtSplitter</span> <span class="keyword">extends</span> <span class="title">ISplitter</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">split</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"TxtSplitter"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PictureSplitter</span> <span class="keyword">extends</span> <span class="title">ISplitter</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">split</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"PictureSplitter"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VideoSplitter</span> <span class="keyword">extends</span> <span class="title">ISplitter</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">split</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"VideoSplitter"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//具体工厂</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BinarySplitterFactory</span> <span class="keyword">extends</span> <span class="title">SplitterFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> ISplitter <span class="title">CreateISplitter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> BinarySplitter();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TxtSplitterFactory</span> <span class="keyword">extends</span> <span class="title">SplitterFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> ISplitter <span class="title">CreateISplitter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> TxtSplitter();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PictureSplitterFactory</span> <span class="keyword">extends</span> <span class="title">SplitterFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> ISplitter <span class="title">CreateISplitter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> PictureSplitter();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VideoSplitterFactory</span> <span class="keyword">extends</span> <span class="title">SplitterFactory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> ISplitter <span class="title">CreateISplitter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> VideoSplitter();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/22/%E6%A1%A5%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/22/%E6%A1%A5%E6%A8%A1%E5%BC%8F/" itemprop="url">桥模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-22T11:06:56+08:00">
+                2020-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>单一职责模式的一种，使用桥模式即继承转组合，将它们之间的强关联改换成为弱关联。用意是“将抽象化(Abstraction)与实现化(Implementation)脱耦，使得二者可以独立地变化”。</p>
+<p>不使用桥模式:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 平台实现	n个</span></span><br><span class="line"><span class="comment"> * 业务抽象	m类</span></span><br><span class="line"><span class="comment"> * 类的数目有 1+n+m*n</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Messager</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlaySound</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DrawShape</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WriteText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//平台实现各有不同</span></span><br><span class="line"><span class="comment">//平台实现 ：n</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCMessagerBase</span> <span class="keyword">extends</span> <span class="title">Messager</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlaySound</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DrawShape</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WriteText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//平台实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MobileMessagerBase</span> <span class="keyword">extends</span> <span class="title">Messager</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlaySound</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DrawShape</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WriteText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//业务抽象，精简版 ：m</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCMessagerLite</span> <span class="keyword">extends</span> <span class="title">PCMessagerBase</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username ,String password)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.Connect();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.WriteText();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.DrawShape();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//业务抽象，华丽版，不同版本实现不同的功能</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCMessagerPerfect</span> <span class="keyword">extends</span> <span class="title">PCMessagerBase</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username ,String password)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.PlaySound();</span><br><span class="line">		<span class="keyword">super</span>.Connect();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.PlaySound();</span><br><span class="line">		<span class="keyword">super</span>.WriteText();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.PlaySound();</span><br><span class="line">		<span class="keyword">super</span>.DrawShape();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//业务抽象，精简版</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MobileMessagerLite</span> <span class="keyword">extends</span> <span class="title">MobileMessagerBase</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username ,String password)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.Connect();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.WriteText();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.DrawShape();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//业务抽象，华丽版，不同版本实现不同的功能</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MobileMessagerPerfect</span> <span class="keyword">extends</span> <span class="title">MobileMessagerBase</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username ,String password)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.PlaySound();</span><br><span class="line">		<span class="keyword">super</span>.Connect();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.PlaySound();</span><br><span class="line">		<span class="keyword">super</span>.WriteText();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.PlaySound();</span><br><span class="line">		<span class="keyword">super</span>.DrawShape();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>使用桥模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 运行时装配</span></span><br><span class="line"><span class="comment"> * 类的个数 1+n+m，可以互相交叉组合</span></span><br><span class="line"><span class="comment"> * 拥有 m*n的功能</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Process</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		BridgeMessagerImp mImp = <span class="keyword">new</span> BridgeMessagerImp();</span><br><span class="line">		BridgeMessager messager = <span class="keyword">new</span> BridgeMessager(mImp);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BridgeMessager</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">protected</span> BridgeMessagerImp messagerimp = <span class="keyword">new</span> BridgeMessagerImp();</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BridgeMessager</span><span class="params">(BridgeMessagerImp msgImp)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">		<span class="keyword">this</span>.messagerimp = messagerimp;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username, String password)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BridgeMessagerImp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlaySound</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DrawShape</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WriteText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//平台实现各有不同</span></span><br><span class="line"><span class="comment">//平台实现 ：n</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BridgePCMessagerBase</span> <span class="keyword">extends</span> <span class="title">BridgeMessagerImp</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlaySound</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DrawShape</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WriteText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//平台实现</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BridgeMobileMessagerBase</span> <span class="keyword">extends</span> <span class="title">BridgeMessagerImp</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">PlaySound</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DrawShape</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">WriteText</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Connect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//业务抽象，精简版 ：m</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BridgeMessagerLite</span> <span class="keyword">extends</span> <span class="title">BridgeMessager</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BridgeMessagerLite</span><span class="params">(BridgeMessagerImp messagerimp)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(messagerimp);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username ,String password)</span> </span>&#123;</span><br><span class="line">		messagerimp.Connect();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		messagerimp.WriteText();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		messagerimp.DrawShape();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//业务抽象，华丽版，不同版本实现不同的功能</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BridgeMessagerPerfect</span> <span class="keyword">extends</span> <span class="title">BridgeMessager</span>  </span>&#123;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">BridgeMessagerPerfect</span><span class="params">(BridgeMessagerImp messagerimp)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(messagerimp);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Login</span><span class="params">(String username ,String password)</span> </span>&#123;</span><br><span class="line">		messagerimp.PlaySound();</span><br><span class="line">		messagerimp.Connect();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">		messagerimp.PlaySound();</span><br><span class="line">		messagerimp.WriteText();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SendPicture</span><span class="params">(String image)</span> </span>&#123;</span><br><span class="line">		messagerimp.PlaySound();</span><br><span class="line">		messagerimp.DrawShape();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/21/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/21/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/" itemprop="url">装饰模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-21T18:01:14+08:00">
+                2020-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>单一职责模式的一种<br>很多重复代码是由于对继承的不良使用<br>动机：<br>某些情况下可能会过度的使用继承来扩展对象的功能，由于继承为类型引入的静态特质，使得这种扩展方式缺乏灵活性，并且随着子类的增多(扩展功能的增多)各种子类的组合(扩展功能的组合)会导致更多子类的膨胀<br><strong><em>核心在于用组合代替继承</em></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这种设计的问题：</span></span><br><span class="line"><span class="comment">//不断地继承，有大量的代码冗余</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Stream</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FileStream</span> <span class="keyword">extends</span> <span class="title">Stream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetworkStream</span> <span class="keyword">extends</span> <span class="title">Stream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemoryStream</span> <span class="keyword">extends</span> <span class="title">Stream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//扩展操作</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CryptoFileStream</span> <span class="keyword">extends</span> <span class="title">FileStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.Read(number);<span class="comment">//读文件流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">super</span>.Seek(position);<span class="comment">//定位文件流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">super</span>.Write(data);<span class="comment">//写文件流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CryptoNetworkStream</span> <span class="keyword">extends</span> <span class="title">NetworkStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.Read(number);<span class="comment">//读网络流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">super</span>.Seek(position);<span class="comment">//定位网络流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">super</span>.Write(data);<span class="comment">//写网络流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CryptoMemoryStream</span> <span class="keyword">extends</span> <span class="title">MemoryStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.Read(number);<span class="comment">//读内存流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">super</span>.Seek(position);<span class="comment">//定位内存流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="keyword">super</span>.Write(data);<span class="comment">//写内存流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BufferedFileStream</span> <span class="keyword">extends</span> <span class="title">FileStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.Read(number);<span class="comment">//读文件流</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">super</span>.Seek(position);<span class="comment">//定位文件流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">super</span>.Write(data);<span class="comment">//写文件流</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BuffereNetworkStream</span> <span class="keyword">extends</span> <span class="title">FileStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.Read(number);<span class="comment">//读文件流</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">super</span>.Seek(position);<span class="comment">//定位文件流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">super</span>.Write(data);<span class="comment">//写文件流</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BufferedMemeryStream</span> <span class="keyword">extends</span> <span class="title">FileStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">super</span>.Read(number);<span class="comment">//读文件流</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">super</span>.Seek(position);<span class="comment">//定位文件流</span></span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//额外的加密操作</span></span><br><span class="line">		<span class="comment">//额外的缓冲操作</span></span><br><span class="line">		<span class="keyword">super</span>.Write(data);<span class="comment">//写文件流</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用组合替代继承</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DecortorStream</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorStream Read"</span>+number);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorStream Seek"</span>+position);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorStream Write"</span>+data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecortorFileStream</span> <span class="keyword">extends</span> <span class="title">DecortorStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorFileStream Read"</span>+number);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorFileStream Seek"</span>+position);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorFileStream Write"</span>+data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecortorNetWorkStream</span> <span class="keyword">extends</span> <span class="title">DecortorStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorNetWorkStream Read"</span>+number);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorNetWorkStream Seek"</span>+position);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorNetWorkStream Write"</span>+data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecortorMemeryStream</span> <span class="keyword">extends</span> <span class="title">DecortorStream</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorMemeryStream Read"</span>+number);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorMemeryStream Seek"</span>+position);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorMemeryStream Write"</span>+data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//扩展操作</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecortorCryptoStream</span> <span class="keyword">extends</span> <span class="title">DecortorStream</span></span>&#123;</span><br><span class="line">	DecortorStream ds = <span class="keyword">new</span> DecortorStream();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DecortorCryptoStream</span> <span class="params">(DecortorStream ds)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.ds = ds;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorCryptoStream Read"</span>+number);</span><br><span class="line">		<span class="keyword">return</span> ds.Read(number);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorCryptoStream Seek"</span>+position);</span><br><span class="line">		ds.Seek(position);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorCryptoStream Write"</span>+data);</span><br><span class="line">		ds.Write(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DecortorBufferedStream</span> <span class="keyword">extends</span> <span class="title">DecortorStream</span></span>&#123;</span><br><span class="line">	DecortorStream ds = <span class="keyword">new</span> DecortorStream();</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DecortorBufferedStream</span> <span class="params">(DecortorStream ds)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.ds = ds;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">char</span> <span class="title">Read</span><span class="params">(<span class="keyword">int</span> number)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorBufferedStream Read"</span>+number);</span><br><span class="line">		<span class="keyword">return</span> ds.Read(number);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Seek</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorBufferedStream Seek"</span>+position);</span><br><span class="line">		ds.Seek(position);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Write</span><span class="params">(<span class="keyword">char</span> data)</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"DecortorBufferedStream Write"</span>+data);</span><br><span class="line">		ds.Write(data);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/21/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,7 +1078,7 @@
       
         
           
-            <p>Observer/Event<br>动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，<br>所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化<br>使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合</p>
+            <p>组件协作模式的一种<br>Observer/Event<br>动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，<br>所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化<br>使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合</p>
 <p>定义对象间的一种一对多(变化)的依赖关系，以便于当一个对象(Subject)的状态发生改变时，所有依赖与他的对象都得到通知并自动更新。<br>以下，定义了Fan接口作为消息的接受者，Idol接口作为信息的发送者。<br>又用ConcreteFan 和ConcreteIdol去实现具体的Fan 和Idol<br>ConcreteFan中实现了Fan接收到的消息时的回应。<br>ConcreteIdol中实现了，将哪些Fan放在接受消息队列中，哪些Fan移除出接受消息队列，并有通知方法，向所有在队列中的Fan发送消息。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Fan</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(String message)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -796,257 +1543,242 @@
 <p> 6、优先使用对象组合，而不是类继承<br> 类继承通常为“白箱复用”，对象组合通常为“黑箱复用”。<br> 继承在某种程度上破坏了封装性，子类父类耦合度高。<br> 而对象组合只要求被组合的对象具有良好定义的接口，耦合度低。</p>
 <p> 7、封装变化点<br> 使用封装来创建对象之间的分界层，让设计者可以在分界层的一侧进行修改<br> 而不会对另一侧产生不良的影响，从而实现层次间的松耦合</p>
 <p> 8、针对接口编程，而不是针对实现编程<br> 不将变量类型声明为某个特定的具体类，而是声明为某个接口<br> 客户程序无需获知对象的具体类型，只需要知道对象所具有的接口<br> 减少系统中各部分的依赖关系，从而实现高内聚、松耦合的类型设计方案。</p>
-<p> 面向接口编程，接口标准化是产业强盛的标志</p>
-<pre><code>GOF-23模式分类
-从目的来看：
+<p>面向接口编程，接口标准化是产业强盛的标志<br>    GOF-23模式分类<br>    从目的来看：<br>    创建型模式<br>        解决对象创建的工作<br>    结构型模式<br>        应对需求变化为对象的结构带来的冲击<br>    行为型模式<br>        多个类之间交互过程中责任划分的问题<br>    从范围来看：<br>    类模式：<br>    类模式倾向类和子类的静态关系，偏重继承方案</p>
+<pre><code>对象模式：
+对象模式处理对象间的动态关系，偏重组合方案
 
-创建型模式
-    解决对象创建的工作
-结构型模式 
-    应对需求变化为对象的结构带来的冲击
-行为型模式
-    多个类之间交互过程中责任划分的问题
+设计模式的要点是：寻找变化点，在变化点处应用设计模式
+重构关键技法：
+静态-&gt;动态
+早绑定-&gt;晚绑定
+继承-&gt;组合
+编译时依赖-&gt;运行时依赖
+紧耦合-&gt;松耦合
 
-从范围来看：
+从封装变化角度对模式分类
+组件协作：
+    通过晚期绑定来实现框架与应用之间的松耦合
+    典型模式：
+        Template Method 模板方法
+                某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，
+                或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现
+                如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求
 
-类模式：
-类模式倾向类和子类的静态关系，偏重继承方案
+        Strategy        策略模式
+            动机：
+            软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中
+            将会使对象变得异常复杂，而且有时候支持不使用的算法也是一个性能负担
+            如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？
+            定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。
+            该模式是的算法可独立于使用它的客户程序(稳定)而变化(扩展，子类化)
+        Observer/Event    观察者模式/事件模式
+单一职责：
+    在软件组件的设计中，如果责任划分的不清晰，使用继承得到的，结果往往是随着需求的变化，子类急剧膨胀，同时充斥着重复代码
+    这时候的关键是划清责任
+    典型模式：
+            Decorator 装饰器模式
+            主体操作和扩展操作分开分支继承
+            动机：
+                 某些情况下可能会过度的使用继承来扩展对象的功能，由于继承为类型引入的静态特质，使得这种扩展方式缺乏灵活性，并且随着子类的增多
+                 (扩展功能的增多)各种子类的组合(扩展功能的组合)会导致更多子类的膨胀
+             动态地给一个对象增加一些额外的职责，就增加功能而言，Decorator模式比生成子类(继承)更为灵活(消除重复代码&amp;减少子类个数)
+            通过采用组合而非继承的手法，Decorator模式实现了在运行时动态扩展对象功能的能力，而且可以根据需要扩展多个功能
+            避免了使用继承带来的“灵活性差”和“多子类衍生问题”。
+            Decorator类在接口上表现为 is-a Component的继承关系，即Decorator类继承了Component类所具有的接口。但在实现上又表现为
+            has-a Component的组合关系，即Decorator类又使用了另外一个Component类。
+            Decorator 模式的目的并非解决“多子类衍生的多继承”问题，Decorator模式应用的要点在于解决“主体类在多个方向上的扩展功能”---是为装饰的含义
 
- 对象模式：
- 对象模式处理对象间的动态关系，偏重组合方案
+            Bridge 桥模式
+                将抽象部分(业务功能)与实现部分(平台实现)分离，使他们都可以独立地变化。
 
- 设计模式的要点是：寻找变化点，在变化点处应用设计模式
- 重构关键技法：
- 静态-&gt;动态
- 早绑定-&gt;晚绑定
- 继承-&gt;组合
- 编译时依赖-&gt;运行时依赖
- 紧耦合-&gt;松耦合
+                Bridge模式使用“对象间的组合关系”解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。所谓抽象和实现沿着
+                各自维度的变化，即&quot;子类化&quot;它们
 
- 从封装变化角度对模式分类
- 组件协作：
-     通过晚期绑定来实现框架与应用之间的松耦合
-     典型模式：
-         Template Method 模板方法
-                 某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，
-                 或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现
-                 如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求
+                Bridge模式有时候类似于多继承方案，但是多继承方案往往违背单一职责原则(即一个类只有一个变化的原因)，复用性比较差。
+                Bridge模式时比多继承方案更好的解决方法。
 
-         Strategy        策略模式
-             动机：
-             软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中
-             将会使对象变得异常复杂，而且有时候支持不使用的算法也是一个性能负担
-             如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？
-             定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。
-             该模式是的算法可独立于使用它的客户程序(稳定)而变化(扩展，子类化)
-         Observer/Event    观察者模式/事件模式
- 单一职责：
-     在软件组件的设计中，如果责任划分的不清晰，使用继承得到的，结果往往是随着需求的变化，子类急剧膨胀，同时充斥着重复代码
-     这时候的关键是划清责任
-     典型模式：
-             Decorator 装饰器模式
-             主体操作和扩展操作分开分支继承
-             动机：
-                  某些情况下可能会过度的使用继承来扩展对象的功能，由于继承为类型引入的静态特质，使得这种扩展方式缺乏灵活性，并且随着子类的增多
-                  (扩展功能的增多)各种子类的组合(扩展功能的组合)会导致更多子类的膨胀
-              动态地给一个对象增加一些额外的职责，就增加功能而言，Decorator模式比生成子类(继承)更为灵活(消除重复代码&amp;减少子类个数)
-             通过采用组合而非继承的手法，Decorator模式实现了在运行时动态扩展对象功能的能力，而且可以根据需要扩展多个功能
-             避免了使用继承带来的“灵活性差”和“多子类衍生问题”。
-             Decorator类在接口上表现为 is-a Component的继承关系，即Decorator类继承了Component类所具有的接口。但在实现上又表现为
-             has-a Component的组合关系，即Decorator类又使用了另外一个Component类。
-             Decorator 模式的目的并非解决“多子类衍生的多继承”问题，Decorator模式应用的要点在于解决“主体类在多个方向上的扩展功能”---是为装饰的含义
-
-             Bridge 桥模式
-                 将抽象部分(业务功能)与实现部分(平台实现)分离，使他们都可以独立地变化。
-
-                 Bridge模式使用“对象间的组合关系”解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。所谓抽象和实现沿着
-                 各自维度的变化，即&quot;子类化&quot;它们
-
-                 Bridge模式有时候类似于多继承方案，但是多继承方案往往违背单一职责原则(即一个类只有一个变化的原因)，复用性比较差。
-                 Bridge模式时比多继承方案更好的解决方法。
-
-                 Bridge模式的应用一般在“两个非常强的变化维度”，有时一个类也有多于两个的变化维度，这时可以使用Bridge的扩展模式。
-                 有时候一个类有多个变化维度，此时可以把某一个聚合的变化维度合在一起，打包成一个基类，用一个抽象指针指向它。有n个变化维度，就打包n个基类，用n个抽象指针指向它。
+                Bridge模式的应用一般在“两个非常强的变化维度”，有时一个类也有多于两个的变化维度，这时可以使用Bridge的扩展模式。
+                有时候一个类有多个变化维度，此时可以把某一个聚合的变化维度合在一起，打包成一个基类，用一个抽象指针指向它。有n个变化维度，就打包n个基类，用n个抽象指针指向它。
 
 
- 对象创建：
-     通过“对象创建”模式绕开new，来避免对象创建(new)过程中所导致的紧耦合(依赖具体类)，从而支持对象创建的稳定，他是接口抽象之后的第一步工作。
-             Factory Method:工厂方法模式
-                     在软件系统中经常面临着创建对象的工作；由于需求的变化，需要创建的对象的具体类型经常变化。
-                     定义一个用于创建对象的接口，让子类决定实例化哪一个类，Factory Method 使得一个类的实例化延迟(目的：解耦，手段：虚函数)到子类
-                     Factory Method模式用于隔离类对象的使用者和具体类型之间的耦合关系，面对一个经常变化的具体类型，紧耦合关系(new)会导致软件的脆弱
-                     Factory Method模式通过面向对象的手法（多态），将所要创建的具体对象工作延迟到子类，从而实现一种扩展(而非更改)的策略，较好地解决了这种紧耦合关系
-                     Factory Method模式解决“单个对象”的需求变化。缺点在于要求创建方法/参数相同
+对象创建：
+    通过“对象创建”模式绕开new，来避免对象创建(new)过程中所导致的紧耦合(依赖具体类)，从而支持对象创建的稳定，他是接口抽象之后的第一步工作。
+            Factory Method:工厂方法模式
+                    在软件系统中经常面临着创建对象的工作；由于需求的变化，需要创建的对象的具体类型经常变化。
+                    定义一个用于创建对象的接口，让子类决定实例化哪一个类，Factory Method 使得一个类的实例化延迟(目的：解耦，手段：虚函数)到子类
+                    Factory Method模式用于隔离类对象的使用者和具体类型之间的耦合关系，面对一个经常变化的具体类型，紧耦合关系(new)会导致软件的脆弱
+                    Factory Method模式通过面向对象的手法（多态），将所要创建的具体对象工作延迟到子类，从而实现一种扩展(而非更改)的策略，较好地解决了这种紧耦合关系
+                    Factory Method模式解决“单个对象”的需求变化。缺点在于要求创建方法/参数相同
 
-             Abstract Factory:抽象工厂模式，和工厂方法模式是同一类模式
-                     动机：软件系统中，经常面临着“一系列相互依赖的对象”的创建工作，同时由于需求的变化，往往存在更多系列对象的创建工作
-                     提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定他们具体的类。
-                     如果没有应对“多系列对象构建”的需求变化，则没有必要使用Abstract Factory模式，这时候使用简单的工厂完全可以
-                     系列对象指的是在某一特定系列下的对象之间有相互依赖，或作用的关系，不同系列的对象之间不能相互依赖
-                     Abstract Factory模式主要在于应对“新系列”的需求变动，其缺点在于难以应对“新对象”的需求变动
-                         即加新系列很简单，但加新对象比较麻烦
-             Prototype ：原型模式
-                     动机：软件系统装，经常面临着“某些结构复杂的对象”的创建工作，由于需求的变化，这些对象经常面临着剧烈的变化，但他们拥有比较稳定一致的接口
-                     Prototype模式同样用于隔离类对象的使用者和具体类型(易变类)之间的耦合关系，它同样要求这些易变类拥有稳定的接口
-                     Prototype模式对于“如何创建易变类的实体对象”采用“原型克隆”的方法来做，它使得我们可以非常灵活地动态创建“拥有某些稳定接口”的新对象
-                     所需工作仅是注册一个新类的对象(即原型)然后再任何需要的地方Clone
-                     Prototype模式中的Clone方法可以利用某些框架的序列化来实现深拷贝。
-             Builder：构建器
-                     动机：在软件系统中，有时候面临着“一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成，由于需求的变化，这个复杂对象的各个部分
-                         经常面临着剧烈的变化，但是将他们组合在一起的算法却异常稳定
-                     将一个复杂对象的构建与其表示相分离，使得同样的构建过程(稳定)可以创建不同的表示(变化)
-                     Builder模式主要用于分步骤构建一个复杂的对象，在这其中“分步骤”是一个稳定的算法，而复杂对象的各个部分则经常变化、
-                     变化点在哪里，封装哪里------Builder模式主要在于应对“复杂对象各个部分”的频繁需求变动，其缺点在于难以应对“分步骤构建算法”的需求变动
-                     Builder模式中，要注意不同语言中构造器内调用虚函数的差别
- 对象性能：    
-         面向对象很好地解决了“抽象”的问题，但是必不可免地要付出一定的代价。对于通常情况来讲，面向对象的成本大都可以忽略不计，但是某些情况下
-         面向对象带来的成本必须谨慎处理。
-         Singleton：单例模式
-             动机：在软件系统中，经常有这样一些特殊的类，必须保证它们在系统中只存在一个实例，才能确保他们的逻辑正确性、以及良好的效率
-             保证一个类只有一个实例，并提供一个该实例的全局访问点
-             Singleton模式中的实例构造器可以设置为protected以允许子类派生
-             Singleton模式一般不要支持拷贝后构造函数和Clone接口，因为这有可能导致多个对象实例，与Singleton模式的初衷违背
-             多线程环境下安全的Singleton 要注意对双检查锁的正确实现。
-         Flyweight：享元模式
-             动机：在软件系统采用纯粹对象方案的问题在于大量细粒度的对象会很快充斥在系统中，从而带来很高的运行时代价--主要指内存需求方面的代价
-             如何在避免大量细粒度对象问题的同时，让外部客户程序仍然能够透明地使用面向对象的方式来进行操作
-             运用共享技术有效地支持大量细粒度的对象。
-
-
- 接口隔离：
-         在组件构建过程中，某些接口之间直接的依赖常常会带来很多问题，甚至根本无法实现，采用添加一层间接(稳定)的接口，
-         来隔离本来互相紧密关联的接口是一种常见的解决方案。
-         Facade:门面模式/界面模式        解耦    系统内和系统外    对象的关联关系
-             为子系统中的一组接口提供一个一致(稳定)的界面，Facade模式定义了一个高层接口，这个接口使得这一子系统更加容易使用(复用)
-             从客户程序的角度来看，Facade模式简化了整个组件系统的接口，对于组件内部与外部客户程序来说，达到了一种解耦的效果
-             内部子系统的任何变化不会影响到Facade接口的变化
-             Facade设计模式更注重从架构的层次去看整个系统，而不是单个类的层次，Facade很多时候更是一种架构设计模式
-             Facade模式中组件的内部应该是“相互耦合关系比较大的一系列组件”,而不是一个简单的功能集合。
-
-         Proxy：代理模式                解耦    两个对象间        的关联关系
-             在面向对象系统中，由于某种原因(比如对象创建的开销很大，或者某些操作需要安全控制，或者需要进程外的访问等)直接访问会给使用者、或者系统结构带来很多麻烦
-             如何在不失去透明操作对象的同时来管理/控制这些对象特有的复杂性？增加一层间接层是软件开发中常见的解决方式。
-             为其他对象提供一种代理以控制(隔离，使用接口)对这个对象的访问。
-
-         Adapter    适配器模式            老接口和新接口
-             由于应用环境的变化，常常需要把“一些现存的对象”放在新的环境中应用，但是新环境要求的接口是这些现存现象所不满足的。
-             将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作
-             Adapter模式主要应用于“希望复用一些现存的类，但是接口又与复用环境要求不一致的情况”在遗留代码复用。类库迁移等方面非常有用
-
-         Mediator:中介者            解耦    多个对象    
-             软件构建过程中，经常会出现多个对象互相关联交互的情况，对象之间常常会维持一种复杂的引用关系，
-             如果遇到一些需求的更改，这种直接的引用关系将面临不断地变化。
-             可以使用一个“中介对象”来管理对象间的关联关系，避免相互交互的对象之间的紧耦合引用关系，从而更好地抵御变化。
-             模式定义：用一个中介者来封装(封装变化)一系列的对象交互。中介者使各对象不需要显示的相互引用(编译时依赖-&gt;运行时依赖)
-             从而使其耦合松散(管理变化)，且可以独立地改变它们之间的交互。
-             将多个对象间复杂的关联关系解耦，Mediator模式将多个对象间的控制逻辑进行集中管理，变“多个对象互相关联”为
-             “多个对象和一个中介者关联”，简化了系统的维护，抵御了可能的变化。
-             随着控制逻辑的复杂化，Mediator具体对象的实现可能相当复杂。这时候可以对Mediator对象进行分解处理
-             Facade模式是解耦系统间(单向)的对象关联关系，Mediator模式是解耦系统内各个对象之间(双向)的关联关系
- 状态变换：
-         在组件构建过程中，某些对象的状态经常面临变化，如何对这些变化进行有效的管理，同时又维持高层模块的稳定，“状态变化”
-         模式为此问题提供解决方案。
-         State    状态模式
-             允许一个对象在其内部状态改变时改变它的行为，从而使对象看起来似乎修改了其行为。
-             State模式将所有与一个特定状态相关的行为都放入一个State的子类对象中，在对象状态切换时，切换相应的对象
-             但同时维持State的接口，这样实现了具体操作与状态转换之间的解耦
-             为不同的状态引入不同的对象使得状态转换变得更加明确，而且可以保证不会出现状态不一致的情况，因为转换是原子性的
-             即要么彻底转换过来，要么不转换。
-             如果State对象没有没有实例对象，那么各个上下文可以共享同一个对象，从而节省对象开销
-         Memonto    备忘录模式
-             软件构建过程中，某些对象的状态在转换过程中，可能由于某种需要，要求程序能够回溯到对象之前处于某个点时的状态。
-             如果使用一些共有借口来让其他对象得到对象的状态，便会暴露对象的实现细节。
-             如何实现对象状态的良好保存与恢复，但又不会因此破坏对象本身的封装性
-             备忘录(Memento)存储原发器(Originator)对象的内部状态，在需要时恢复原发器状态
-             Memento模式的核心是信息隐藏，即Originator需要向外接隐藏信息，保持其封装性。但同时又需要将状态保持到外界(Memento)
-             由于现代语言运行时，都具有相当的对象序列化支持，因此往往采用效率高，又较容易正确实现的序列化方案来实现Memento方案
- 数据结构：
-         常常有一些组件在内部具有特定的数据结构，如果让客户程序依赖这些特定的数据结构，会破坏组件的复用性，这时候如果将这些特定的数据结构封装在内部
-         在外部提供统一的接口，来实现与特定数据结构无关的访问，是一种行之有效的解决方案。
-         Composite 组合模式
-             将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对单个对象和组合对象的使用具有一致性(稳定)
-         采用树形结构来实现普遍存在的对象容器，从而将一对多的关系转为一对一的关系，使得客户代码可以一致地(复用)处理对象和对象容器，
-         无需关心处理的是单个的对象还是组合的对象容器
-         将“客户代码与复杂的对象容器结构”解耦是Composite的核心思想，解耦之后，客户代码将与纯粹的抽象接口--而非对象容器的内部实现结构--发生依赖
-         从而更能应对变化。
-         Composite模式在具体实现中，可以让父对象的子对象反向追溯；如果父对象有频繁的便利需求，可使用缓存技巧来改善效率。
-
-         Iterator  迭代器模式
-             集合对象内部结构常常变化各异，但对于这些集合对象，我们希望在不暴露其内部结构的同时，可以让外部客户代码透明地访问其中包含的元素，
-         同时这种透明遍历也为同一种算法在多种集合对象上进行操作提供了可能。
-             提供一种方法，顺序访问一个聚合对象中的各个元素，而又不暴露(稳定)该对象的内部表示
-         要点：
-             迭代抽象：访问一个聚合对象的内容而无需暴露它的内部表示、
-             迭代多态：为遍历不同的集合结构提供一个统一的接口，从而支持同样的算法在不同的集合结构上进行操作
-             迭代器健壮性考虑：遍历的同时更改迭代器所在的集合结构，会导致问题
-         Chain of Responsibility 职责链模式
-             动机：软件构建过程中，一个请求可能会被多个对象处理，但是每个请求在运行时只能有一个接受者，如果显示指定，将必不可少地带来请求发送者与接受者的紧耦合
-             模式定义：使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递请求，直到有一个对象处理它为止。
-             Chain of Responsibility模式应用场合在于“一个请求可能有多个接受者，但是最后真正的接受者只能有一个”，这时候请求发送者与接受者的耦合有可能出现“变化脆弱”
-             的症状，职责链的目的就是将二者解耦，从而更好地应对变化。
-             应用了Chain of Responsibility模式后，对象的职责分派将更具灵活性，我们可以在运行时动态添加/修改请求的处理职责。
-             如果请求传递到责任链的末尾仍得不到处理，应该有一个合理的缺省机制，这也是每一个接收对象的责任，而不是发出请求的对象的责任。
- 行为变化：
-         在组件的构建过程中，组件行为的变化经常导致组件本身剧烈的变化，“行为变化”模式将组件的行为和组件本身进行解耦，从而支持组件行为的变化，实现两者之间的松耦合。
-         Command 命令模式
-             软件构建过程中，“行为请求者”与“行为实现者”通常呈现一种“紧耦合”。但是在某些场合--比如需要对行为进行“记录、撤销/重(undo/redo)、事务”等处理，这种无法抵御变化的紧耦合是不合适的
-             将请求(行为)封装为一个对象，从而使你可以用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。
-             Command模式的根本目的在于将“行为请求者”与“行为实现者”解耦，在面向对象语言中，常见的实现手段是“将行为抽象为对象”。
-             实现Command接口的具体命令对象ConcreteCommand有时候根据需要可能会保存一些额外的状态信息，通过使用Composite模式，可以将多个“命令”封装为一个“复合命令”MacroCommand。
-             Command模式与C++中的函数对象有些类似，但两者定义行为接口的规范有所区别：Command以面向对象中的“接口-实现”来定义行为接口规范，更严格，但有性能损失，C++函数对象以函数签名来定义行为接口规范，更灵活
-
-         Visitor 访问器模式
-             软件构建过程中，由于需求的改变，某些类层次结构中常常需要增加新的行为(方法)，如果直接在基类中做这样的改变，将会给子类带来很繁重的变更负担，甚至破坏原有设计
-             表示一个作用于某对象结构中的各元素的操作。使得可以在不改变(稳定)各元素的类的前提下定义(扩展)作用于这些元素的新操作(变化)
-             Visitor 模式通过所谓双重分发(double dispatch)来实现在不更改(不添加新的操作-编译时)Element类层次结构的前提下，在运行时透明地为类层次结构上的各个类动态添加新的操作(支持变化)
-             所谓双重分发即Visitor模式中间包括了两个多态分发(注意其中的多台机制)：第一个为accept方法的多态辨析；第二个为visitElementX方法的多态辨析。
-             Visitor模式的最大缺点在于扩展类层次结构(添加新的Element子类)，会导致Visitor类的改变。因此Visitor模式适用于“Element类层次结构稳定，而其中的操作却经常面临频繁改动”
+            Abstract Factory:抽象工厂模式，和工厂方法模式是同一类模式
+                    动机：软件系统中，经常面临着“一系列相互依赖的对象”的创建工作，同时由于需求的变化，往往存在更多系列对象的创建工作
+                    提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定他们具体的类。
+                    如果没有应对“多系列对象构建”的需求变化，则没有必要使用Abstract Factory模式，这时候使用简单的工厂完全可以
+                    系列对象指的是在某一特定系列下的对象之间有相互依赖，或作用的关系，不同系列的对象之间不能相互依赖
+                    Abstract Factory模式主要在于应对“新系列”的需求变动，其缺点在于难以应对“新对象”的需求变动
+                        即加新系列很简单，但加新对象比较麻烦
+            Prototype ：原型模式
+                    动机：软件系统装，经常面临着“某些结构复杂的对象”的创建工作，由于需求的变化，这些对象经常面临着剧烈的变化，但他们拥有比较稳定一致的接口
+                    Prototype模式同样用于隔离类对象的使用者和具体类型(易变类)之间的耦合关系，它同样要求这些易变类拥有稳定的接口
+                    Prototype模式对于“如何创建易变类的实体对象”采用“原型克隆”的方法来做，它使得我们可以非常灵活地动态创建“拥有某些稳定接口”的新对象
+                    所需工作仅是注册一个新类的对象(即原型)然后再任何需要的地方Clone
+                    Prototype模式中的Clone方法可以利用某些框架的序列化来实现深拷贝。
+            Builder：构建器
+                    动机：在软件系统中，有时候面临着“一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成，由于需求的变化，这个复杂对象的各个部分
+                        经常面临着剧烈的变化，但是将他们组合在一起的算法却异常稳定
+                    将一个复杂对象的构建与其表示相分离，使得同样的构建过程(稳定)可以创建不同的表示(变化)
+                    Builder模式主要用于分步骤构建一个复杂的对象，在这其中“分步骤”是一个稳定的算法，而复杂对象的各个部分则经常变化、
+                    变化点在哪里，封装哪里------Builder模式主要在于应对“复杂对象各个部分”的频繁需求变动，其缺点在于难以应对“分步骤构建算法”的需求变动
+                    Builder模式中，要注意不同语言中构造器内调用虚函数的差别
+对象性能：    
+        面向对象很好地解决了“抽象”的问题，但是必不可免地要付出一定的代价。对于通常情况来讲，面向对象的成本大都可以忽略不计，但是某些情况下
+        面向对象带来的成本必须谨慎处理。
+        Singleton：单例模式
+            动机：在软件系统中，经常有这样一些特殊的类，必须保证它们在系统中只存在一个实例，才能确保他们的逻辑正确性、以及良好的效率
+            保证一个类只有一个实例，并提供一个该实例的全局访问点
+            Singleton模式中的实例构造器可以设置为protected以允许子类派生
+            Singleton模式一般不要支持拷贝后构造函数和Clone接口，因为这有可能导致多个对象实例，与Singleton模式的初衷违背
+            多线程环境下安全的Singleton 要注意对双检查锁的正确实现。
+        Flyweight：享元模式
+            动机：在软件系统采用纯粹对象方案的问题在于大量细粒度的对象会很快充斥在系统中，从而带来很高的运行时代价--主要指内存需求方面的代价
+            如何在避免大量细粒度对象问题的同时，让外部客户程序仍然能够透明地使用面向对象的方式来进行操作
+            运用共享技术有效地支持大量细粒度的对象。
 
 
- 领域问题：    
-         软件构建过程中，如果某一特定领域的问题比较复杂，类似的结构不断重复出现，如果使用普遍的编程方式来实现将面临非常频繁的变化。
-         在这种情况下，将特定领域的问题表达为某种语法规则下的句子，然后构建一个解释器来解释这样的句子，从而达到解决问题的目的。
-         Interpreter 解析器模式
-         给定一个语言，定义它的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。
-         Interpreter模式的应用场景是Interpreter模式应用中的难点，只有满足“业务规则频繁变化，且类似的结构不断重复出现，并且容易抽象为语法规则的问题”才适合使用Interpreter模式。
-         使用Interpreter模式来表示文法规则，从而可以使用面向对象技巧来方便地“扩展”文法。
-         Interpreter模式比较适合简单的文法表示，对于复杂的文法表示，Interpreter模式会产生比较大的类层次结构，需要求助于语法分析生成器这样的标准工具。        
+接口隔离：
+        在组件构建过程中，某些接口之间直接的依赖常常会带来很多问题，甚至根本无法实现，采用添加一层间接(稳定)的接口，
+        来隔离本来互相紧密关联的接口是一种常见的解决方案。
+        Facade:门面模式/界面模式        解耦    系统内和系统外    对象的关联关系
+            为子系统中的一组接口提供一个一致(稳定)的界面，Facade模式定义了一个高层接口，这个接口使得这一子系统更加容易使用(复用)
+            从客户程序的角度来看，Facade模式简化了整个组件系统的接口，对于组件内部与外部客户程序来说，达到了一种解耦的效果
+            内部子系统的任何变化不会影响到Facade接口的变化
+            Facade设计模式更注重从架构的层次去看整个系统，而不是单个类的层次，Facade很多时候更是一种架构设计模式
+            Facade模式中组件的内部应该是“相互耦合关系比较大的一系列组件”,而不是一个简单的功能集合。
+
+        Proxy：代理模式                解耦    两个对象间        的关联关系
+            在面向对象系统中，由于某种原因(比如对象创建的开销很大，或者某些操作需要安全控制，或者需要进程外的访问等)直接访问会给使用者、或者系统结构带来很多麻烦
+            如何在不失去透明操作对象的同时来管理/控制这些对象特有的复杂性？增加一层间接层是软件开发中常见的解决方式。
+            为其他对象提供一种代理以控制(隔离，使用接口)对这个对象的访问。
+
+        Adapter    适配器模式            老接口和新接口
+            由于应用环境的变化，常常需要把“一些现存的对象”放在新的环境中应用，但是新环境要求的接口是这些现存现象所不满足的。
+            将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作
+            Adapter模式主要应用于“希望复用一些现存的类，但是接口又与复用环境要求不一致的情况”在遗留代码复用。类库迁移等方面非常有用
+
+        Mediator:中介者            解耦    多个对象    
+            软件构建过程中，经常会出现多个对象互相关联交互的情况，对象之间常常会维持一种复杂的引用关系，
+            如果遇到一些需求的更改，这种直接的引用关系将面临不断地变化。
+            可以使用一个“中介对象”来管理对象间的关联关系，避免相互交互的对象之间的紧耦合引用关系，从而更好地抵御变化。
+            模式定义：用一个中介者来封装(封装变化)一系列的对象交互。中介者使各对象不需要显示的相互引用(编译时依赖-&gt;运行时依赖)
+            从而使其耦合松散(管理变化)，且可以独立地改变它们之间的交互。
+            将多个对象间复杂的关联关系解耦，Mediator模式将多个对象间的控制逻辑进行集中管理，变“多个对象互相关联”为
+            “多个对象和一个中介者关联”，简化了系统的维护，抵御了可能的变化。
+            随着控制逻辑的复杂化，Mediator具体对象的实现可能相当复杂。这时候可以对Mediator对象进行分解处理
+            Facade模式是解耦系统间(单向)的对象关联关系，Mediator模式是解耦系统内各个对象之间(双向)的关联关系
+状态变换：
+        在组件构建过程中，某些对象的状态经常面临变化，如何对这些变化进行有效的管理，同时又维持高层模块的稳定，“状态变化”
+        模式为此问题提供解决方案。
+        State    状态模式
+            允许一个对象在其内部状态改变时改变它的行为，从而使对象看起来似乎修改了其行为。
+            State模式将所有与一个特定状态相关的行为都放入一个State的子类对象中，在对象状态切换时，切换相应的对象
+            但同时维持State的接口，这样实现了具体操作与状态转换之间的解耦
+            为不同的状态引入不同的对象使得状态转换变得更加明确，而且可以保证不会出现状态不一致的情况，因为转换是原子性的
+            即要么彻底转换过来，要么不转换。
+            如果State对象没有没有实例对象，那么各个上下文可以共享同一个对象，从而节省对象开销
+        Memonto    备忘录模式
+            软件构建过程中，某些对象的状态在转换过程中，可能由于某种需要，要求程序能够回溯到对象之前处于某个点时的状态。
+            如果使用一些共有借口来让其他对象得到对象的状态，便会暴露对象的实现细节。
+            如何实现对象状态的良好保存与恢复，但又不会因此破坏对象本身的封装性
+            备忘录(Memento)存储原发器(Originator)对象的内部状态，在需要时恢复原发器状态
+            Memento模式的核心是信息隐藏，即Originator需要向外接隐藏信息，保持其封装性。但同时又需要将状态保持到外界(Memento)
+            由于现代语言运行时，都具有相当的对象序列化支持，因此往往采用效率高，又较容易正确实现的序列化方案来实现Memento方案
+数据结构：
+        常常有一些组件在内部具有特定的数据结构，如果让客户程序依赖这些特定的数据结构，会破坏组件的复用性，这时候如果将这些特定的数据结构封装在内部
+        在外部提供统一的接口，来实现与特定数据结构无关的访问，是一种行之有效的解决方案。
+        Composite 组合模式
+            将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对单个对象和组合对象的使用具有一致性(稳定)
+        采用树形结构来实现普遍存在的对象容器，从而将一对多的关系转为一对一的关系，使得客户代码可以一致地(复用)处理对象和对象容器，
+        无需关心处理的是单个的对象还是组合的对象容器
+        将“客户代码与复杂的对象容器结构”解耦是Composite的核心思想，解耦之后，客户代码将与纯粹的抽象接口--而非对象容器的内部实现结构--发生依赖
+        从而更能应对变化。
+        Composite模式在具体实现中，可以让父对象的子对象反向追溯；如果父对象有频繁的便利需求，可使用缓存技巧来改善效率。
+
+        Iterator  迭代器模式
+            集合对象内部结构常常变化各异，但对于这些集合对象，我们希望在不暴露其内部结构的同时，可以让外部客户代码透明地访问其中包含的元素，
+        同时这种透明遍历也为同一种算法在多种集合对象上进行操作提供了可能。
+            提供一种方法，顺序访问一个聚合对象中的各个元素，而又不暴露(稳定)该对象的内部表示
+        要点：
+            迭代抽象：访问一个聚合对象的内容而无需暴露它的内部表示、
+            迭代多态：为遍历不同的集合结构提供一个统一的接口，从而支持同样的算法在不同的集合结构上进行操作
+            迭代器健壮性考虑：遍历的同时更改迭代器所在的集合结构，会导致问题
+        Chain of Responsibility 职责链模式
+            动机：软件构建过程中，一个请求可能会被多个对象处理，但是每个请求在运行时只能有一个接受者，如果显示指定，将必不可少地带来请求发送者与接受者的紧耦合
+            模式定义：使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递请求，直到有一个对象处理它为止。
+            Chain of Responsibility模式应用场合在于“一个请求可能有多个接受者，但是最后真正的接受者只能有一个”，这时候请求发送者与接受者的耦合有可能出现“变化脆弱”
+            的症状，职责链的目的就是将二者解耦，从而更好地应对变化。
+            应用了Chain of Responsibility模式后，对象的职责分派将更具灵活性，我们可以在运行时动态添加/修改请求的处理职责。
+            如果请求传递到责任链的末尾仍得不到处理，应该有一个合理的缺省机制，这也是每一个接收对象的责任，而不是发出请求的对象的责任。
+行为变化：
+        在组件的构建过程中，组件行为的变化经常导致组件本身剧烈的变化，“行为变化”模式将组件的行为和组件本身进行解耦，从而支持组件行为的变化，实现两者之间的松耦合。
+        Command 命令模式
+            软件构建过程中，“行为请求者”与“行为实现者”通常呈现一种“紧耦合”。但是在某些场合--比如需要对行为进行“记录、撤销/重(undo/redo)、事务”等处理，这种无法抵御变化的紧耦合是不合适的
+            将请求(行为)封装为一个对象，从而使你可以用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。
+            Command模式的根本目的在于将“行为请求者”与“行为实现者”解耦，在面向对象语言中，常见的实现手段是“将行为抽象为对象”。
+            实现Command接口的具体命令对象ConcreteCommand有时候根据需要可能会保存一些额外的状态信息，通过使用Composite模式，可以将多个“命令”封装为一个“复合命令”MacroCommand。
+            Command模式与C++中的函数对象有些类似，但两者定义行为接口的规范有所区别：Command以面向对象中的“接口-实现”来定义行为接口规范，更严格，但有性能损失，C++函数对象以函数签名来定义行为接口规范，更灵活
+
+        Visitor 访问器模式
+            软件构建过程中，由于需求的改变，某些类层次结构中常常需要增加新的行为(方法)，如果直接在基类中做这样的改变，将会给子类带来很繁重的变更负担，甚至破坏原有设计
+            表示一个作用于某对象结构中的各元素的操作。使得可以在不改变(稳定)各元素的类的前提下定义(扩展)作用于这些元素的新操作(变化)
+            Visitor 模式通过所谓双重分发(double dispatch)来实现在不更改(不添加新的操作-编译时)Element类层次结构的前提下，在运行时透明地为类层次结构上的各个类动态添加新的操作(支持变化)
+            所谓双重分发即Visitor模式中间包括了两个多态分发(注意其中的多台机制)：第一个为accept方法的多态辨析；第二个为visitElementX方法的多态辨析。
+            Visitor模式的最大缺点在于扩展类层次结构(添加新的Element子类)，会导致Visitor类的改变。因此Visitor模式适用于“Element类层次结构稳定，而其中的操作却经常面临频繁改动”
 
 
- 模式应用时要分辨出哪些是稳定的哪些是变化的。
+领域问题：    
+        软件构建过程中，如果某一特定领域的问题比较复杂，类似的结构不断重复出现，如果使用普遍的编程方式来实现将面临非常频繁的变化。
+        在这种情况下，将特定领域的问题表达为某种语法规则下的句子，然后构建一个解释器来解释这样的句子，从而达到解决问题的目的。
+        Interpreter 解析器模式
+        给定一个语言，定义它的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。
+        Interpreter模式的应用场景是Interpreter模式应用中的难点，只有满足“业务规则频繁变化，且类似的结构不断重复出现，并且容易抽象为语法规则的问题”才适合使用Interpreter模式。
+        使用Interpreter模式来表示文法规则，从而可以使用面向对象技巧来方便地“扩展”文法。
+        Interpreter模式比较适合简单的文法表示，对于复杂的文法表示，Interpreter模式会产生比较大的类层次结构，需要求助于语法分析生成器这样的标准工具。        
+
+
+模式应用时要分辨出哪些是稳定的哪些是变化的。
 
 
 
- 总结
-     一个目标：管理变化，提高复用
-     两种手段：分解、抽象
-     八大原则：    依赖倒置原则(DIP)
-             开放封闭原则(OCP)
-             单一职责原则(SRP)
-             Liskov替换原则(LSP)
-             接口隔离原则(ISP)
-             对象组合优于类继承
-             封装变化点
-             面向接口编程
+总结
+    一个目标：管理变化，提高复用
+    两种手段：分解、抽象
+    八大原则：    依赖倒置原则(DIP)
+            开放封闭原则(OCP)
+            单一职责原则(SRP)
+            Liskov替换原则(LSP)
+            接口隔离原则(ISP)
+            对象组合优于类继承
+            封装变化点
+            面向接口编程
 
-     重构技法：    静态-&gt;动态
-             早绑定-&gt;晚绑定
-             继承-&gt;组合
-             编译时依赖-&gt;运行时依赖
-             紧耦合-&gt;松耦合
+    重构技法：    静态-&gt;动态
+            早绑定-&gt;晚绑定
+            继承-&gt;组合
+            编译时依赖-&gt;运行时依赖
+            紧耦合-&gt;松耦合
 
-     什么时候不用模式：代码可读性很差时
-                 需求理解还很浅时
-                 变化没有显现时
-                 不是系统的关键依赖点
-                 项目没有复用价值时
-                 项目将要发布时
-     经验之谈：    不要为了模式而模式
-             关注抽象类&amp;接口
-             理清变化点和稳定点
-             审视依赖关系
-             要有Framework和Application的区隔思维
-             良好的设计是演化的结果</code></pre>
+    什么时候不用模式：代码可读性很差时
+                需求理解还很浅时
+                变化没有显现时
+                不是系统的关键依赖点
+                项目没有复用价值时
+                项目将要发布时
+    经验之谈：    不要为了模式而模式
+            关注抽象类&amp;接口
+            理清变化点和稳定点
+            审视依赖关系
+            要有Framework和Application的区隔思维
+            良好的设计是演化的结果</code></pre>
           
         
       
@@ -1244,759 +1976,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/leetcodeing/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/20/leetcodeing/" itemprop="url">leetcodeing</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-20T14:11:18+08:00">
-                2020-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="leetcode-27-移除元素"><a href="#leetcode-27-移除元素" class="headerlink" title="leetcode-27. 移除元素"></a>leetcode-27. 移除元素</h2><p>给你一个数组 nums 和一个值 val，你需要 原地 移除所有数值等于 val 的元素，并返回移除后数组的新长度。不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。</p>
-<p>双指针问题：快指针正常遍历数组，慢指针只有遇到不等于val的值时才自增，当遍历数组结束后慢指针的值为数组中不为val的元素个数，即移除后数组的新长度。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(nums == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">    		<span class="keyword">if</span>(nums[i]!=val)&#123;</span><br><span class="line">    			nums[flag] = nums[i];</span><br><span class="line">    			flag++;</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">			<span class="keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h2 id="leetcode-33搜索旋转排序数组"><a href="#leetcode-33搜索旋转排序数组" class="headerlink" title="leetcode-33搜索旋转排序数组"></a>leetcode-33搜索旋转排序数组</h2><p>假设按照升序排序的数组在预先未知的某个点上进行了旋转。( 例如，数组 [0,1,2,4,5,6,7] 可能变为 [4,5,6,7,0,1,2])。搜索一个给定的目标值，如果数组中存在这个目标值，则返回它的索引，否则返回 -1 。你可以假设数组中不存在重复的元素。你的算法时间复杂度必须是O(logn) 级别。</p>
-<p>看到时间复杂度O(logn)即可知道要使用二分法了。<br>旋转数组数据状况分析：一个升序数组结果旋转之后，变为两个升序数组，其中，右边升序数组的最大值小于左边升序数组的最小值。会因为旋转位置和mid之间的不同而导致不同的数据状况<br>例如：[0,1,2,4,5,6,7,8,9] 可能变为<br>情况A：[4,5,6,7,8,9,0,1,2] 此时left &lt; mid,mid左端是排序数组，mid右端是旋转数组<br>也可能变为<br>情况B：[7,8,9,0,1,2,3,4,5,6] left &gt; mid,此时mid左端是旋转数组，右端是排序数组</p>
-<p>若target = mid则直接返回<br>否则分情况讨论<br>情况A时,若mid &lt; target ,则target必在mid右端的旋转数组中，因为那里才有大于mid的数字<br>若mid &gt; target , 则需要继续判断,left与target之间的关系</p>
-<p>当left &lt; target,target在mid左端,[因为右端有序部分的最大值也小于left值]<br>当left &gt; target,target在mid右端,[因为左端部分最小值都大于target,必须在右端找]</p>
-<p>情况B时, 若mid &gt; target,则target必在mid左端的旋转数组中，<br>若mid &lt; target,则需要继续判断,right与target之间的关系</p>
-<p>当right &gt; target,target在mid右端<br>当right &lt; target,target在mid左端</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span>  <span class="title">search</span> <span class="params">(<span class="keyword">int</span> []nums , <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums==<span class="keyword">null</span>||nums.length==<span class="number">0</span>)<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> right = nums.length-<span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">if</span>(nums[left]==target)<span class="keyword">return</span> left;</span><br><span class="line">		<span class="keyword">if</span>(nums[right]==target)<span class="keyword">return</span> right;</span><br><span class="line">		<span class="keyword">while</span>(left+<span class="number">1</span>&lt;right)&#123;</span><br><span class="line">			<span class="keyword">int</span> mid = left + (right - left)/<span class="number">2</span>;</span><br><span class="line">			<span class="keyword">if</span>(nums[mid]==target)&#123;</span><br><span class="line">				<span class="keyword">return</span> mid;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(nums[left]&lt;nums[mid])&#123;</span><br><span class="line">				<span class="keyword">if</span>(nums[mid]&lt;target)&#123;</span><br><span class="line">					left = mid;</span><br><span class="line">				&#125;<span class="keyword">else</span> <span class="keyword">if</span>(nums[left]&lt;target)&#123;</span><br><span class="line">					right = mid;</span><br><span class="line">				&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">					left = mid;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(nums[mid]&gt;target)&#123;</span><br><span class="line">				right = mid;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span>(nums[right]&gt;target)&#123;</span><br><span class="line">				left = mid;</span><br><span class="line">			&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">				right = mid;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url">论文笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-12T12:00:59+08:00">
-                2020-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">论文笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="U-net与Dense-net相结合的视网膜血管提取"><a href="#U-net与Dense-net相结合的视网膜血管提取" class="headerlink" title="U-net与Dense-net相结合的视网膜血管提取"></a>U-net与Dense-net相结合的视网膜血管提取</h2><p>创新部分：<br>1、U-net层次化对称结构和Dense-net稠密连接方式的结合<br>2、白话预处理奇数弱化原始彩色眼底图像中的亮度不均，增强图像中血管区域的对比度<br>3、数据集随即旋转 Gamma变化实现数据增广<br>4、将每幅图像随机分割成若干较小的图块，用于减小模型参数规模，降低训练难度</p>
-<h2 id="采用卷积核金字塔和空洞卷积的单阶段目标检测"><a href="#采用卷积核金字塔和空洞卷积的单阶段目标检测" class="headerlink" title="采用卷积核金字塔和空洞卷积的单阶段目标检测"></a>采用卷积核金字塔和空洞卷积的单阶段目标检测</h2><p>创新部分：<br>1、采用多种方式融合特征信息，先使用逐像素相加方式融合多层不同大小的特征图信息，然后在通道维度拼接不同阶段的特征图。<br>2、在模型的锚框机制中引入卷积核金字塔结构以解决多尺度问题<br>3、采用空洞卷积减少大尺度卷积核增加的参数量，合理降低锚框数量。</p>
-<p>目标检测分为两类，一类是无特征信息融合的例如 FastR-CNN 和Faster R-CNN 以及YOLOv1、YOLOv2<br>一类是有特征信息融合，在多个特征图上进行预测如SSD、MS-CNN(multi-scale CNN)或在单个融合的特征图上进行预测HyperNet和ION(inside-outsidenot)使用拼接方式融合不同层次的特征。或在多个融合的特征图上进行预测如DSSD(deconvolutional single-shot detector)使用逐像素相乘的方式融合信息。YOLOv3、FPN、MaskR-CNN使用逐像素相加的方式融合信息。</p>
-<p>为利用不同深度特征图的优势，本文在两个阶段上融合特征信息。<br>1、在<strong><em>特征提取网络之后</em></strong>添加多个卷积层，对添加的多个卷积层使用<strong><em>逐像素相加</em></strong>的方式从深层到浅层逐层融合特征信息，形成具有丰富语义信息和细节信息的特征图。<br>2、为进一步增强特征信息融合，使用<strong><em>通道拼接的方式</em></strong>为上一步得到的融合特征图<strong><em>拼接不同阶段的特征图</em></strong>，形成语义、细节信息更加丰富的特征图。<br>特征信息融合模块：从原始SSD预测层的最深层开始，先通过双线性插值操作增大特征图的分辨率，再使用逐像素相加的方式和前一层特征图融合，直至原始SSD预测层的最浅层。再拼接不同阶段的特征图。</p>
-<h2 id="多尺度特征融合工件目标语义分割"><a href="#多尺度特征融合工件目标语义分割" class="headerlink" title="多尺度特征融合工件目标语义分割"></a>多尺度特征融合工件目标语义分割</h2><p>创新部分：在ResNet网络的第四个block层后继续多尺度特征提取。而图像金字塔只是简单地进图像分辨率的变化，虽然能获得多尺度信息表达，但ResNet网络的第四个block层的输出已经是一个维度很小的特征图，若继续降分辨率，不利于后续的特征响应，反而会增加网络模型参数计算量，因此使用空洞卷积代替降分辨率操作，在不降低分辨率的前提下，有效增大了滤波器的感受野，又充分获得了上级图像的局部特征信息。<br>故采用三层图像金字塔模式，底层为block4层输出的特征图，中层为使用不同采样率的多个并行空洞卷积，以提取不同尺度的局部特征信息，顶层为中层提取的局部特征信息的融合层。</p>
-<h2 id="多尺度特征图融合的目标检测"><a href="#多尺度特征图融合的目标检测" class="headerlink" title="多尺度特征图融合的目标检测"></a>多尺度特征图融合的目标检测</h2><p>创新部分：利用原始SSD网络提取特征图，通过1 * 1卷积层将提取的特征图统一为256维，通过反卷积操作增加自顶向下特征图的空间分辨率，通过对应元素相加的操作，将两个方向的特征图进行融合，融合后的特征图采用3 * 3的卷积核进行卷积操作，减小特征图融合后的混叠效应。<br>以完全卷积的方式处理任意的单尺度图像，然后特征融合结构将特征提取网络的<strong><em>原始特征图</em></strong>和<strong><em>反卷积后的特征图</em></strong>进行融合操作。</p>
-<h2 id="多模态深度神经网络的固废对象分割"><a href="#多模态深度神经网络的固废对象分割" class="headerlink" title="多模态深度神经网络的固废对象分割"></a>多模态深度神经网络的固废对象分割</h2><p>在颜色退化严重的场景下，把RGB图像和深度图一起作为深度卷积神经网络的输入，<br>创新部分：<br>1、在VGG16网络结构的基础上融合深度信息，把VGG16最后的全连接层改造成3层卷积层，形成一个全卷积网络，进行多模态信息的特征学习。<br>深度神卷积经网络包含2个输入层data1和data2，data1输入RGB图像和对应的标签文件，data2输入对应的深度图。将两者最后一层卷积层输出的特征图进行加权求和后作为输入训练softmax分类器。<br>网络结构改进：<br>1、修改输入，增加一个并列分支data2层用于训练对应深度图<br>2、避免特征图空间分辨率下降，普通池化会缩小图片尺寸，损失精细结构信息，令第四第五个池化层步长为1，再加上1填充，池化核尺寸都为3，这样经过池化后特征图大小不变，由于步长比池化核的尺寸小，输出之间会有重叠和覆盖，提高了特征丰富性，但后层感受野发生了变化，为使感受野不变，后面的卷积层使用空洞卷积，以在不增加参数的前提下，增加感受野。<br>3、修改卷积层滤波器核数，由于进行学习的图片场景较为复杂，包含的信息、特征数相对较多，需要更高维度上的特征学习，全连接层改造的三层卷积核的绿薄荷为1024、1024、4（4为最终的输出数）.</p>
-<h2 id="多特征融合的文档图像版面分析"><a href="#多特征融合的文档图像版面分析" class="headerlink" title="多特征融合的文档图像版面分析"></a>多特征融合的文档图像版面分析</h2><p>采用不同大小的卷积核并行对输入图像进行特征提取，接着将卷积后的特征图进行融合，组成特征融合模块，然后选取DeepLabV3中的串并行空间金字塔策略。并添加图像级特征对提取的特征图进一步优化，最后通过双线性插值法对图像进行恢复。</p>
-<p>DeepLabV3的核心部分，串并行空间金字塔池化模块(ASPP)<br>通过不同感受野的空洞卷积核对特征图进行上采样，捕获多尺度信息，分别为1 * 1以及扩张率为6、12、18的3 * 3空洞卷积核。<br>采样卷积核大小接近特征图大小时，3 * 3的卷积核失去捕捉全图像的信息，退化为1 * 1的卷积核，可以采用平均池化特征图进行处理经过卷积，再融合得出的特征图。最终将经过4种不同卷积核得到的特征图与图像及特征进行融合。</p>
-<h2 id="改进SSD算法在零部件检测中的应用研究"><a href="#改进SSD算法在零部件检测中的应用研究" class="headerlink" title="改进SSD算法在零部件检测中的应用研究"></a>改进SSD算法在零部件检测中的应用研究</h2><p>改进：<br>1、修改backbone为MobileNetV3-Large，移除平均池化层和最后的1 * 1卷积层，<br>2、减小输入图像的尺寸，提高检测速度，变300 * 300为224 * 224<br>3、用特征金字塔网络提高对较小零件检测效果，选取对应尺寸(28,28)(14,14)(7,7)(4,4)(2,2)(1,1)的所有特征层和最后一层组成自底向上的特征金字塔结构。</p>
-<h2 id="改进的YOLOv3红外视频图像行人检测算法"><a href="#改进的YOLOv3红外视频图像行人检测算法" class="headerlink" title="改进的YOLOv3红外视频图像行人检测算法"></a>改进的YOLOv3红外视频图像行人检测算法</h2><p>改进：<br>1、对红外图像数据集的目标候选框进行维度聚类选择最优anchor个数，YOLOv3的anchor个数和维度是有VOC20类和COCO80类数据集聚类得到，不适用于红外行人检测，红外行人检测时，行人在图片中的长宽比始终是一个相对固定的值。<br>2、调整分类网络预训练过程，使用不同分辨率的红外图像作为网络输入，用VOC数据集进行模型的预训练。使用不同分辨率的红外图像作为分类数据集，可以取得比较明显的微调效果。<br>3、网络地铁带过程中，随机改变输入图像的尺寸，进行多尺度网络训练，使模型对不同尺寸图像的检测具有鲁棒性</p>
-<h2 id="改进的YOLOv3算法及其在小目标检测中的应用"><a href="#改进的YOLOv3算法及其在小目标检测中的应用" class="headerlink" title="改进的YOLOv3算法及其在小目标检测中的应用"></a>改进的YOLOv3算法及其在小目标检测中的应用</h2><p>改进：YOLOv3网络利用8倍降采样输出的特征图对小目标进行检测，这意味着当目标小于8×8时网络对目标的预测会出现困难，并且特征图为8倍降采样的目标检测层对小目标位置信息的检测能力是有限的。为了使网络获取更多小目标的特征信息，提高对小目标的检测率。<br>利用原网络中输出的4倍降采样特征图对目标进行检测，对YOLOv3输出的8倍降采样特征图进行2倍上采样，将2倍上采用特征图与Darknet53中第2个残差块输出的4倍降采样特征图进行拼接，建立输出为4倍降采样的特征融合目标检测层以检测小目标。为了获得更多低层的小目标位置信息，在源网络的第2个残差块中增加2个残差单元。</p>
-<h2 id="基于YOLOV3的复杂环境红外弱小目标检测"><a href="#基于YOLOV3的复杂环境红外弱小目标检测" class="headerlink" title="基于YOLOV3的复杂环境红外弱小目标检测"></a>基于YOLOV3的复杂环境红外弱小目标检测</h2><p>红外图像特点：<br>信噪比较低，几何轮廓较为模糊，且与真实形态可能存在较大差异，对其成像特征进行分析，可以提升检测网络对目标的适配能力。</p>
-<p>改进:无，0-0醉了，可能是因为发在航空兵器</p>
-<h2 id="改进的YOLOv3网络在钢板表面缺陷检测研究"><a href="#改进的YOLOv3网络在钢板表面缺陷检测研究" class="headerlink" title="改进的YOLOv3网络在钢板表面缺陷检测研究"></a>改进的YOLOv3网络在钢板表面缺陷检测研究</h2><p>1、使用轻量级网络MobileNet来代替YOLOv3原有网络中的密集连接Darknet-53，适当的减少参数量的提取<br>2、加入空洞卷积，提高网络对小目标缺陷的检测能力，<br>3、在网络结构的最后一层卷积中加入Inception结构。</p>
-<h2 id="基于YOLOv3的红外行人小目标检测技术研究"><a href="#基于YOLOv3的红外行人小目标检测技术研究" class="headerlink" title="基于YOLOv3的红外行人小目标检测技术研究"></a>基于YOLOv3的红外行人小目标检测技术研究</h2><p>借鉴SENet中对特征进行权重重标定的思路，将SE block引入YOLOv3中，提升了网络的特征描述能力。<br>根据SENet的思路，对网络进行改进一般有几种方式<br>1、直接在卷积层后面直接加SENet模块，对所有网络都通用，但是由于现在的网络中都含有大量的卷积层且参数量巨大，且需要大量实验来确定哪些卷积层后面加入新模块。<br>2用加入的SENet的模块替换原有网络中的inception或者residual层，这类替换位置较为明确，在YOLOv3中含有较多的Residual层，于是对网络的改进采取引入SE-Resnet模块的方法。</p>
-<h2 id="基于多尺度特征融合的小目标行人检测"><a href="#基于多尺度特征融合的小目标行人检测" class="headerlink" title="基于多尺度特征融合的小目标行人检测"></a>基于多尺度特征融合的小目标行人检测</h2><p>针对SSD当前存在的小目标漏检及误检问题，结合反卷积与特征融合思想，提出回归SSD模型，将原SSD特征层反卷积后与较浅层特征结合，实现复杂场景下小目标行人检测。</p>
-<h2 id="基于改进Fast-R-CNN的红外图像行人检测研究"><a href="#基于改进Fast-R-CNN的红外图像行人检测研究" class="headerlink" title="基于改进Fast R-CNN的红外图像行人检测研究"></a>基于改进Fast R-CNN的红外图像行人检测研究</h2><p>改进：<br>1、结合红外图像的特点，提出了一种自适应ROI提取算法，在不影响准确率的前提下降低了ROI数量，使得网络的计算量减小。<br>Fast R-CNN用selective search算法在一帧图片中生成约2000个候选框，计算量较大，红外图像不含色彩，对于一帧红外光图片，背景和行人的灰度差值十分明显，先通过图像的局部均值、标准差对局部区域做粗检测，<br>2、提出了一种加权锚点框的定位机制，基于3种不同宽高比锚点框的检测置信度进行坐标加权，获得更准确的定位框。</p>
-<h2 id="基于红外热成像与YOLOv3的夜间目标识别方法"><a href="#基于红外热成像与YOLOv3的夜间目标识别方法" class="headerlink" title="基于红外热成像与YOLOv3的夜间目标识别方法"></a>基于红外热成像与YOLOv3的夜间目标识别方法</h2><p>图像预处理，提高图像对比度，增强图像细节，去除图像噪声。<br>提高图像对比度目的在于突出热源与背景的反差，突出热源目标，采用高反差保留法，该方法主要是将图像中颜色、明暗反差较大两部分的交界处保留下来。表达形式如下：<br>dst = img - R * Blur(img)<br>dst为处理后结果，img为原始图像，R为增益参数：Blur为调用的高斯滤波器。<br>R的取值不同对对比度的提升不同，R取0位原始图像，R取1提高对比度不强，R取6时对比度过高产生早点，因此本文R值取3。<br>增强对比度后，使用高斯高通滤波器对图像进行锐化，在增强边沿、细节的同时，不会丢失源图像的低频成分。<br>图像锐化在增强热成像图像细节特征的同时会引入随机噪声点，因此图像与处理最后一步进行降噪工作，使用高斯低通滤波器平滑，降低图像中的噪点。</p>
-<h2 id="基于显著图融合的无人机载热红外图像目标检测方法。、"><a href="#基于显著图融合的无人机载热红外图像目标检测方法。、" class="headerlink" title="基于显著图融合的无人机载热红外图像目标检测方法。、"></a>基于显著图融合的无人机载热红外图像目标检测方法。、</h2><p>热红外图片对比度低，纹理特征弱，本文使用热红外图像的显著图来进行图像增强，作为目标检测器的注意力机制。<br>使用BASNet生成显著图，通过通道替换和像素级加权融合两种方案将红外热图像与对应的显著图进行融合增强。<br>融合方案：<br>1、用显著图分别替换R、G、B三个通道中的一个，每个替换方式都对应于一个新的融合图像，目标检测性能存在差异。<br>2、将显著图与热红外图像的三个通道亮度值分别在像素级别上直接按各自0.5的权重比例融合，显著图与热红外图像的融合在突出图像中行人及车辆目标的同时保留了图像中的纹理信息。<br>将MobileNetv2的平均池化和最后一个卷积层去掉，使其替换YOLOv3网络中原有的DarkNet53网络，同时分别将分辨率为输入图像8倍和16倍下采样的特征层中的最后一层作为细粒度特征与检测网络中上采样之后的高级语义特征融合。增强目标检测能力，对无人机航拍图像中的小目标检测有重要意义。</p>
-<h2 id="结合改进Deeplab-V3-网络的水岸线检测方法"><a href="#结合改进Deeplab-V3-网络的水岸线检测方法" class="headerlink" title="结合改进Deeplab V3+网络的水岸线检测方法"></a>结合改进Deeplab V3+网络的水岸线检测方法</h2><p>利用伽马函数扩充样本<br>修改deeplab v3+网络，对xception结构进行微调，同时在decoder时增加一路低级特征，增加特征信息然后利用图像信息设定损失权重系数。</p>
-<h2 id="融合多层特征的多尺度行人检测"><a href="#融合多层特征的多尺度行人检测" class="headerlink" title="融合多层特征的多尺度行人检测"></a>融合多层特征的多尺度行人检测</h2><p>针对行人检测问题，删除深度残差网络的一部分，仅采用深度残差网络的3个区域提取特征图，然后采用最邻近上采样法将最后一层提取的特征图放大两倍后再用相加法，将高层语义信息丰富的特征和低层细节信息丰富的特征进行融合。</p>
-<h2 id="针对小目标的深度学习行人检测算法研究"><a href="#针对小目标的深度学习行人检测算法研究" class="headerlink" title="针对小目标的深度学习行人检测算法研究"></a>针对小目标的深度学习行人检测算法研究</h2><p>SSD 算法采用多尺度检测框架来检测不同大小的目标行人，存在两个主要的问题<br>1、多尺度检测框架中各个特征层之间的关联不够密切，特征层之间的上下文信息没有被充分利用<br>2、SSD算法主要采用浅层网络的Conv4_3层来检测小目标行人，而Conv4_3层属于低级特征，语义区分性不强，存在行人特征提取不够充分的问题。</p>
-<h2 id="基于YOLO的实时目标检测方法研究"><a href="#基于YOLO的实时目标检测方法研究" class="headerlink" title="基于YOLO的实时目标检测方法研究"></a>基于YOLO的实时目标检测方法研究</h2><p>YOLO-PC(YOLO based People Counting Approach)<br>将YOLO对图像的划分从7×7变为9×9，同时对每个划分的网格增加了检测的数量，多划分的改进有效增加了对行人检测的平均置信度，并且获得了更多的行人检测框基于边界选择的方法对特定区域统计行人人流量，可以避免对非目标区域行人的检测和计数。<br>实现YOLO-PC增加了参数，为减少参数数量，基于YOLO-PC提出了模型压缩的实时行人计数算大。<br>基本实现了模型的无损精度压缩。<br>Squeezenet提出了一种新的卷积计算模块火层模块。<br>引入并优化火层模块，并利用其替换了具有较大参数量的卷积层来减少参数。</p>
-<p>Squeezenet采用1×1的卷积核代替3×3的卷积核用来构建非常紧凑的神经网络。参数数量减少50倍</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%A8%B3%E5%AE%9A%E6%80%A7%E5%88%86%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/10/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%A8%B3%E5%AE%9A%E6%80%A7%E5%88%86%E6%9E%90/" itemprop="url">排序算法的复杂度稳定性分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T13:04:15+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">排序算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/10/%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F/" itemprop="url">基数排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T13:04:00+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">排序算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>从低位到高位逐渐对数字进行排序。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/%E6%A1%B6%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/10/%E6%A1%B6%E6%8E%92%E5%BA%8F/" itemprop="url">桶排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T13:03:37+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">排序算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>桶排序可看做计数排序的升级版，将数据分到有限的桶里，每个桶再分别排序。<br>先设定一个定量的数组当做空桶，遍历数据，将数据放入一个个对应的桶中，对每个不是空的桶进行排序，并从不是空的桶里把排好序的数据拼接起来。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BucketSort</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">		<span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">		<span class="keyword">int</span> []arr = &#123;<span class="number">7</span>,<span class="number">9</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">8</span>&#125;;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; arr.length;i++) &#123;</span><br><span class="line">			max = Math.max(max, arr[i]);</span><br><span class="line">			min = Math.min(min, arr[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> bucketNum = (max - min)/arr.length+<span class="number">1</span>;</span><br><span class="line">		ArrayList&lt;ArrayList&lt;Integer&gt;&gt; bucketArr = <span class="keyword">new</span> ArrayList&lt;&gt;(bucketNum);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; bucketNum; i++) &#123;</span><br><span class="line">			bucketArr.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; arr.length ; i++) &#123;</span><br><span class="line">			<span class="keyword">int</span> num = (arr[i] - min) / arr.length;</span><br><span class="line">			bucketArr.get(num).add(arr[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; bucketArr.size();i++) &#123;</span><br><span class="line">			Collections.sort(bucketArr.get(i));</span><br><span class="line">		&#125;</span><br><span class="line">		System.out.println(bucketArr.toString());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2042,7 +2026,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

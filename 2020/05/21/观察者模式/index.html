@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="Observer&#x2F;Event动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合 定义对象间的一种一对多(变化)的依赖关系，以便于当一个对象(Subject)">
+<meta name="description" content="组件协作模式的一种Observer&#x2F;Event动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合 定义对象间的一种一对多(变化)的依赖关系，以便于当一个对象">
 <meta property="og:type" content="article">
 <meta property="og:title" content="观察者模式">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;21&#x2F;%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="Observer&#x2F;Event动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合 定义对象间的一种一对多(变化)的依赖关系，以便于当一个对象(Subject)">
+<meta property="og:description" content="组件协作模式的一种Observer&#x2F;Event动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合 定义对象间的一种一对多(变化)的依赖关系，以便于当一个对象">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-05-21T09:57:11.097Z">
+<meta property="og:updated_time" content="2020-05-21T10:01:52.076Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -329,7 +329,7 @@
       
 
       
-        <p>Observer/Event<br>动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，<br>所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化<br>使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合</p>
+        <p>组件协作模式的一种<br>Observer/Event<br>动机：在软件构建过程中，需要为某些对象构建一种“通知依赖关系”————一个对象(目标对象)的状态发生改变，<br>所有的依赖对象(观察者对象)都将得到通知，如果这样的依赖关系过于紧密，将使软件不能很好地地域变化<br>使用面向对象技术，将这种依赖关系弱化，并形成一种稳定的依赖关系，从而实现软件体系结构的松耦合</p>
 <p>定义对象间的一种一对多(变化)的依赖关系，以便于当一个对象(Subject)的状态发生改变时，所有依赖与他的对象都得到通知并自动更新。<br>以下，定义了Fan接口作为消息的接受者，Idol接口作为信息的发送者。<br>又用ConcreteFan 和ConcreteIdol去实现具体的Fan 和Idol<br>ConcreteFan中实现了Fan接收到的消息时的回应。<br>ConcreteIdol中实现了，将哪些Fan放在接受消息队列中，哪些Fan移除出接受消息队列，并有通知方法，向所有在队列中的Fan发送消息。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Fan</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(String message)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -374,6 +374,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/21/%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/" rel="prev" title="装饰模式">
+                装饰模式 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -441,7 +445,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

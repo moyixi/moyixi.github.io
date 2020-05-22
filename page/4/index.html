@@ -238,6 +238,824 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/%E4%BD%BF%E7%94%A8%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" itemprop="url">使用存储过程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T15:22:32+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有时，一个完整的操作需要多条语句才能完成，例如：<br>1、为了处理订单，需要核对以保证库存中有相应的物品。<br>2、果库存有物品，这些物品需要预定以便不将它们再卖给别的人，并且要减少可用的物品数量以反映正确的库存量。<br>3、库存中没有的物品需要订购，这需要与供应商进行某种交互。<br>4、关于哪些物品入库（并且可以立即发货）和哪些物品退订，需要通知相应的客户。</p>
+<p>执行上述处理需要有针对许多表的多条MySQL语句，需要执行的具体语句及其次序也不是固定的，可能会根据物品的库存情况而发生变化。<br>我们可以单独编写每条语句，并根据结果有条件地执行另外的语句。可以创建存储过程解决这个问题，即为以后的使用而保存一条或多条MySQL语句的集合。</p>
+<p><strong>创建存储过程</strong><br>创建一个返回产品平均价格的存储过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE productpricing()</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Avg(prod_price) AS priceaverage</span><br><span class="line">	FROM products;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p><strong>使用存储过程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL productpricing();</span><br></pre></td></tr></table></figure>
+
+<p><strong>删除存储过程</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DROP PROCEDURE productpricing;</span><br><span class="line">DROP PROCEDURE IF EXISTS productpricing;</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>mysql命令行客户机的分隔符</em></strong><br>mysql 命令行实用程序使用 ‘;’ 作为语句分隔符。如果命令行实用程序要解释存储过程自身内的 ‘;’ 字符，则它们最终不会成为存储过程的成分，这会使存储过程中的SQL出现句法错误。<br>可以临时更改命令行程序的语句分隔符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DELIMITER //</span><br><span class="line">CREATE PROCEDURE productpricing()</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Avg(prod_price) AS priceaverage</span><br><span class="line">	FROM products;</span><br><span class="line">END //</span><br><span class="line">DELIMITER ;</span><br></pre></td></tr></table></figure>
+<p>使用 DELIMITER // 告诉命令行，使用’ // ‘作为新的语句结束符，此时，标志存储过程结束的END定义为 END // 而不是 END; 最后再用DELIMITER; 将语句分隔符恢复。(<em>除\外所有字符都可以用作语句分隔符</em>)</p>
+<p><strong>在存储过程中使用参数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE productpricing(</span><br><span class="line">	OUT pl DECIMAL(8,2),</span><br><span class="line">	OUT ph DECIMAL(8,2),</span><br><span class="line">	OUT pa DECIMAL(8,2) </span><br><span class="line">)</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Min(prod_price)</span><br><span class="line">	INTO pl</span><br><span class="line">	FROM products;</span><br><span class="line">	SELECT Max(prod_price)</span><br><span class="line">	INTO ph</span><br><span class="line">	FROM products;</span><br><span class="line">	SELECT Avg(prod_price)</span><br><span class="line">	INTO pa</span><br><span class="line">	FROM products;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程要求三个参数，调用时需要正好传递三个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CALL productpricing(@pricelow,</span><br><span class="line">					@pricehigh,</span><br><span class="line">					@priceaverage);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE ordertotal(</span><br><span class="line">	IN onumber INT,</span><br><span class="line">	OUT ototal DECIMAL(8,2)</span><br><span class="line">	)</span><br><span class="line">BEGIN</span><br><span class="line">	SELECT Sum(item_price*quantity)</span><br><span class="line">	FROM orderitems</span><br><span class="line">	WHERE order_num = onumber</span><br><span class="line">	INTO ototal;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>上述存储过程，onumber定义为IN,即 订单号order_num被传入存储过程，ototal被定义为OUT，是从存储过程中返回。<br>SELECT语句使用参数 onumber 和ototal，WHERE子句为onumber挑选正确的值，INTO使用ototal存储计算出来的合计 Sum(item_price * quantity)</p>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL ordertotal(20005,@total);</span><br></pre></td></tr></table></figure>
+<p>调用上述存储过程。<br>为显示调用结果需要使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @total；</span><br></pre></td></tr></table></figure>
+
+<h2 id="建立智能存储过程"><a href="#建立智能存储过程" class="headerlink" title="建立智能存储过程"></a>建立智能存储过程</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">CREATE PROCEDURE ordertotal(</span><br><span class="line">	IN onumber INT,</span><br><span class="line">	IN taxable BOLLEAN,</span><br><span class="line">	OUT ototal DECIMAL(8,2)</span><br><span class="line">	)COMMENT &apos;Obtain order total , optionally adding tax&apos;</span><br><span class="line">	BEGIN </span><br><span class="line">		DECLARE total DECIMAL(8,2);</span><br><span class="line">		DECLARE taxrate INT DEFAULT 6;</span><br><span class="line">		SELECT Sum(item_price*quantity)</span><br><span class="line">		FROM orderitems</span><br><span class="line">		WHERE order_num = onumber</span><br><span class="line">		INTO total;</span><br><span class="line">		IF taxable THEN</span><br><span class="line">			SELECT total+(total/100*taxrate) INTO total;</span><br><span class="line">		END IF;</span><br><span class="line">		SELECT total INTO ototal;</span><br><span class="line">	END;</span><br></pre></td></tr></table></figure>
+<p>在上述存储过程中有一个布尔型参数taxable(若要执行 total+(total/100 * taxrate) INTO total 可令其为真)<br>DECLARE语句定义了两个局部变量total和taxrate,在taxable为真时，可以对total进行改变，再在最后一行使用另一SELECT语句将total保存到ototal</p>
+<p><strong><em>COMMENT 关键字</em></strong> <em>本例子中的存储过程在 CREATE PROCEDURE 语句中包含了一个 COMMENT 值。它不是必需的，但如果给出，将在 SHOW PROCEDURE STATUS 的结果中显示。</em></p>
+<p>调用并显示上述存储过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CALL (20005,0,@total);</span><br><span class="line">SELECT @total;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CALL (20005,1,@total);</span><br><span class="line">SELECT @total;</span><br></pre></td></tr></table></figure>
+<p>会因为传入的taxable参数的不同而影响最终结果。</p>
+<p><strong>检查存储过程</strong><br>显示存储过程ordertotal的详细信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW CREATE PROCEDURE ordertotal;</span><br></pre></td></tr></table></figure>
+<p>显示数据库中所有存储过程的存储过程信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW PROCEDURE STATUS ;</span><br></pre></td></tr></table></figure>
+<p>上述语句也可以使用LIKE关键字进行过滤。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/%E4%BD%BF%E7%94%A8%E8%A7%86%E5%9B%BE/" itemprop="url">使用视图</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T13:55:17+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>视图是虚拟的表，与包含数据的表不一样，视图只包含使用时动态检索数据的查询，它不包含表中应有的任何列或数据，而是一个SQL查询<br><strong>视图的作用</strong><br>(1)重用SQL语句<br>(2)简化复杂的SQL操作，在编写查询后，可以方便地重用它而不必知道它的基本查询细节<br>(3)使用表的组成部分而不是整个表<br>(4)保护数据。给用户授予表的特定部分的访问权限而不是整个表的访问权限<br>(5)更改数据格式和表示。视图可返回与底层表的表示和格式不同的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW productcustomers AS</span><br><span class="line">SELECT cust_name,cust_contact,prod_id</span><br><span class="line">FROM customers,orders,orderitems</span><br><span class="line">WHERE customers.cust_id = order.cust_id</span><br><span class="line">AND orderitems.order_num = order.order_num;</span><br></pre></td></tr></table></figure>
+<p>创建一个名为 productcustomers 的视图，它联结三个表，返回已定个了任意产品的所有客户的列表。</p>
+<p>可在视图中检索订购了产品TNT2的客户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name,cust_contact</span><br><span class="line">FROM productcustomers</span><br><span class="line">WHERE prod_id = &apos;TNT2&apos;;</span><br></pre></td></tr></table></figure>
+<p>由此可见，利用视图可以一次性编写基础的SQL，再根据需要重复使用。<br>也可用视图重新格式化检索出的数据，以供反复使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW vendorlocations AS</span><br><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;)</span><br><span class="line">		AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDER BY vend_name;</span><br></pre></td></tr></table></figure>
+<p>或对数据进行筛选。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW customeremaillist AS</span><br><span class="line">SELECT cust_id,cust_name,cust_email</span><br><span class="line">FROM costomers</span><br><span class="line">WHERE cust_email IS NOT NULL;</span><br></pre></td></tr></table></figure>
+<p>或简化计算字段的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE VIEW orderitemsexpanded AS</span><br><span class="line">SELECT 	order_num,</span><br><span class="line">		prod_id,</span><br><span class="line">		quantity,</span><br><span class="line">		item_price,</span><br><span class="line">		quantity*item_price AS expanded_price</span><br><span class="line">FROM orderitems;</span><br></pre></td></tr></table></figure>
+<p>再要检索详细内容即可直接在视图 orderitemsexpanded 上进行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM orderitemsexpanded</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
+
+<p><strong>更新视图</strong><br>视图是可以用INSERT、UPDATE和DELETE进行更新的，但因为视图本身没有数据，所以对视图的增加或删除，是对其基表的增加或删除。<br>并非所有的视图都可以更新，若视图中有以下操作，则无法更新，且一般应将视图用于检索而不是更新。<br>(1)分组(GROUP、HAVING);<br>(2)联结;<br>(3)子查询;<br>(4)并;<br>(5)聚集函数(Min()、Count()、Sum());<br>(6)DISTINCT;<br>(7)导出(计算)列。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92medium/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/05/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92medium/" itemprop="url">动态规划medium</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T18:32:51+08:00">
+                2020-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="leetcode-63-不同路径-II"><a href="#leetcode-63-不同路径-II" class="headerlink" title="leetcode 63. 不同路径 II"></a>leetcode 63. 不同路径 II</h2><p>描述：m * n的网格，其中有障碍物，机器人每次只能向下或向右移动一步，求从左上角走到右下角有多少种可能。</p>
+<p>思路：<br>在第(i,j)格没有障碍物时，状态转移方程dp[i][j] = dp[i-1][j] + dp[i][j-1]，若第(i,j)格有障碍物，则到这一格的可能路径为0<br>即若(0,0)位置有障碍物，则整题的答案为0，若(0,0)位置没有障碍物dp[0][0] = 1;<br>在第一行或第一列，遇到障碍物之前，值为1，遇到一个障碍物之后，后续位置的dp值均为0</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">uniquePathsWithObstacles</span><span class="params">(<span class="keyword">int</span>[][] obstacleGrid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = obstacleGrid.length;</span><br><span class="line">        <span class="keyword">if</span>(m == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = obstacleGrid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [m][n];</span><br><span class="line">        <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][<span class="number">0</span>] == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[i][<span class="number">0</span>] == <span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                dp[i][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(obstacleGrid[<span class="number">0</span>][j] == <span class="number">0</span>)&#123;</span><br><span class="line">                dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>];</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                dp[<span class="number">0</span>][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(obstacleGrid[i][j] == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i][j] = dp[i-<span class="number">1</span>][j]+dp[i][j-<span class="number">1</span>];</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="leetcode-474-一和零"><a href="#leetcode-474-一和零" class="headerlink" title="leetcode 474. 一和零"></a>leetcode 474. 一和零</h2><p>在计算机界中，我们总是追求用有限的资源获取最大的收益。<br>现在，假设你分别支配着 m 个 0 和 n 个 1。另外，还有一个仅包含 0 和 1 字符串的数组。<br>你的任务是使用给定的 m 个 0 和 n 个 1 ，找到能拼出存在于数组中的字符串的最大数量。每个 0 和 1 至多被使用一次。</p>
+<p>对于整个数组的每一个数，都可以选择拼这个数或者不拼这个数，若拼这个数，m、n则相应减少。定义dp[m][n]为拥有m个0、n个1时的最大收益<br><strong>补充</strong><br><em>0-1背包问题可以逆序降维,即从k = m,l = n 开始</em><br>普通的背包问题f[i][j]表示前i件物品放入容量为j的背包可以获得的最大价值状态转移方程为<br>f[i][j] = max{f[i-1][j],f[i-1][j-w[i]] + v[i]}<br>f[i][j]要从f[i-1][j]和f[i-1][j-w[i]]+v[i]两个状态转移而来<br>这两个状态是从二维数组中直接取出的，所以正序还是逆序是无所谓的。<br>压缩维度后状态转移方程变为<br>f[j] = max{f[j],f[j-w[i]] + v[i]}<br>f[j]表示执行i次循环后,前i个物体放到容量为j时背包的最大价值,f[j]要重复使用，故会出现第i次循环覆盖第i-1次循环的结果，故需要逆序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMaxForm</span><span class="params">(String[] strs, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(strs.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [m+<span class="number">1</span>][n+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; strs.length ; i++)&#123;</span><br><span class="line">            <span class="keyword">int</span> zeros = <span class="number">0</span>,ones = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; strs[i].length() ; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(strs[i].charAt(j) == <span class="string">'0'</span>)&#123;</span><br><span class="line">                    zeros++;</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    ones++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = m ; k &gt;= zeros ; k--)&#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> l = n ; l &gt;= ones ; l--)&#123;</span><br><span class="line">                    dp[k][l] = Math.max(dp[k][l],dp[k-zeros][l-ones]+<span class="number">1</span>);</span><br><span class="line">                    <span class="comment">//max里的dp[k][l]是在上一层循环刚结束时的值</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="leetcode-120-三角形最小路径和"><a href="#leetcode-120-三角形最小路径和" class="headerlink" title="leetcode 120. 三角形最小路径和"></a>leetcode 120. 三角形最小路径和</h2><p>给定一个三角形，找出自顶向下的最小路径和。每一步只能移动到下一行中相邻的结点上。<br>例如，给定三角形：</p>
+<p>[<br>     [2],<br>    [3,4],<br>   [6,5,7],<br>  [4,1,8,3]<br>]<br>自顶向下的最小路径和为 11（即，2 + 3 + 5 + 1 = 11）。<br>思路：<br>[<br>     [2],<br>    [3,4],<br>   [6,5,7],<br>  [4,1,8,3]<br>]<br>变为<br>[<br>[2],<br>[3,4],<br>[6,5,7],<br>[4,1,8,3]<br>]<br>每个数可以走到的数，是它下方和右下方的数。<br>定义dp[i][j]为包含第i行第j列元素的最下路径和<br>状态转移方程：<br>dp[0][0] = triangle[0][0];<br>最左边一列(j == 0 时)，必然经过它的上一个元素，即 dp[i][0] = dp[i-1][0]+triangle[i][0];<br>每一行的最右边元素(i == j 时 )必然经过它左上角的一个元素 dp[i][j] = dp[i-1][j-1]+triangle[i][j];<br>常规情况 dp[i][j] = min(dp[i-1][j],dp[i-1][j-1]) + triangle[i][j];<br>在最后一层(i = row-1时)，所存的dp[i][j]代表着从最后一层的每一个元素作为出口时的最小值，而整题的最小值是这些最小值中最小的一个。<br><strong>补充</strong><br>Java List的用法<br>List<Integer> triangle<br>获取长度 triangle.size()<br>增加元素 triangle.add(e)<br>按索引获取 triangle.get(index)<br>按索引删除元素 triangle.remove(index)<br>按元素内容删除 triangle.remove(Object o)<br>是否包含某元素 triangle.contains(Object o)<br>按索引替换元素值 triangle.set(index,element)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumTotal</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; triangle)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(triangle == <span class="keyword">null</span> || triangle.size() ==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> row = triangle.size();</span><br><span class="line">    <span class="keyword">int</span> column = triangle.get(row-<span class="number">1</span>).size();</span><br><span class="line">    <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [row][column];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; row ; i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt;= i ; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i==<span class="number">0</span>&amp;&amp;j==<span class="number">0</span>)&#123;</span><br><span class="line">                dp[i][j] =triangle.get(i).get(j);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(j == <span class="number">0</span>)</span><br><span class="line">            &#123;dp[i][j] = dp[i-<span class="number">1</span>][j]+triangle.get(i).get(j);&#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (i == j)</span><br><span class="line">            &#123;dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>]+triangle.get(i).get(j);&#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j],dp[i-<span class="number">1</span>][j-<span class="number">1</span>])+triangle.get(i).get(j);&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> min = Integer.MAX_VALUE;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; column ; j++)&#123;</span><br><span class="line">        min = Math.min(min,dp[row-<span class="number">1</span>][j]); </span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> min;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="leetcode-221-最大正方形"><a href="#leetcode-221-最大正方形" class="headerlink" title="leetcode 221. 最大正方形"></a>leetcode 221. 最大正方形</h2><p>在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。<br>示例:<br>输入:<br>1 0 1 0 0<br>1 0 1 1 1<br>1 1 1 1 1<br>1 0 0 1 0<br>输出: 4<br>定义dp[m][n]代表以第m行第n列个元素为右下角的正方形的大小。<br>状态转移方程：<br>第一行，若当前位置值为1则大小为1 ，否则大小为零。<br>第一列，若当前位置值为1则大小为1 ，否则大小为零。<br>普通位置，若当前位置和其上方其右方三个位置的值均为1 ，则其大小为(其左上角、上、左 三个位置中的最小值)+1，否则若该位置值为1，其大小为1，否则大小为零。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximalSquare</span><span class="params">(<span class="keyword">char</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(matrix == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m = matrix.length;</span><br><span class="line">        <span class="keyword">if</span>(m == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> dp [][] = <span class="keyword">new</span> <span class="keyword">int</span> [m][n];</span><br><span class="line">        <span class="keyword">if</span>(matrix[<span class="number">0</span>][<span class="number">0</span>] == <span class="string">'0'</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">            max = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = matrix[i][<span class="number">0</span>] == <span class="string">'0'</span> ? <span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">            max = Math.max(max,dp[i][<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = matrix[<span class="number">0</span>][j] == <span class="string">'0'</span> ? <span class="number">0</span>:<span class="number">1</span>;</span><br><span class="line">            max = Math.max(max,dp[<span class="number">0</span>][j]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ;  i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>((matrix[i][j] == <span class="string">'1'</span>)&amp;&amp;(matrix[i-<span class="number">1</span>][j] == <span class="string">'1'</span>)&amp;&amp;(matrix[i][j-<span class="number">1</span>] == <span class="string">'1'</span>))</span><br><span class="line">                    &#123;</span><br><span class="line">                        dp[i][j] = Math.min(Math.min(dp[i-<span class="number">1</span>][j-<span class="number">1</span>],dp[i-<span class="number">1</span>][j]) , dp[i][j-<span class="number">1</span>]) +<span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(matrix[i][j] == <span class="string">'1'</span>) dp[i][j] = <span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">else</span> dp[i][j] = <span class="number">0</span>;</span><br><span class="line">                    max = Math.max(max,dp[i][j]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">return</span> max*max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="leetcode-152-乘积最大子数组"><a href="#leetcode-152-乘积最大子数组" class="headerlink" title="leetcode 152. 乘积最大子数组"></a>leetcode 152. 乘积最大子数组</h2><p>给你一个整数数组 nums ，请你找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。<br>思路：数组中可能会遇到负数，这时乘积会变为最小，若后续出现另一个负数，则负负得正乘积变为最大。<br>故在数组中维护两个数字 imax 代表遍历至当前位置的最大值和imin代表遍历至当前位置的最小值。<br>若数组中没有负数，只需维护一个imax即可。若数组中存在负数，则imin所存的最小值在与出现的负数相乘时，会变为最大值，故将当前最大值imax和当前最小值imin交换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxProduct</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">int</span> imax = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> imin = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] &lt;<span class="number">0</span> )&#123;</span><br><span class="line">                <span class="keyword">int</span> temp = imax;</span><br><span class="line">                imax = imin;</span><br><span class="line">                imin = temp;</span><br><span class="line">            &#125;</span><br><span class="line">            imax = Math.max(imax*nums[i],nums[i]);</span><br><span class="line">            imin = Math.min(imin*nums[i],nums[i]);</span><br><span class="line">            max = Math.max(max,imax);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/05/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" itemprop="url">卡特兰数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T16:01:37+08:00">
+                2020-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%A1%E7%89%B9%E5%85%B0%E6%95%B0/" itemprop="url" rel="index">
+                    <span itemprop="name">卡特兰数</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>卡特兰数是常出现在计数问题中的数列。<br>h(n) = h(0) * h(n-1)+h(1) * h(n-2) + … + h(n-1) * h(0) (n&gt;=2)、(h(0) = 1)<br>可化简为<br>h(n) = h(n-1) * (4n-2)(n+1)<br>通项公式 h(n) = C(2n,n)-C(2n,n+1)<br>可以化为 h(n)=C(2n,n)/(n+1)</p>
+<p>前几项为：<br>1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, …<br>在某些算法问题中得到很好的应用。</p>
+<p>卡特兰数增长速度较快，int型无法满足，对于Java可以使用 BigInteger来计算大整数<br>使用化简后的h(n) = h(n-1) * (4n-2)(n+1)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Catalan</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> n = <span class="number">20</span>;</span><br><span class="line">		BigInteger ans = BigInteger.valueOf(<span class="number">1</span>);</span><br><span class="line">		System.out.println(<span class="string">"1:"</span>+ans.toString());</span><br><span class="line">		BigInteger  four = BigInteger.valueOf(<span class="number">4</span>);</span><br><span class="line">		BigInteger  one = BigInteger.valueOf(<span class="number">1</span>);</span><br><span class="line">		BigInteger  two = BigInteger.valueOf(<span class="number">2</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; n ; i++)&#123;</span><br><span class="line">			BigInteger bi = BigInteger.valueOf(i);</span><br><span class="line">			ans = ans.multiply(four.multiply(bi).subtract(two)).divide(bi.add(one));</span><br><span class="line">			System.out.println(i+<span class="string">":"</span>+ans.toString());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="进出栈序列"><a href="#进出栈序列" class="headerlink" title="进出栈序列"></a>进出栈序列</h2><p>描述：n个元素进栈序列为：1、2、3、4、…、n,有多少种出栈序列。<br>思路：令n个元素进出栈问题的解为f(n),假设最后一个出栈的元素为K,则在K之前，进栈并出栈的元素有K-1个，这是一个 K-1个元素进出栈的子问题。在K之后进栈并出栈的元素有n-K个，这是一个n-K个元素进出栈的子问题。即在第K个元素是最后一个出栈的元素时，问题的解法有f(K-1) * f(n-K)个<br>因为K的取值可以为1,2,3,…,n中的任何一个。即f(n) = f(0) * f(n-1) + f(1) * f(n-2) + … + f(n-1) * f(0)。是一个显然的卡特兰数问题。</p>
+<h2 id="括号序列"><a href="#括号序列" class="headerlink" title="括号序列"></a>括号序列</h2><p>描述：n对括号，求有多少种匹配的括号序列</p>
+<p>左括号视为进栈，右括号视为出栈，和进出栈问题相同。</p>
+<h2 id="满二叉树数量"><a href="#满二叉树数量" class="headerlink" title="满二叉树数量"></a>满二叉树数量</h2><p>描述：n+1个节点能构成多少个不同的满二叉树。<br>思路：深度优先搜索这棵满二叉树，向左扩展视为进栈，向右扩展视为出栈</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/05/%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/05/%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE/" itemprop="url">插入、更新和删除数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-05T13:51:56+08:00">
+                2020-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>插入语句：INSERT</strong><br>INSERT语句有以下几种使用方式<br>(1)插入完整的行<br>(2)插入行的一部分<br>(3)插入多行<br>(4)插入某些查询的结果</p>
+<p>基本的INSERT语法要求制定表名和被插入到新行中的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Customers</span><br><span class="line">VALUES( NULL,</span><br><span class="line">		&apos;Pep E. LaPew&apos;,</span><br><span class="line">		&apos;100 Main Street&apos;,</span><br><span class="line">		&apos;Los Angeles&apos;,</span><br><span class="line">		&apos;CA&apos;,</span><br><span class="line">		&apos;90046&apos;</span><br><span class="line">		&apos;USA&apos;,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL);</span><br></pre></td></tr></table></figure>
+<p>上面写法的第一个cust_id为NULL，因为每次插入一个新行时，该列由MySQL自动增量。你不想给出一个值（这是MySQL的工作），又不能省略此列（如前所述，必须给出每个列），所以指定一个 NULL 值（它被MySQL忽略，MySQL在这里插入下一个可用的 cust_id 值）。<br>更安全的写法明确给出了列名，优点是即使表的结构发生改变，INSERT语句依然能够正确工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Customers(cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country,</span><br><span class="line">	cust_contact,</span><br><span class="line">	cust_email)</span><br><span class="line">	VALUES(</span><br><span class="line">		&apos;Pep E. LaPew&apos;,</span><br><span class="line">		&apos;100 Main Street&apos;,</span><br><span class="line">		&apos;Los Angeles&apos;,</span><br><span class="line">		&apos;CA&apos;,</span><br><span class="line">		&apos;90046&apos;</span><br><span class="line">		&apos;USA&apos;,</span><br><span class="line">		NULL,</span><br><span class="line">		NULL);</span><br></pre></td></tr></table></figure>
+
+<p>数据库经常被多个客户访问，对处理什么请 求以及用什么次序处理进行管理是MySQL的任务。 INSERT 操作可能很耗时（特别是有很多索引需要更新时），而且它可能 降低等待处理的 SELECT 语句的性能。如果数据检索是最重要的（通常是这样），则你可以通过在 INSERT 和 INTO 之间添加关键字 LOW_PRIORITY ，指示MySQL 降低 INSERT 语句的优先级,即<br>INSERT LOW_PRIORITY INTO</p>
+<p><strong>插入多个行</strong><br>1、使用多条INSERT语句，每条语句用一个分号结束<br>2、若每条INSERT语句中的列名和次序相同，可以直接组合语句,把每组值容易对圆括号括起来,用逗号分割。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO Customers(cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country)</span><br><span class="line">	VALUES(</span><br><span class="line">		&apos;Pep E. LaPew&apos;,</span><br><span class="line">		&apos;100 Main Street&apos;,</span><br><span class="line">		&apos;Los Angeles&apos;,</span><br><span class="line">		&apos;CA&apos;,</span><br><span class="line">		&apos;90046&apos;</span><br><span class="line">		&apos;USA&apos;),</span><br><span class="line">		(</span><br><span class="line">		&apos;M. Martian&apos;,</span><br><span class="line">		&apos;42 Galaxy Way&apos;,</span><br><span class="line">		&apos;New York&apos;,</span><br><span class="line">		&apos;NY&apos;,</span><br><span class="line">		&apos;11213&apos;,</span><br><span class="line">		&apos;USA&apos;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>插入检索出的数据</strong><br>将一个名为custnew的表中的数据导入customers表中,cust_id 也可省略，这样MySQL会自动生成新值，不省略则要保证cust_id的值不重复</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO customers(cust_id,</span><br><span class="line">	cust_contact,</span><br><span class="line">	cust_email,</span><br><span class="line">	cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country)</span><br><span class="line">SELECT cust_id,</span><br><span class="line">	cust_contact,</span><br><span class="line">	cust_email,</span><br><span class="line">	cust_name,</span><br><span class="line">	cust_address,</span><br><span class="line">	cust_city,</span><br><span class="line">	cust_state,</span><br><span class="line">	cust_zip,</span><br><span class="line">	cust_country</span><br><span class="line">FROM custnew;</span><br></pre></td></tr></table></figure>
+
+<p>为更新(修改)表中的数据，可使用UPDATE语句<br><strong>UPDATE</strong><br>UPDATE语句由三部分组成<br>(1)要更新的表<br>(2)列名和它们的新值<br>(3)确定要更新行的过滤条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">UPDATE customers</span><br><span class="line">SET cust_name = &apos;The Fudds&apos;,</span><br><span class="line">	cust_email = &apos;elmer@fudd.com&apos;</span><br><span class="line">WHERE cust_id = 10005;</span><br></pre></td></tr></table></figure>
+<p><strong><em>IGNORE 关键字</em></strong> <em>如果用 UPDATE 语句更新多行，并且在更新这些行中的一行或多行时出一个现错误，则整个 UPDATE 操作被取消（错误发生前更新的所有行被恢复到它们原来的值）。为即使是发生错误，也继续进行更新，可使用 IGNORE 关键字，如下所示：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE IGNORE customers…</span><br></pre></td></tr></table></figure>
+
+<p><strong>DELETE FROM</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM customers</span><br><span class="line">WHERE cust_id = 10006;</span><br></pre></td></tr></table></figure>
+<p><em>若想从表中删除所有行，可使用TRUNCATE TABLE，速度更快（ TRUNCATE 实际是删除原来的表并重新创建一个表，而不是逐行删除表中的数据）在对 UPDATE 或 DELETE 语句使用 WHERE 子句前，应该先用 SELECT 进行测试，保证它过滤的是正确的记录，以防编写的 WHERE 子句不正确。</em></p>
+<p><strong>CREATE TABLE</strong><br>创建表需要包含标的名字，列的名字和定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE customers</span><br><span class="line">(</span><br><span class="line">cust_id			int 		NOT NULL AUTO_INCREMENT,</span><br><span class="line">cust_name		char(50)	NOT NULL,	</span><br><span class="line">cust_address 	char(50)	NULL,</span><br><span class="line">cust_city		char(50)	NULL,</span><br><span class="line">cust_state		char(50)	NULL,</span><br><span class="line">cust_zip		char(50)	NULL,</span><br><span class="line">cust_country	char(50)	NULL,</span><br><span class="line">cust_contact	char(50)	NULL,</span><br><span class="line">cust_email		char(255)	NULL,</span><br><span class="line">PRIMARY KEY(cust_id)</span><br><span class="line">)ENGINE = InnoDB;</span><br></pre></td></tr></table></figure>
+<p><strong><em>NULL</em></strong> <em>NULL值是没有值，它不是空串。如果指定’’（两个单引号，其间没有字符），这在 NOT NULL 列中是允许的。空串是一个有效的值，它不是无值。 NULL 值用关键字 NULL 而不是空串指定。</em></p>
+<p><strong><em>主键</em></strong><br><em>主键值必须唯一。即，表中的每个行必须具有唯一的主键值。如果主键使用单个列，则它的值必须唯一。如果使用多个列，则这些列的组合值必须唯一。主键中只能使用不允许 NULL 值的列。允许 NULL 值的列不能作为唯一标识</em></p>
+<p>使用单个列定义主键：<br>PRIMARY KEY(cust_id)</p>
+<p>使用多个列定义主键：<br>PRIMARY KEY(order_num,order_item)</p>
+<p><strong>AUTO_INCREMENT</strong><br>AUTO_INCREMENT 告诉MySQL，本列每当增加一行时自动增量。每次执行一个 INSERT 操作时，MySQL自动对该列增量（从而才有这个关键字AUTO_INCREMENT ），给该列赋予下一个可用的值。这样给每个行分配一个唯一的 cust_id ，从而可以用作主键值。每个表只允许一个 AUTO_INCREMENT 列，而且它必须被索引（如，通过使它成为主键）</p>
+<p><em>DEFAULT 关键字指定默认值,只支持常量，不支持函数</em></p>
+<p><strong>更新表</strong><br>给vendors表增加一个vend_phone列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE vendors</span><br><span class="line">ADD vend_phone CHAR(20);</span><br></pre></td></tr></table></figure>
+<p>删除刚才添加的列</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> vendors</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">COLUMN</span> vend_phone;</span><br></pre></td></tr></table></figure>
+<p>ALTER TABLE 常见用途是定义外键</p>
+<p><strong>删除表</strong><br>DROP TABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE customers2;</span><br></pre></td></tr></table></figure>
+<p><strong>重命名表</strong><br>RENAME TABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE customers2 TO customers;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/04/%E5%85%A8%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1525,881 +2343,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/02/MySQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/02/MySQL/" itemprop="url">数据库基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-02T15:43:55+08:00">
-                2020-05-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="数据库基础"><a href="#数据库基础" class="headerlink" title="数据库基础"></a>数据库基础</h2><p>数据库是一个以某种有组织的方式存储的数据集合。可想象为一个文件柜，此文件柜是一个存放数据的物理位置，不管数据是什么以及如何组织的。<br><strong>数据库（database）</strong> 保存有组织的数据的容器（通常是一个文件或一组文件）<br>在将资料放入自己的文件柜时，并不是随便将它们扔进某个抽屉就完事了，而是在文件柜中创建文件，然后将相关的资料放入特定的文件中。<br>在数据库领域中，这种文件称为表。表是一种结构化的文件，可用来存储某种特定类型的数据。表可以保存顾客清单、产品目录，或者其他信息清单。<br><strong>表（table）</strong>某种特定类型数据的结构化清单。<br><em>存储在表中的数据应当是一种类型的数据或一个清单，为免以后检索访问困难，不应将不同的清单存入同一数据库中。</em><br><strong>列（column）</strong> 表中的一个字段。所有表都是由一个或多个列组成的<br><strong>行（row）</strong> 表中的一个记录。<br><strong>主键（primary key）</strong>一列（或一组列），其值能够<strong>唯一区分</strong>表中每个行。<br>作为主键需要满足两个条件：1、任意两行都不具有不相同的主键值；2、每行都必须有一个主键值(主键列不允许NULL值)<br>作为主键的三个良好习惯：<br>1、不更新主键列中的值；<br>2、不重用主键列的值(即列从表中删除后，其主键不能赋给以后的新行)；很多系统中，业务与主键耦合，重用主键可能会使系统发生业务错误。<br>3、不在主键列中使用可能会更改的值。</p>
-<p><strong>选择数据库</strong><br>为查看拥有哪些数据库，应输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW databases;</span><br></pre></td></tr></table></figure>
-<p>为使用 crashcourse数据库，应输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE crashcourse;</span><br></pre></td></tr></table></figure>
-<p>输出 Database changed<br>为获得一个数据库内的表，应输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES</span><br></pre></td></tr></table></figure>
-<p>show语句也可用于展示 columns，用法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW columns </span><br><span class="line">FROM customers</span><br></pre></td></tr></table></figure>
-<p>customers：表名</p>
-<h2 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h2><p>SELECT语句:<br>从products表中检索名为prod_name的列：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p>从products表中检索多个列，它们的名为 prod_id，prod_name，prod_price :</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name,prod_price </span><br><span class="line">FROM products</span><br></pre></td></tr></table></figure>
-<p>从products中检索所有列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p><strong>*检索不需要的列通常会降低检索和应用程序性能，所以最好不使用 *通配符 *</strong></p>
-<p>检索不重复的值使用关键字 DISTINCT </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p><strong>DISTINCT关键字应用于所有列即，所有列的值相同才算重复，即有任意一项不重复都会被检索出来例如：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id , prod_price </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
-<p>使用LIMIT子句限定SELECT的返回结果<br>例：限定返回结果不多于5行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
-<p>例：限定返回结果是从第8行开始的5行（第一行为行0）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 8,5;</span><br></pre></td></tr></table></figure>
-
-<p>使用完全限定的列名和表名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT products.prod_name </span><br><span class="line">FROM crashcourse.products;</span><br></pre></td></tr></table></figure>
-<h2 id="排序检索数据"><a href="#排序检索数据" class="headerlink" title="排序检索数据"></a>排序检索数据</h2><p>使用ORDER BY子句对搜索结果进行排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
-<p>按多个列进行排序，用逗号分隔即可。<br>先按照prod_price排序，再在遇到相同的prod_price时按照prod_name排序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price, prod_name;</span><br></pre></td></tr></table></figure>
-<p>降序排序使用 DESC关键字<br>升序排序是默认的 关键字 ASC</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC;</span><br></pre></td></tr></table></figure>
-<p>按多个列进行排序，并对其中的某些使用降序排序,DESC紧跟着列，再用逗号和其他列隔开即，DESC只应用于当前列，而DISTINCT应用于所有列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC,prod_name;</span><br></pre></td></tr></table></figure>
-
-<h2 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h2><p>使用WHERE子句对检索结果进行筛选</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price = 2.50;</span><br></pre></td></tr></table></figure>
-
-<p>WHERE 子句操作符:</p>
-<table>
-<thead>
-<tr>
-<th align="left">操作符</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">‘=’</td>
-<td align="left">“等于’</td>
-</tr>
-<tr>
-<td align="left">‘&lt;&gt;’</td>
-<td align="left">“不等于”</td>
-</tr>
-<tr>
-<td align="left">‘!=’</td>
-<td align="left">“不等于”</td>
-</tr>
-<tr>
-<td align="left">‘&lt;’</td>
-<td align="left">“小于”</td>
-</tr>
-<tr>
-<td align="left">‘&lt;=’</td>
-<td align="left">“小于等于”</td>
-</tr>
-<tr>
-<td align="left">‘&gt;’</td>
-<td align="left">“大于”</td>
-</tr>
-<tr>
-<td align="left">‘&gt;=’</td>
-<td align="left">“大于等于”</td>
-</tr>
-<tr>
-<td align="left">‘BETWEEN’</td>
-<td align="left">“在指定的两个值之间”</td>
-</tr>
-</tbody></table>
-<p><em>MySQL执行匹配时默认不区分大小写,BETWEEN匹配时包括所指定的值</em><br>BETWEEN 用法:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price BETWEEN 5 AND 10;</span><br></pre></td></tr></table></figure>
-<p>空值检查</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price IS NULL;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E9%80%92%E5%BD%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/30/%E9%80%92%E5%BD%92/" itemprop="url">递归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T14:02:17+08:00">
-                2020-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>斐波那契数列的是这样一个数列：1、1、2、3、5、8、13、21、34….，即第一项 f(1) = 1,第二项 f(2) = 1…..,第 n 项目为 f(n) = f(n-1) + f(n-2)。求第 n 项的值是多少。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数fib(),设其功能为求第n项的值</span></span><br><span class="line">	<span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//斐波那契问题的递归出口,f(1) = 1 ,f(2) = 1</span></span><br><span class="line">	<span class="keyword">return</span> fib(n-<span class="number">1</span>)+fib(n-<span class="number">2</span>)<span class="comment">//斐波那契问题的等价关系式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="小青蛙跳台阶"><a href="#小青蛙跳台阶" class="headerlink" title="小青蛙跳台阶"></a>小青蛙跳台阶</h2><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。<br>跳上n级台阶的方法有两种，先跳1级，再跳n-1级，和先跳2级，再跳n-2级，这一点与斐波那契题类似，但需要注意递归出口不同。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ha</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数ha(),设其功能为n级台阶的跳法</span></span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> ha(n-<span class="number">1</span>)+ha(n-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	Node next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node <span class="title">reverseList</span><span class="params">(Node head)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> head;<span class="comment">//递归出口，当节点为空，或只有一个节点时直接返回。</span></span><br><span class="line">	&#125;</span><br><span class="line">	Node reverseExceptHead =reverseList (head.next);<span class="comment">//定义一个除了首节点均逆置完毕的状态，首节点还正常指向它的下一个节点</span></span><br><span class="line">	Node node = head.next <span class="comment">//获得当前首节点的下一个节点，等待逆置</span></span><br><span class="line">	node.next = head;<span class="comment">//完成最后一步逆置</span></span><br><span class="line">	head.next = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">return</span> reverseExceptHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/30/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" itemprop="url">动态规划</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T14:00:54+08:00">
-                2020-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>动态规划在于用数组保存历史数据以减少计算量。</p>
-<h2 id="小青蛙跳台阶动态规划解法"><a href="#小青蛙跳台阶动态规划解法" class="headerlink" title="小青蛙跳台阶动态规划解法"></a>小青蛙跳台阶动态规划解法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ha</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">	<span class="keyword">int</span> []dp = <span class="keyword">new</span> <span class="keyword">int</span> [n+<span class="number">1</span>];</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span> ; i &lt;= n ; i++)&#123;</span><br><span class="line">		dp[i] = dp[i-<span class="number">1</span>]+dp[i-<span class="number">2</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="不同路径"><a href="#不同路径" class="headerlink" title="不同路径"></a>不同路径</h2><p>一个机器人位于一个 m x n 网格的左上角机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角问总共有多少条不同的路径？</p>
-<p>定义dp[i][j] 为机器人从左上角走到[i][j]时共有多少条不同路径，本题答案右下角即为dp[m-1][n-1]。<br>状态转移方程：<br>走到[i][j]有两种状态 1、先走到[i][j-1]再往右一步，或2、先走到[i-1][j]，再往下一步。即dp[i][j] = dp[i][j-1]+dp[i-1][j]<br>初始值：<br>注意：dp[0][0]并不为0：只有一个格子的时候默认有一条路径而不是0条。<br>以下两种情况为机器人只一直往右或一直往下<br>dp[0][0..1..2..n] = 1;<br>dp[0..1..2..n][0] = 1;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">road</span><span class="params">(<span class="keyword">int</span> m,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(m &lt;= <span class="number">0</span> || n&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [m][n];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">		dp[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">		dp[j][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m ; i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">			dp[i][j] = dp[i-<span class="number">1</span>][j] + dp[i][j-<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="最小路径和"><a href="#最小路径和" class="headerlink" title="最小路径和"></a>最小路径和</h2><p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。<br>说明：每次只能向下或者向右移动一步。</p>
-<p>定义dp[i][j]为走到这一步时的最小路径和。<br>状态转移方程：dp[i][j] = Math.min(dp[i][j-1],dp[i-1][j]) + arr[i][j]<br>初始值：<br>dp[0][j] = dp[0][j-1]+arr[0][j];<br>dp[i][0] = dp[i-1][0]+arr[i][0];</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = grid.length;</span><br><span class="line">        <span class="keyword">int</span> n = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        dp [<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>]+grid[i][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>]+grid[<span class="number">0</span>][j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>])+grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h2><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。<br>你可以对一个单词进行如下三种操作：<br>插入一个字符<br>删除一个字符<br>替换一个字符<br>定义状态dp[i][j] 为 word1的前i个字母转换成word2的前j个字母所需要的最少操作。<br>则状态转移方程：<br>当word1[i] == word2[j]时 dp[i][j] = dp[i-1][j-1]<br>当word1[i] != word2[j]时 有三种可能性：<br>1、在word1[i]之后插入word2[j],问题变为求word1[i]和word2[j-1]之间的最少操作+1<br>2、将word1[i]删除，问题变为求word1[i-1]和word2[j]之间的最少操作+1<br>3、将word1[i]替换为word2[j]，问题变为求word1[i-1]和word2[j-1]之间的最少操作+1(替换操作)<br>即dp[i][j] = Math.min(dp[i][j-1],dp[i-1][j],dp[i-1][j-1])+1;</p>
-<p>初始值：dp[0][0] = 0;即两个都是空单词，无需操作<br>dp[0][1..2..3..m] = m;<br>dp[1..2..3..n][0] = n;<br>即两个单词中有一个为空，若word1为空，对其进行word2长度的插入即可，若word2为空，对其进行word1长度的删除。<br><strong><em>此题需要注意单词位数和数组下标之间的对应</em></strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(String word1, String word2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = word1.length();<span class="comment">//</span></span><br><span class="line">        <span class="keyword">int</span> n = word2.length();<span class="comment">//m n为单词长度，不从0开始，即单词多长值即为多少</span></span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];<span class="comment">//新建数组时需要+1，否则会溢出</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= m ;i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt;= n ; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m+<span class="number">1</span> ; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n+<span class="number">1</span> ; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>))<span class="comment">//调用charAr函数时，又从0开始计数了，需要-1；&#123;</span></span><br><span class="line">                &#123;dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>];&#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = Math.min(Math.min(dp[i][j-<span class="number">1</span>],dp[i-<span class="number">1</span>][j]),dp[i-<span class="number">1</span>][j-<span class="number">1</span>]) + <span class="number">1</span>;   </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="强盗抢劫"><a href="#强盗抢劫" class="headerlink" title="强盗抢劫"></a>强盗抢劫</h2><p>不能抢相邻的住户，求抢劫金额的最大值<br>定义状态转移方程dp[i]为抢到第i个住户的最大金额<br>若抢了 i-1 用户，则不能抢i用户<br>若只抢到i-2用户，则可以抢i用户<br>那么<br>dp[i] = Math.max(dp[i-2]+nums[i],dp[i-1]);<br>初始值：<br>dp[0] = nums[0];<br>dp[1] = Math.max(dp[0],nums[1]);<br>注意要将数组为空和nums数组只有一个值的情况当做特例先解决，否则dp数组会溢出。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> []dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">1</span>] = Math.max(dp[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">        dp[i] = Math.max(dp[i-<span class="number">2</span>]+nums[i],dp[i-<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[len-<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="环形强盗抢劫"><a href="#环形强盗抢劫" class="headerlink" title="环形强盗抢劫"></a>环形强盗抢劫</h2><p>同样不能抢相邻住户，但与上题的区别为，给出的nums数组视为首尾巴相连<br>分两次比较着抢出最大值，第一次从 0 抢到 n-1 第二次从 1 抢到 n即可<br>//呆逼做法等待优化</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">int</span> [] nums2 = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len-<span class="number">1</span> ; i++)&#123;</span><br><span class="line">        nums2[i] = nums[i+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> []dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">1</span>] = Math.max(dp[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">        dp[i] = Math.max(dp[i-<span class="number">2</span>]+nums[i],dp[i-<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> []dp2 = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    dp2[<span class="number">0</span>] = nums2[<span class="number">0</span>];</span><br><span class="line">    dp2[<span class="number">1</span>] = Math.max(dp2[<span class="number">0</span>] , nums2[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; len-<span class="number">1</span> ; i++)&#123;</span><br><span class="line">        dp2[i] = Math.max(dp2[i-<span class="number">2</span>]+nums2[i],dp2[i-<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> Math.max(dp[len-<span class="number">2</span>],dp2[len-<span class="number">2</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="信件错排"><a href="#信件错排" class="headerlink" title="信件错排"></a>信件错排</h2><p>有N个信和信封，它们被打乱，求错误装信方式的数量,要求每封信都不在其原来位置。<br>状态转移方程：<br>N个元素的错排可分两步完成：<br>1、先把第1个元素排在第2个到第N个位置，有n-1种排法<br>2、当第1个元素被排在第k个位置时，再来排第k个元素，此时分为两种情况<br>2.1、第k个元素被排在第1个位置，那么剩下的问题是n-2个元素的错排问题，其解为 f(n-2)<br>2.2、第k个元素没有被排在第1个位置,待错排的元素有n-1个,可被错排的位置有n-1个,即剩下的问题是n-1个元素的错排问题，其解为f(n-1)<br>可得f(n) = (n-1) * (f(n-1) + f(n-2))<br>初始值：f(1) = 0, f(2) = 1, f(3) = 2</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">misalignment</span> <span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">2</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">3</span>)<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> (n-<span class="number">1</span>) * (misalignment(n-<span class="number">1</span>) + misalignment(n-<span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="母牛生产问题"><a href="#母牛生产问题" class="headerlink" title="母牛生产问题"></a>母牛生产问题</h2><p>假设农场中成熟的母牛每年都会生1头小母牛，并且永远不会死。第一年有1只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛3年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。</p>
-<p>这题和很著名的斐波那契兔子问题类似<br>状态转移方程：每一年的牛数量 = 去年的牛数量 + 新增的牛数量<br>每年新增的牛数量 = 当年成熟母牛数量 = 三年前的母牛数量<br>即 f(n) = f(n-1) + f(n-3)<br>初始值：f(1) = 1,f(2) = 2,f(3) = 3; </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">cow</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n&lt;<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(n&lt;=<span class="number">3</span>)<span class="keyword">return</span> n;</span><br><span class="line">    <span class="keyword">return</span> cow(n-<span class="number">1</span>)+cow(n-<span class="number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="leetcode-303-区域和检索-数组不可变"><a href="#leetcode-303-区域和检索-数组不可变" class="headerlink" title="leetcode 303 区域和检索 - 数组不可变"></a>leetcode 303 区域和检索 - 数组不可变</h2><p>给定一个整数数组nums，求出数组从索引i到j(i ≤ j)范围内元素的总和，包含i,j两点。<br>思路：新建一个数组sums，sums[i]为nums数组从nums[0]累加至nums[i-1]的值。<br><strong>【开始想的是sums[i]为nums数组从nums[0]累加至nums[i]的值，但这会导致写出sums[i] = sums[i-1]+nums[i]这样一个下标不相等(i-1 和 i)的式子出来,极易发生越界等错误】</strong><br>计算从i到j的值时 即可用sums[j] - sums[i-1]快速求解得出</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> []sums;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">NumArray</span><span class="params">(<span class="keyword">int</span>[]nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    sums = <span class="keyword">new</span> <span class="keyword">int</span> [len+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= len ; i++)&#123;</span><br><span class="line">        sums[i] = sums[i-<span class="number">1</span>]+nums[i-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i , <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sums[j+<span class="number">1</span>] - sums[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>leetcode 746. 使用最小花费爬楼梯<br>数组的每个索引做为一个阶梯，第 i个阶梯对应着一个非负数的体力花费值 cost<a href="索引从0开始">i</a>。<br>每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。<br>您需要找到达到楼层顶部的最低花费。在开始时，你可以选择从索引为 0 或 1 的元素作为初始阶梯。</p>
-<p>状态转移方程：f(i) = cost[i] + Math.min(f(i-1),f(i-2))</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minCostClimbingStairs</span><span class="params">(<span class="keyword">int</span>[] cost)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f1 = <span class="number">0</span> , f2 = <span class="number">0</span>;<span class="comment">//f1代表走到第i-2阶阶梯的最小消耗，f2代表走到第i-1阶阶梯的最小消耗</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cost.length ; i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> current = cost[i] + Math.min(f1,f2);<span class="comment">//current代表走到第i阶阶梯的最小消耗</span></span><br><span class="line">        f1 = f2;<span class="comment">//在求出第i阶台阶的最小消耗之后第i-2阶和第i-1阶阶梯刷新。</span></span><br><span class="line">        f2 = current;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Math.min(f1,f2);<span class="comment">//最后走到终点，可能是从第n-1阶台阶走一步上去的，也可能是从第n-2阶台阶走2步上去的。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="三步问题"><a href="#三步问题" class="headerlink" title="三步问题"></a>三步问题</h2><p>三步问题。有个小孩正在上楼梯，楼梯有n阶台阶，小孩一次可以上1阶、2阶或3阶。实现一种方法，计算小孩有多少种上楼梯的方式。结果可能很大，你需要对结果模1000000007。<br><strong>状态转移方程易得，需注意取模过程，要对每个数据都取模，任意两个数据的和再取模</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">waysToStep</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span> [n+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">3</span>) <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">    dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">    dp[<span class="number">3</span>] = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">4</span> ; i &lt;= n ; i++)&#123;</span><br><span class="line">        dp[i] = ((dp[i-<span class="number">1</span>]%<span class="number">1000000007</span>+dp[i-<span class="number">2</span>]%<span class="number">1000000007</span>)%<span class="number">1000000007</span>+dp[i-<span class="number">3</span>]%<span class="number">1000000007</span>)%<span class="number">1000000007</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="leetcode-1025-除数博弈"><a href="#leetcode-1025-除数博弈" class="headerlink" title="leetcode 1025. 除数博弈"></a>leetcode 1025. 除数博弈</h2><p>爱丽丝和鲍勃一起玩游戏，他们轮流行动。爱丽丝先手开局。<br>最初，黑板上有一个数字 N 。在每个玩家的回合，玩家需要执行以下操作：<br>选出任一 x，满足 0 &lt; x &lt; N 且 N % x == 0 。<br>用 N - x 替换黑板上的数字 N 。<br>如果玩家无法执行这些操作，就会输掉游戏。<br>只有在爱丽丝在游戏中取得胜利时才返回 True，否则返回 false。假设两个玩家都以最佳状态参与游戏。</p>
-<p>常规解法：<br>play[i]记录了数为i时的结果，true为胜利，false为失败。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> [] play = <span class="keyword">new</span> <span class="keyword">boolean</span>[N+<span class="number">1</span>];<span class="comment">//boolean 型数据新建后默认为false;</span></span><br><span class="line">    play[<span class="number">1</span>] = <span class="keyword">false</span>;<span class="comment">//只剩1时无数可取，失败。</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt;= N ; i++)&#123;<span class="comment">//从2开始依次判断</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i ; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i%j==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">//在1~i之间判断，可以取走哪个数，使得取走那个数后的子问题变为false则当前问题为true即胜利</span></span><br><span class="line">                <span class="comment">//取走后的问题转变为play[i-j]</span></span><br><span class="line">                <span class="keyword">if</span>(play[i-j] == <span class="keyword">false</span>)&#123;</span><br><span class="line">                    play[i] = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> play[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>数学解法:<br>最终结果是取到2的必然胜利，取到1的失败。<br>若当前数为奇数，其约数必然为奇数，则取走后变为偶数。<br>若当前数为偶数，只需一直取1，让取完后的数字变为奇数，即可让对方不断地给自己提供偶数。<br>最终自己能取到最小偶数2，获得胜利。<br>即 偶数胜利，奇数失败</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (N%<span class="number">2</span>) == <span class="number">0</span> ? <span class="keyword">true</span>:<span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="连续数列"><a href="#连续数列" class="headerlink" title="连续数列"></a>连续数列</h2><p>给定一个整数数组，找出总和最大的连续数列，并返回总和。<br>常规的动态规划问题,值为正时则继续累加,值为负时则从新开始累加,更新最大值。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max = nums[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> imax = nums[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(imax &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            imax += nums[i];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;imax = nums[i];&#125;</span><br><span class="line">        max = Math.max(max,imax);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="按摩师"><a href="#按摩师" class="headerlink" title="按摩师"></a>按摩师</h2><p>一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。<br>常规的动态规划题，但是这次居然<strong>忘记判断初始情况</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[]dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">    <span class="keyword">if</span>(nums.length == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(nums.length == <span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">1</span>] = Math.max(dp[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">        dp[i] = Math.max(dp[i-<span class="number">1</span>],dp[i-<span class="number">2</span>]+nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[nums.length-<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/2020%E5%BF%AB%E6%89%8B%E7%AC%94%E8%AF%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/30/2020%E5%BF%AB%E6%89%8B%E7%AC%94%E8%AF%95%E9%A2%98/" itemprop="url">2020快手笔试题[动态规划]</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T11:19:31+08:00">
-                2020-04-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>小明最近在做病毒自动检测，他发现，在某些library 的代码段的二进制表示中，如果包含子串并且恰好有k个1，就有可能有潜在的病毒。library的二进制表示可能很大，并且子串可能很多，人工分析不可能，于是他想写个程序来先算算到底有多少个子串满足条件。如果子串内容相同，但是开始或者结束位置不一样，则被认为是不同的子串。 </p>
-<p>注：子串一定是连续的。例如”010”有6个子串，分别是 “0, “1”, “0”, “01”, “10”, “010” </p>
-<p>例：字符串s = “0010101010” , k = 2。<br>思路：每个’1’前后部分的0的个数是共有多少个子串的关键,用滑动窗口辅助思考,在遍历至出现2个’1’,而第三个’1’,尚未出现时。<br>字符串 “0010101010” 包含的子串如下<br>[00101]01010<br>0[0101]01010<br>00[101]01010<br>[001010]1010<br>0[01010]1010<br>00[1010]1010</p>
-<p>001[0101]010<br>0010[101]010<br>001[01010]10<br>0010[1010]10</p>
-<p>00101[0101]0<br>001010[101]0<br>00101[01010]<br>001010[1010]</p>
-<p>在满足条件个数的’1’出现之后，下一个’1’出现之前，即右滑窗’]’，它的第前k个’1’与第前k+1个’1’之间有多少个位数，即左滑窗’[‘就统计多少次。<br>即,遍历过程中,下一个’1’出现之前 每经过一位,就累加一次，所累加的值是这个子串的第一个’1’出现之前的0的个数+1<br>dp[]数组存放的是左滑窗可移动的次数，每两个’1’之间有n个’0’则滑窗可移动n+1次，遍历过程中，会遇到1，即可在遍历到1时也使dp自增来代替遇到了n个0但却可移动n+1次的这个’+1’，而最左端的0前面没有这个额外的’+1’，故dp[0]的初始值要置为1</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num=<span class="number">0</span>,len=s.length();</span><br><span class="line"><span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line"><span class="keyword">long</span> result=<span class="number">0</span>;</span><br><span class="line">dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">char</span> c:s.toCharArray())&#123;</span><br><span class="line">    <span class="keyword">if</span>(c==<span class="string">'1'</span>) num++;</span><br><span class="line">    <span class="keyword">if</span>(num-k&gt;=<span class="number">0</span>) result+=dp[num-k];</span><br><span class="line">    dp[num]++;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(result);</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/29/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/" itemprop="url">蓄水池采样算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-29T15:34:19+08:00">
-                2020-04-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">蓄水池采样算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>问题描述:一般的采样问题，会知道具体的样本数量，即使样本比较大也可以用生成随机数的方式解决。但有一类采样问题，样本具体数量不可知，在不知道具体数量的样本中均匀的抽取一部分需要用到蓄水池采样算法。</p>
-<p>例如：给定一台发球机，不间断的发球，要求在其发出N个球时，均匀的取出M个球，即保证每个球被取到的概率都是M/N。</p>
-<p>算法思路：建立一个拥有M个元素的集合，将其作为蓄水池，把前M个元素均放入池中，然后从i = M + 1开始，进行遍历。<br>是否取第i个元素的概率为M / i，若第i个元素被取，再以1 / M 的概率决定替换掉集合中的某个元素。</p>
-<p>算法正确性验证：<br>对于第i个元素<br>i&lt;=M时,在M步之前，被选中的概率为1，在M+1步时，被第M+1个元素替换的概率 = 第M+1个元素被选中的概率 * i被选中为替换元素的概率<br>即 M/(M+1) * 1/M = 1/(M+1),那么不被第M+1个元素替换的概率为 1 - 1/(M+1) = M/(M+1)。<br>不被第M+2个元素替换的概率为1 - M/(M+2) * 1/M = (M+1)/(M+2)<br>以此类推，不被第N个元素替换掉的概率为 (N-1)/N<br>则运行到第N步时，i元素还保留着的概率为 被选中的概率 * 不被替换的概率 ： 1 * M/(M+1) * (M+1)/(M+2) * … * (N-1)/N = M/N;</p>
-<p>i&gt;M时,在第i步，其被选中的概率为 M/i,不被第i+1个元素替换的概率为 1 - M/(i+1) * (1/M) = i/(i+1)<br>不被第i+2个元素替换的概率为 1 - M/(i+2) * (1/M) = (i+1)/(i+2)<br>以此类推，不被第N个元素替换掉的概率为 (N-1)/N<br>则运行到第N步时，i元素还保留着的概率为 被选中的概率 * 不被替换的概率 ： M/i * i/(i+1) * (i+1)/(i+2) * … * (N-1)/N = M/N;<br>即对于每个元素，被取到的概率都是 M/N</p>
-<p>代码:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReservoirSampling</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> [] dataStream;<span class="comment">//dataStream 为所有的元素</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> N=<span class="number">1000000</span>;</span><br><span class="line">	<span class="keyword">private</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;<span class="comment">//构建待取样的数据流</span></span><br><span class="line">		dataStream = <span class="keyword">new</span> <span class="keyword">int</span> [N];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; N ; i++)&#123;</span><br><span class="line">			dataStream[i] = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> [] sampling(<span class="keyword">int</span> M)&#123;</span><br><span class="line">		<span class="keyword">int</span> [] reservoir = <span class="keyword">new</span> <span class="keyword">int</span> [M];<span class="comment">//reservoir 为所建立的大小为M的蓄水池</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; reservoir.length ; i++)&#123;</span><br><span class="line">			reservoir[i] = dataStream[i];<span class="comment">//先将前M个元素放入蓄水池中</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = M ; i &lt; dataStream.length ; i++)&#123;</span><br><span class="line">			<span class="keyword">int</span> d = random.nextInt(i+<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">if</span>(d&lt;M)&#123;<span class="comment">//前i个元素中random一个数，其小于M的概率为M/i，即以M/i的概率决定要不要取一个元素</span></span><br><span class="line">				reservoir[d] = dataStream[i];<span class="comment">//蓄水池reservoir中任一元素被替换出的概率是均等的</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> reservoir;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i : sampling(<span class="number">100</span>))&#123;</span><br><span class="line">			System.out.println(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		ReservoirSampling RS = <span class="keyword">new</span> ReservoirSampling();</span><br><span class="line">		RS.setUp();</span><br><span class="line">		RS.test();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/">&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -2445,7 +2393,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

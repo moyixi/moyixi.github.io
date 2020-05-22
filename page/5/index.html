@@ -238,6 +238,876 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/02/MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/02/MySQL/" itemprop="url">数据库基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-02T15:43:55+08:00">
+                2020-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数据库基础"><a href="#数据库基础" class="headerlink" title="数据库基础"></a>数据库基础</h2><p>数据库是一个以某种有组织的方式存储的数据集合。可想象为一个文件柜，此文件柜是一个存放数据的物理位置，不管数据是什么以及如何组织的。<br><strong>数据库（database）</strong> 保存有组织的数据的容器（通常是一个文件或一组文件）<br>在将资料放入自己的文件柜时，并不是随便将它们扔进某个抽屉就完事了，而是在文件柜中创建文件，然后将相关的资料放入特定的文件中。<br>在数据库领域中，这种文件称为表。表是一种结构化的文件，可用来存储某种特定类型的数据。表可以保存顾客清单、产品目录，或者其他信息清单。<br><strong>表（table）</strong>某种特定类型数据的结构化清单。<br><em>存储在表中的数据应当是一种类型的数据或一个清单，为免以后检索访问困难，不应将不同的清单存入同一数据库中。</em><br><strong>列（column）</strong> 表中的一个字段。所有表都是由一个或多个列组成的<br><strong>行（row）</strong> 表中的一个记录。<br><strong>主键（primary key）</strong>一列（或一组列），其值能够<strong>唯一区分</strong>表中每个行。<br>作为主键需要满足两个条件：1、任意两行都不具有不相同的主键值；2、每行都必须有一个主键值(主键列不允许NULL值)<br>作为主键的三个良好习惯：<br>1、不更新主键列中的值；<br>2、不重用主键列的值(即列从表中删除后，其主键不能赋给以后的新行)；很多系统中，业务与主键耦合，重用主键可能会使系统发生业务错误。<br>3、不在主键列中使用可能会更改的值。</p>
+<p><strong>选择数据库</strong><br>为查看拥有哪些数据库，应输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW databases;</span><br></pre></td></tr></table></figure>
+<p>为使用 crashcourse数据库，应输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE crashcourse;</span><br></pre></td></tr></table></figure>
+<p>输出 Database changed<br>为获得一个数据库内的表，应输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES</span><br></pre></td></tr></table></figure>
+<p>show语句也可用于展示 columns，用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW columns </span><br><span class="line">FROM customers</span><br></pre></td></tr></table></figure>
+<p>customers：表名</p>
+<h2 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h2><p>SELECT语句:<br>从products表中检索名为prod_name的列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p>从products表中检索多个列，它们的名为 prod_id，prod_name，prod_price :</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name,prod_price </span><br><span class="line">FROM products</span><br></pre></td></tr></table></figure>
+<p>从products中检索所有列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p><strong>*检索不需要的列通常会降低检索和应用程序性能，所以最好不使用 *通配符 *</strong></p>
+<p>检索不重复的值使用关键字 DISTINCT </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p><strong>DISTINCT关键字应用于所有列即，所有列的值相同才算重复，即有任意一项不重复都会被检索出来例如：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id , prod_price </span><br><span class="line">FROM products;</span><br></pre></td></tr></table></figure>
+<p>使用LIMIT子句限定SELECT的返回结果<br>例：限定返回结果不多于5行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
+<p>例：限定返回结果是从第8行开始的5行（第一行为行0）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products </span><br><span class="line">LIMIT 8,5;</span><br></pre></td></tr></table></figure>
+
+<p>使用完全限定的列名和表名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT products.prod_name </span><br><span class="line">FROM crashcourse.products;</span><br></pre></td></tr></table></figure>
+<h2 id="排序检索数据"><a href="#排序检索数据" class="headerlink" title="排序检索数据"></a>排序检索数据</h2><p>使用ORDER BY子句对搜索结果进行排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_name;</span><br></pre></td></tr></table></figure>
+<p>按多个列进行排序，用逗号分隔即可。<br>先按照prod_price排序，再在遇到相同的prod_price时按照prod_name排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price, prod_name;</span><br></pre></td></tr></table></figure>
+<p>降序排序使用 DESC关键字<br>升序排序是默认的 关键字 ASC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC;</span><br></pre></td></tr></table></figure>
+<p>按多个列进行排序，并对其中的某些使用降序排序,DESC紧跟着列，再用逗号和其他列隔开即，DESC只应用于当前列，而DISTINCT应用于所有列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id, prod_price, prod_name</span><br><span class="line">FROM products</span><br><span class="line">ORDER BY prod_price DESC,prod_name;</span><br></pre></td></tr></table></figure>
+
+<h2 id="过滤数据"><a href="#过滤数据" class="headerlink" title="过滤数据"></a>过滤数据</h2><p>使用WHERE子句对检索结果进行筛选</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price = 2.50;</span><br></pre></td></tr></table></figure>
+
+<p>WHERE 子句操作符:</p>
+<table>
+<thead>
+<tr>
+<th align="left">操作符</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">‘=’</td>
+<td align="left">“等于’</td>
+</tr>
+<tr>
+<td align="left">‘&lt;&gt;’</td>
+<td align="left">“不等于”</td>
+</tr>
+<tr>
+<td align="left">‘!=’</td>
+<td align="left">“不等于”</td>
+</tr>
+<tr>
+<td align="left">‘&lt;’</td>
+<td align="left">“小于”</td>
+</tr>
+<tr>
+<td align="left">‘&lt;=’</td>
+<td align="left">“小于等于”</td>
+</tr>
+<tr>
+<td align="left">‘&gt;’</td>
+<td align="left">“大于”</td>
+</tr>
+<tr>
+<td align="left">‘&gt;=’</td>
+<td align="left">“大于等于”</td>
+</tr>
+<tr>
+<td align="left">‘BETWEEN’</td>
+<td align="left">“在指定的两个值之间”</td>
+</tr>
+</tbody></table>
+<p><em>MySQL执行匹配时默认不区分大小写,BETWEEN匹配时包括所指定的值</em><br>BETWEEN 用法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price BETWEEN 5 AND 10;</span><br></pre></td></tr></table></figure>
+<p>空值检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price IS NULL;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E9%80%92%E5%BD%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/30/%E9%80%92%E5%BD%92/" itemprop="url">递归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T14:02:17+08:00">
+                2020-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>斐波那契数列的是这样一个数列：1、1、2、3、5、8、13、21、34….，即第一项 f(1) = 1,第二项 f(2) = 1…..,第 n 项目为 f(n) = f(n-1) + f(n-2)。求第 n 项的值是多少。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数fib(),设其功能为求第n项的值</span></span><br><span class="line">	<span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//斐波那契问题的递归出口,f(1) = 1 ,f(2) = 1</span></span><br><span class="line">	<span class="keyword">return</span> fib(n-<span class="number">1</span>)+fib(n-<span class="number">2</span>)<span class="comment">//斐波那契问题的等价关系式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小青蛙跳台阶"><a href="#小青蛙跳台阶" class="headerlink" title="小青蛙跳台阶"></a>小青蛙跳台阶</h2><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。<br>跳上n级台阶的方法有两种，先跳1级，再跳n-1级，和先跳2级，再跳n-2级，这一点与斐波那契题类似，但需要注意递归出口不同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ha</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数ha(),设其功能为n级台阶的跳法</span></span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> ha(n-<span class="number">1</span>)+ha(n-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	Node next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node <span class="title">reverseList</span><span class="params">(Node head)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> head;<span class="comment">//递归出口，当节点为空，或只有一个节点时直接返回。</span></span><br><span class="line">	&#125;</span><br><span class="line">	Node reverseExceptHead =reverseList (head.next);<span class="comment">//定义一个除了首节点均逆置完毕的状态，首节点还正常指向它的下一个节点</span></span><br><span class="line">	Node node = head.next <span class="comment">//获得当前首节点的下一个节点，等待逆置</span></span><br><span class="line">	node.next = head;<span class="comment">//完成最后一步逆置</span></span><br><span class="line">	head.next = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">return</span> reverseExceptHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/30/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" itemprop="url">动态规划</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T14:00:54+08:00">
+                2020-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>动态规划在于用数组保存历史数据以减少计算量。</p>
+<h2 id="小青蛙跳台阶动态规划解法"><a href="#小青蛙跳台阶动态规划解法" class="headerlink" title="小青蛙跳台阶动态规划解法"></a>小青蛙跳台阶动态规划解法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ha</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n &lt;= <span class="number">1</span>) <span class="keyword">return</span> n;</span><br><span class="line">	<span class="keyword">int</span> []dp = <span class="keyword">new</span> <span class="keyword">int</span> [n+<span class="number">1</span>];</span><br><span class="line">	dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">	dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">	dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span> ; i &lt;= n ; i++)&#123;</span><br><span class="line">		dp[i] = dp[i-<span class="number">1</span>]+dp[i-<span class="number">2</span>];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="不同路径"><a href="#不同路径" class="headerlink" title="不同路径"></a>不同路径</h2><p>一个机器人位于一个 m x n 网格的左上角机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角问总共有多少条不同的路径？</p>
+<p>定义dp[i][j] 为机器人从左上角走到[i][j]时共有多少条不同路径，本题答案右下角即为dp[m-1][n-1]。<br>状态转移方程：<br>走到[i][j]有两种状态 1、先走到[i][j-1]再往右一步，或2、先走到[i-1][j]，再往下一步。即dp[i][j] = dp[i][j-1]+dp[i-1][j]<br>初始值：<br>注意：dp[0][0]并不为0：只有一个格子的时候默认有一条路径而不是0条。<br>以下两种情况为机器人只一直往右或一直往下<br>dp[0][0..1..2..n] = 1;<br>dp[0..1..2..n][0] = 1;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">road</span><span class="params">(<span class="keyword">int</span> m,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(m &lt;= <span class="number">0</span> || n&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span> [m][n];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">		dp[i][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">		dp[j][<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; m ; i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">			dp[i][j] = dp[i-<span class="number">1</span>][j] + dp[i][j-<span class="number">1</span>];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="最小路径和"><a href="#最小路径和" class="headerlink" title="最小路径和"></a>最小路径和</h2><p>给定一个包含非负整数的 m x n 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。<br>说明：每次只能向下或者向右移动一步。</p>
+<p>定义dp[i][j]为走到这一步时的最小路径和。<br>状态转移方程：dp[i][j] = Math.min(dp[i][j-1],dp[i-1][j]) + arr[i][j]<br>初始值：<br>dp[0][j] = dp[0][j-1]+arr[0][j];<br>dp[i][0] = dp[i-1][0]+arr[i][0];</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minPathSum</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = grid.length;</span><br><span class="line">        <span class="keyword">int</span> n = grid[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span>[m][n];</span><br><span class="line">        dp [<span class="number">0</span>][<span class="number">0</span>] = grid[<span class="number">0</span>][<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = dp[i-<span class="number">1</span>][<span class="number">0</span>]+grid[i][<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = dp[<span class="number">0</span>][j-<span class="number">1</span>]+grid[<span class="number">0</span>][j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m ; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt; n ; j++)&#123;</span><br><span class="line">                dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j],dp[i][j-<span class="number">1</span>])+grid[i][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[m-<span class="number">1</span>][n-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="编辑距离"><a href="#编辑距离" class="headerlink" title="编辑距离"></a>编辑距离</h2><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。<br>你可以对一个单词进行如下三种操作：<br>插入一个字符<br>删除一个字符<br>替换一个字符<br>定义状态dp[i][j] 为 word1的前i个字母转换成word2的前j个字母所需要的最少操作。<br>则状态转移方程：<br>当word1[i] == word2[j]时 dp[i][j] = dp[i-1][j-1]<br>当word1[i] != word2[j]时 有三种可能性：<br>1、在word1[i]之后插入word2[j],问题变为求word1[i]和word2[j-1]之间的最少操作+1<br>2、将word1[i]删除，问题变为求word1[i-1]和word2[j]之间的最少操作+1<br>3、将word1[i]替换为word2[j]，问题变为求word1[i-1]和word2[j-1]之间的最少操作+1(替换操作)<br>即dp[i][j] = Math.min(dp[i][j-1],dp[i-1][j],dp[i-1][j-1])+1;</p>
+<p>初始值：dp[0][0] = 0;即两个都是空单词，无需操作<br>dp[0][1..2..3..m] = m;<br>dp[1..2..3..n][0] = n;<br>即两个单词中有一个为空，若word1为空，对其进行word2长度的插入即可，若word2为空，对其进行word1长度的删除。<br><strong><em>此题需要注意单词位数和数组下标之间的对应</em></strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(String word1, String word2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = word1.length();<span class="comment">//</span></span><br><span class="line">        <span class="keyword">int</span> n = word2.length();<span class="comment">//m n为单词长度，不从0开始，即单词多长值即为多少</span></span><br><span class="line">        <span class="keyword">int</span> [][]dp = <span class="keyword">new</span> <span class="keyword">int</span>[m+<span class="number">1</span>][n+<span class="number">1</span>];<span class="comment">//新建数组时需要+1，否则会溢出</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= m ;i++)&#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span> ; j &lt;= n ; j++)&#123;</span><br><span class="line">            dp[<span class="number">0</span>][j] = j;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; m+<span class="number">1</span> ; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; n+<span class="number">1</span> ; j++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(word1.charAt(i-<span class="number">1</span>)==word2.charAt(j-<span class="number">1</span>))<span class="comment">//调用charAr函数时，又从0开始计数了，需要-1；&#123;</span></span><br><span class="line">                &#123;dp[i][j] = dp[i-<span class="number">1</span>][j-<span class="number">1</span>];&#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    dp[i][j] = Math.min(Math.min(dp[i][j-<span class="number">1</span>],dp[i-<span class="number">1</span>][j]),dp[i-<span class="number">1</span>][j-<span class="number">1</span>]) + <span class="number">1</span>;   </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[m][n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="强盗抢劫"><a href="#强盗抢劫" class="headerlink" title="强盗抢劫"></a>强盗抢劫</h2><p>不能抢相邻的住户，求抢劫金额的最大值<br>定义状态转移方程dp[i]为抢到第i个住户的最大金额<br>若抢了 i-1 用户，则不能抢i用户<br>若只抢到i-2用户，则可以抢i用户<br>那么<br>dp[i] = Math.max(dp[i-2]+nums[i],dp[i-1]);<br>初始值：<br>dp[0] = nums[0];<br>dp[1] = Math.max(dp[0],nums[1]);<br>注意要将数组为空和nums数组只有一个值的情况当做特例先解决，否则dp数组会溢出。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> []dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">1</span>] = Math.max(dp[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">        dp[i] = Math.max(dp[i-<span class="number">2</span>]+nums[i],dp[i-<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[len-<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="环形强盗抢劫"><a href="#环形强盗抢劫" class="headerlink" title="环形强盗抢劫"></a>环形强盗抢劫</h2><p>同样不能抢相邻住户，但与上题的区别为，给出的nums数组视为首尾巴相连<br>分两次比较着抢出最大值，第一次从 0 抢到 n-1 第二次从 1 抢到 n即可<br>//呆逼做法等待优化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">int</span> [] nums2 = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len-<span class="number">1</span> ; i++)&#123;</span><br><span class="line">        nums2[i] = nums[i+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(len == <span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> []dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">1</span>] = Math.max(dp[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; len ; i++)&#123;</span><br><span class="line">        dp[i] = Math.max(dp[i-<span class="number">2</span>]+nums[i],dp[i-<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> []dp2 = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    dp2[<span class="number">0</span>] = nums2[<span class="number">0</span>];</span><br><span class="line">    dp2[<span class="number">1</span>] = Math.max(dp2[<span class="number">0</span>] , nums2[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; len-<span class="number">1</span> ; i++)&#123;</span><br><span class="line">        dp2[i] = Math.max(dp2[i-<span class="number">2</span>]+nums2[i],dp2[i-<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">return</span> Math.max(dp[len-<span class="number">2</span>],dp2[len-<span class="number">2</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="信件错排"><a href="#信件错排" class="headerlink" title="信件错排"></a>信件错排</h2><p>有N个信和信封，它们被打乱，求错误装信方式的数量,要求每封信都不在其原来位置。<br>状态转移方程：<br>N个元素的错排可分两步完成：<br>1、先把第1个元素排在第2个到第N个位置，有n-1种排法<br>2、当第1个元素被排在第k个位置时，再来排第k个元素，此时分为两种情况<br>2.1、第k个元素被排在第1个位置，那么剩下的问题是n-2个元素的错排问题，其解为 f(n-2)<br>2.2、第k个元素没有被排在第1个位置,待错排的元素有n-1个,可被错排的位置有n-1个,即剩下的问题是n-1个元素的错排问题，其解为f(n-1)<br>可得f(n) = (n-1) * (f(n-1) + f(n-2))<br>初始值：f(1) = 0, f(2) = 1, f(3) = 2</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">misalignment</span> <span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">2</span>)<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">3</span>)<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> (n-<span class="number">1</span>) * (misalignment(n-<span class="number">1</span>) + misalignment(n-<span class="number">2</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="母牛生产问题"><a href="#母牛生产问题" class="headerlink" title="母牛生产问题"></a>母牛生产问题</h2><p>假设农场中成熟的母牛每年都会生1头小母牛，并且永远不会死。第一年有1只小母牛，从第二年开始，母牛开始生小母牛。每只小母牛3年之后成熟又可以生小母牛。给定整数 N，求 N 年后牛的数量。</p>
+<p>这题和很著名的斐波那契兔子问题类似<br>状态转移方程：每一年的牛数量 = 去年的牛数量 + 新增的牛数量<br>每年新增的牛数量 = 当年成熟母牛数量 = 三年前的母牛数量<br>即 f(n) = f(n-1) + f(n-3)<br>初始值：f(1) = 1,f(2) = 2,f(3) = 3; </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">cow</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n&lt;<span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(n&lt;=<span class="number">3</span>)<span class="keyword">return</span> n;</span><br><span class="line">    <span class="keyword">return</span> cow(n-<span class="number">1</span>)+cow(n-<span class="number">3</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="leetcode-303-区域和检索-数组不可变"><a href="#leetcode-303-区域和检索-数组不可变" class="headerlink" title="leetcode 303 区域和检索 - 数组不可变"></a>leetcode 303 区域和检索 - 数组不可变</h2><p>给定一个整数数组nums，求出数组从索引i到j(i ≤ j)范围内元素的总和，包含i,j两点。<br>思路：新建一个数组sums，sums[i]为nums数组从nums[0]累加至nums[i-1]的值。<br><strong>【开始想的是sums[i]为nums数组从nums[0]累加至nums[i]的值，但这会导致写出sums[i] = sums[i-1]+nums[i]这样一个下标不相等(i-1 和 i)的式子出来,极易发生越界等错误】</strong><br>计算从i到j的值时 即可用sums[j] - sums[i-1]快速求解得出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> []sums;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">NumArray</span><span class="params">(<span class="keyword">int</span>[]nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    sums = <span class="keyword">new</span> <span class="keyword">int</span> [len+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt;= len ; i++)&#123;</span><br><span class="line">        sums[i] = sums[i-<span class="number">1</span>]+nums[i-<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumRange</span><span class="params">(<span class="keyword">int</span> i , <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> sums[j+<span class="number">1</span>] - sums[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>leetcode 746. 使用最小花费爬楼梯<br>数组的每个索引做为一个阶梯，第 i个阶梯对应着一个非负数的体力花费值 cost<a href="索引从0开始">i</a>。<br>每当你爬上一个阶梯你都要花费对应的体力花费值，然后你可以选择继续爬一个阶梯或者爬两个阶梯。<br>您需要找到达到楼层顶部的最低花费。在开始时，你可以选择从索引为 0 或 1 的元素作为初始阶梯。</p>
+<p>状态转移方程：f(i) = cost[i] + Math.min(f(i-1),f(i-2))</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minCostClimbingStairs</span><span class="params">(<span class="keyword">int</span>[] cost)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> f1 = <span class="number">0</span> , f2 = <span class="number">0</span>;<span class="comment">//f1代表走到第i-2阶阶梯的最小消耗，f2代表走到第i-1阶阶梯的最小消耗</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cost.length ; i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> current = cost[i] + Math.min(f1,f2);<span class="comment">//current代表走到第i阶阶梯的最小消耗</span></span><br><span class="line">        f1 = f2;<span class="comment">//在求出第i阶台阶的最小消耗之后第i-2阶和第i-1阶阶梯刷新。</span></span><br><span class="line">        f2 = current;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Math.min(f1,f2);<span class="comment">//最后走到终点，可能是从第n-1阶台阶走一步上去的，也可能是从第n-2阶台阶走2步上去的。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三步问题"><a href="#三步问题" class="headerlink" title="三步问题"></a>三步问题</h2><p>三步问题。有个小孩正在上楼梯，楼梯有n阶台阶，小孩一次可以上1阶、2阶或3阶。实现一种方法，计算小孩有多少种上楼梯的方式。结果可能很大，你需要对结果模1000000007。<br><strong>状态转移方程易得，需注意取模过程，要对每个数据都取模，任意两个数据的和再取模</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">waysToStep</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span> [n+<span class="number">1</span>];</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">3</span>) <span class="keyword">return</span> <span class="number">4</span>;</span><br><span class="line">    dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    dp[<span class="number">2</span>] = <span class="number">2</span>;</span><br><span class="line">    dp[<span class="number">3</span>] = <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">4</span> ; i &lt;= n ; i++)&#123;</span><br><span class="line">        dp[i] = ((dp[i-<span class="number">1</span>]%<span class="number">1000000007</span>+dp[i-<span class="number">2</span>]%<span class="number">1000000007</span>)%<span class="number">1000000007</span>+dp[i-<span class="number">3</span>]%<span class="number">1000000007</span>)%<span class="number">1000000007</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[n];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="leetcode-1025-除数博弈"><a href="#leetcode-1025-除数博弈" class="headerlink" title="leetcode 1025. 除数博弈"></a>leetcode 1025. 除数博弈</h2><p>爱丽丝和鲍勃一起玩游戏，他们轮流行动。爱丽丝先手开局。<br>最初，黑板上有一个数字 N 。在每个玩家的回合，玩家需要执行以下操作：<br>选出任一 x，满足 0 &lt; x &lt; N 且 N % x == 0 。<br>用 N - x 替换黑板上的数字 N 。<br>如果玩家无法执行这些操作，就会输掉游戏。<br>只有在爱丽丝在游戏中取得胜利时才返回 True，否则返回 false。假设两个玩家都以最佳状态参与游戏。</p>
+<p>常规解法：<br>play[i]记录了数为i时的结果，true为胜利，false为失败。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> [] play = <span class="keyword">new</span> <span class="keyword">boolean</span>[N+<span class="number">1</span>];<span class="comment">//boolean 型数据新建后默认为false;</span></span><br><span class="line">    play[<span class="number">1</span>] = <span class="keyword">false</span>;<span class="comment">//只剩1时无数可取，失败。</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt;= N ; i++)&#123;<span class="comment">//从2开始依次判断</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; i ; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i%j==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="comment">//在1~i之间判断，可以取走哪个数，使得取走那个数后的子问题变为false则当前问题为true即胜利</span></span><br><span class="line">                <span class="comment">//取走后的问题转变为play[i-j]</span></span><br><span class="line">                <span class="keyword">if</span>(play[i-j] == <span class="keyword">false</span>)&#123;</span><br><span class="line">                    play[i] = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> play[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数学解法:<br>最终结果是取到2的必然胜利，取到1的失败。<br>若当前数为奇数，其约数必然为奇数，则取走后变为偶数。<br>若当前数为偶数，只需一直取1，让取完后的数字变为奇数，即可让对方不断地给自己提供偶数。<br>最终自己能取到最小偶数2，获得胜利。<br>即 偶数胜利，奇数失败</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">divisorGame</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (N%<span class="number">2</span>) == <span class="number">0</span> ? <span class="keyword">true</span>:<span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="连续数列"><a href="#连续数列" class="headerlink" title="连续数列"></a>连续数列</h2><p>给定一个整数数组，找出总和最大的连续数列，并返回总和。<br>常规的动态规划问题,值为正时则继续累加,值为负时则从新开始累加,更新最大值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> max = nums[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">int</span> imax = nums[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(imax &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            imax += nums[i];</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;imax = nums[i];&#125;</span><br><span class="line">        max = Math.max(max,imax);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="按摩师"><a href="#按摩师" class="headerlink" title="按摩师"></a>按摩师</h2><p>一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。<br>常规的动态规划题，但是这次居然<strong>忘记判断初始情况</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[]dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">    <span class="keyword">if</span>(nums.length == <span class="number">0</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(nums.length == <span class="number">1</span>)<span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">    dp[<span class="number">1</span>] = Math.max(dp[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span> ; i &lt; nums.length ; i++)&#123;</span><br><span class="line">        dp[i] = Math.max(dp[i-<span class="number">1</span>],dp[i-<span class="number">2</span>]+nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[nums.length-<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/2020%E5%BF%AB%E6%89%8B%E7%AC%94%E8%AF%95%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/30/2020%E5%BF%AB%E6%89%8B%E7%AC%94%E8%AF%95%E9%A2%98/" itemprop="url">2020快手笔试题[动态规划]</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T11:19:31+08:00">
+                2020-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>小明最近在做病毒自动检测，他发现，在某些library 的代码段的二进制表示中，如果包含子串并且恰好有k个1，就有可能有潜在的病毒。library的二进制表示可能很大，并且子串可能很多，人工分析不可能，于是他想写个程序来先算算到底有多少个子串满足条件。如果子串内容相同，但是开始或者结束位置不一样，则被认为是不同的子串。 </p>
+<p>注：子串一定是连续的。例如”010”有6个子串，分别是 “0, “1”, “0”, “01”, “10”, “010” </p>
+<p>例：字符串s = “0010101010” , k = 2。<br>思路：每个’1’前后部分的0的个数是共有多少个子串的关键,用滑动窗口辅助思考,在遍历至出现2个’1’,而第三个’1’,尚未出现时。<br>字符串 “0010101010” 包含的子串如下<br>[00101]01010<br>0[0101]01010<br>00[101]01010<br>[001010]1010<br>0[01010]1010<br>00[1010]1010</p>
+<p>001[0101]010<br>0010[101]010<br>001[01010]10<br>0010[1010]10</p>
+<p>00101[0101]0<br>001010[101]0<br>00101[01010]<br>001010[1010]</p>
+<p>在满足条件个数的’1’出现之后，下一个’1’出现之前，即右滑窗’]’，它的第前k个’1’与第前k+1个’1’之间有多少个位数，即左滑窗’[‘就统计多少次。<br>即,遍历过程中,下一个’1’出现之前 每经过一位,就累加一次，所累加的值是这个子串的第一个’1’出现之前的0的个数+1<br>dp[]数组存放的是左滑窗可移动的次数，每两个’1’之间有n个’0’则滑窗可移动n+1次，遍历过程中，会遇到1，即可在遍历到1时也使dp自增来代替遇到了n个0但却可移动n+1次的这个’+1’，而最左端的0前面没有这个额外的’+1’，故dp[0]的初始值要置为1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> num=<span class="number">0</span>,len=s.length();</span><br><span class="line"><span class="keyword">int</span>[] dp=<span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line"><span class="keyword">long</span> result=<span class="number">0</span>;</span><br><span class="line">dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">char</span> c:s.toCharArray())&#123;</span><br><span class="line">    <span class="keyword">if</span>(c==<span class="string">'1'</span>) num++;</span><br><span class="line">    <span class="keyword">if</span>(num-k&gt;=<span class="number">0</span>) result+=dp[num-k];</span><br><span class="line">    dp[num]++;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(result);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/29/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/29/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/" itemprop="url">蓄水池采样算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-29T15:34:19+08:00">
+                2020-04-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%93%84%E6%B0%B4%E6%B1%A0%E9%87%87%E6%A0%B7%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">蓄水池采样算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>问题描述:一般的采样问题，会知道具体的样本数量，即使样本比较大也可以用生成随机数的方式解决。但有一类采样问题，样本具体数量不可知，在不知道具体数量的样本中均匀的抽取一部分需要用到蓄水池采样算法。</p>
+<p>例如：给定一台发球机，不间断的发球，要求在其发出N个球时，均匀的取出M个球，即保证每个球被取到的概率都是M/N。</p>
+<p>算法思路：建立一个拥有M个元素的集合，将其作为蓄水池，把前M个元素均放入池中，然后从i = M + 1开始，进行遍历。<br>是否取第i个元素的概率为M / i，若第i个元素被取，再以1 / M 的概率决定替换掉集合中的某个元素。</p>
+<p>算法正确性验证：<br>对于第i个元素<br>i&lt;=M时,在M步之前，被选中的概率为1，在M+1步时，被第M+1个元素替换的概率 = 第M+1个元素被选中的概率 * i被选中为替换元素的概率<br>即 M/(M+1) * 1/M = 1/(M+1),那么不被第M+1个元素替换的概率为 1 - 1/(M+1) = M/(M+1)。<br>不被第M+2个元素替换的概率为1 - M/(M+2) * 1/M = (M+1)/(M+2)<br>以此类推，不被第N个元素替换掉的概率为 (N-1)/N<br>则运行到第N步时，i元素还保留着的概率为 被选中的概率 * 不被替换的概率 ： 1 * M/(M+1) * (M+1)/(M+2) * … * (N-1)/N = M/N;</p>
+<p>i&gt;M时,在第i步，其被选中的概率为 M/i,不被第i+1个元素替换的概率为 1 - M/(i+1) * (1/M) = i/(i+1)<br>不被第i+2个元素替换的概率为 1 - M/(i+2) * (1/M) = (i+1)/(i+2)<br>以此类推，不被第N个元素替换掉的概率为 (N-1)/N<br>则运行到第N步时，i元素还保留着的概率为 被选中的概率 * 不被替换的概率 ： M/i * i/(i+1) * (i+1)/(i+2) * … * (N-1)/N = M/N;<br>即对于每个元素，被取到的概率都是 M/N</p>
+<p>代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Random;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReservoirSampling</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> [] dataStream;<span class="comment">//dataStream 为所有的元素</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> N=<span class="number">1000000</span>;</span><br><span class="line">	<span class="keyword">private</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;<span class="comment">//构建待取样的数据流</span></span><br><span class="line">		dataStream = <span class="keyword">new</span> <span class="keyword">int</span> [N];</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; N ; i++)&#123;</span><br><span class="line">			dataStream[i] = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> [] sampling(<span class="keyword">int</span> M)&#123;</span><br><span class="line">		<span class="keyword">int</span> [] reservoir = <span class="keyword">new</span> <span class="keyword">int</span> [M];<span class="comment">//reservoir 为所建立的大小为M的蓄水池</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; reservoir.length ; i++)&#123;</span><br><span class="line">			reservoir[i] = dataStream[i];<span class="comment">//先将前M个元素放入蓄水池中</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = M ; i &lt; dataStream.length ; i++)&#123;</span><br><span class="line">			<span class="keyword">int</span> d = random.nextInt(i+<span class="number">1</span>);</span><br><span class="line">			<span class="keyword">if</span>(d&lt;M)&#123;<span class="comment">//前i个元素中random一个数，其小于M的概率为M/i，即以M/i的概率决定要不要取一个元素</span></span><br><span class="line">				reservoir[d] = dataStream[i];<span class="comment">//蓄水池reservoir中任一元素被替换出的概率是均等的</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> reservoir;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i : sampling(<span class="number">100</span>))&#123;</span><br><span class="line">			System.out.println(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		ReservoirSampling RS = <span class="keyword">new</span> ReservoirSampling();</span><br><span class="line">		RS.setUp();</span><br><span class="line">		RS.test();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/%E8%B4%AA%E5%BF%83%E6%80%9D%E6%83%B3%E7%AE%97%E6%B3%95%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1162,631 +2032,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%981/" itemprop="url">二叉树1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-02T15:09:30+08:00">
-                2020-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二叉树类题目多考虑递归，在处理完root之后，root的左右子树的处理方法都是一致的，处理root过程中，要先考虑到各种null情况。</p>
-<h2 id="二叉树两节点的最长路径"><a href="#二叉树两节点的最长路径" class="headerlink" title="二叉树两节点的最长路径"></a>二叉树两节点的最长路径</h2><p>二叉树的两节点的最长路径，要么两节点都在左子树上，要么两节点都在右子树上，要么一个节点在左子树一个节点在右子树，若一个节点在左子树一个节点在右子树，即求左右子树不包括根节点的高度和+1<br>故根结点为root的二叉树的两节点最长路径 = Max(左子树的最长路径，右子树的最长路径，左子树深度(去根)+右子树深度(去根)+1)即</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">solution</span> </span>&#123; </span><br><span class="line"><span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">diameterOfBinaryTree</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	getDepth(root);</span><br><span class="line">	<span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getDepth</span><span class="params">(TreeNode root)</span></span>&#123;<span class="comment">//返回树的最大深度</span></span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> l = getDepth(root.left);</span><br><span class="line">	<span class="keyword">int</span> r = getDepth(root.right);</span><br><span class="line">	<span class="keyword">int</span> max = Math.max(max , l+r);</span><br><span class="line">	<span class="keyword">return</span> Math.max(l,r)+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="反转二叉树"><a href="#反转二叉树" class="headerlink" title="反转二叉树 "></a>反转二叉树 </h2><p>常见的递归操作题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">invertTree</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	TreeNode left = root.left;<span class="comment">//记录root.left防止丢失</span></span><br><span class="line">	root.left = invertTree(root.right);</span><br><span class="line">	root.right = invertTree(left);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="归并两棵二叉树"><a href="#归并两棵二叉树" class="headerlink" title="归并两棵二叉树"></a>归并两棵二叉树</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">MergeTree</span><span class="params">(TreeNode tree1 , TreeNode tree2)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(tree1 == <span class="keyword">null</span> &amp;&amp; tree2 == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">if</span>(tree1 == <span class="keyword">null</span>) <span class="keyword">return</span> tree2;</span><br><span class="line">	<span class="keyword">if</span>(tree2 == <span class="keyword">null</span>) <span class="keyword">return</span> tree1;</span><br><span class="line">	TreeNode root = <span class="keyword">new</span> TreeNode(tree1.val + tree2.val);</span><br><span class="line">	root.left = MergeTree(tree1.left, tree2.left);</span><br><span class="line">	root.right = MergeTree(tree1.right , tree2.right);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径"><a href="#判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径" class="headerlink" title="判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径"></a>判断二叉树中是否存在从根结点到叶子结点的和为目标数的路径</h2><p>路径要么在左子树上，要么在右子树上。<br>走向左右子树后，目标数减去根结点数值，对左右子树做递归。<br>因为必须要走到叶子结点后结束，即当前节点没有左右节点时判断是否为目标数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathsum</span><span class="params">(TreeNode root , <span class="keyword">int</span> sum)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span> &amp;&amp; root.val == sum) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	<span class="keyword">return</span> hasPathsum(root.left,sum-root.val) || hasPathsum(root.right, sum-root.val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="统计二叉树中路径和等于目标数的路径数量"><a href="#统计二叉树中路径和等于目标数的路径数量" class="headerlink" title="统计二叉树中路径和等于目标数的路径数量"></a>统计二叉树中路径和等于目标数的路径数量</h2><p>不需要从根节点起到叶子节点止，但需要连续。</p>
-<p>整个判断过程，先从根节点开始走路径，然后递归左右子节点。<br>判断过程中，省去了验证最后一个结点为叶子结点的过程。<br>然后再做一次递归，从这个根节点的左右子树开始判断，以左右子树为根结点再判断一次是否符合题意。即本题有两种递归，一种是递归的判断以某点作为起点是否存在路径，一种是递归的找起点。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode root , <span class="keyword">int</span> sum)</span></span>&#123;<span class="comment">//这个函数是递归的找起始节点。</span></span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> result = pathSumStartWithRoot(root,sum)+pathSum(root.left , sum)+pathSum(root.right , sum);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">pathSumStartWithRoot</span><span class="params">(TreeNode root , <span class="keyword">int</span> sum)</span></span>&#123;<span class="comment">//这个函数可以判断出从根节点开始的路径和是否满足目标数</span></span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(root.val == sum) result ++;</span><br><span class="line">	result += pathSumStartWithRoot(root.left , sum - root.val) + pathSumStarrtWithRoot(root.right , sum - root.val);</span><br><span class="line">	<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断A树是否为B树的子树"><a href="#判断A树是否为B树的子树" class="headerlink" title="判断A树是否为B树的子树"></a>判断A树是否为B树的子树</h2><p>若A树是B树的子树，那必和B树的一部分相等,以下为判断两树是否相等<br>方法：若都为null，则相等，若只有一个为null，则不相等，若数值不同则不相等，递归对比他们的左右子树。</p>
-<p>判断A树是否和B树相等之后，再递归比较A树是否和B树的左右子树相等即可判断A树是否是B树的子树,当B树为null时递归退出</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSubtree</span><span class="params">(TreeNode A , TreeNode B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(B==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">return</span> isSame(A,B)||isSubtree(A,B.left)||isSubtree(A,B.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSame</span><span class="params">(TreeNode A,TreeNode B)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(A == <span class="keyword">null</span> &amp;&amp; B == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	<span class="keyword">if</span>(A == <span class="keyword">null</span> || B == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="comment">//都为空排除后的或证明了一个为空一个不为空</span></span><br><span class="line">	<span class="keyword">if</span>(A.val != B.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">return</span> isSame(A.left,B.left)&amp;&amp;isSame(A.right,B.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断一个树是否左右对称"><a href="#判断一个树是否左右对称" class="headerlink" title="判断一个树是否左右对称"></a>判断一个树是否左右对称</h2><p>此题和子树判断题类似，可以将左右对称变为判断两个树是否相等</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSymmetric</span><span class="params">(Tree root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;<span class="comment">//之所以null时返回true是因为比对到null则说明递归到底，比对成功了</span></span><br><span class="line">	<span class="keyword">return</span> isSame(root.left, root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="树的最小路径"><a href="#树的最小路径" class="headerlink" title="树的最小路径"></a>树的最小路径</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;<span class="comment">//若这个树为空则高度为0</span></span><br><span class="line">	<span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//若这个树左右子树同时为空则高度为1</span></span><br><span class="line">	<span class="keyword">int</span> leftDepth = minDepth(root.left);</span><br><span class="line">	<span class="keyword">int</span> rightDepth = minDepth(root.right);</span><br><span class="line">	<span class="keyword">if</span>(leftDepth == <span class="number">0</span>)</span><br><span class="line">	<span class="comment">//若这个树左子树为空，则长度为右子树长度+1</span></span><br><span class="line">		<span class="keyword">return</span> rightDepth + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(rightDepth == <span class="number">0</span>)</span><br><span class="line">	<span class="comment">//若这个树右子树为空，则长度为左子树长度+1</span></span><br><span class="line">		<span class="keyword">return</span> leftDepth + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> min(leftDepth,rightDepth) + <span class="number">1</span>;</span><br><span class="line"> 	<span class="comment">//若左右子树都不为空，则长度为左右子树的较小值+1</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p>以上代码可优化为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> leftDepth = minDepth(root.left);</span><br><span class="line">	<span class="keyword">int</span> rightDepth = minDepth(root.right);</span><br><span class="line">	<span class="keyword">if</span>(leftDepth == <span class="number">0</span> || rightDepth == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> leftDepth+rightDepth+<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//leftDepth和rightDepth都不为0才返回下一御酒</span></span><br><span class="line">	<span class="keyword">return</span> Math.min(leftDepth,rightDepth)+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="统计左叶子节点的和"><a href="#统计左叶子节点的和" class="headerlink" title="统计左叶子节点的和"></a>统计左叶子节点的和</h2><p>//若一个结点的左孩子是叶节点，即他的左孩子是左叶子结点，累加左孩子数值之后再递归判断这个结点的右子树<br>//否则，递归判断这个结点的左右子树</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sumOfLeftLeaves</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">if</span>(isLeaf(root.left))&#123;</span><br><span class="line">		<span class="keyword">return</span> root.left.val + sumOfLeftLeaves(root.right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sumOfLeftLeaves(root.left)+sumOfLeftLeaves(root.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//判断一个节点是不是叶子节点</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isLeaf</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">return</span> node.left == <span class="keyword">null</span> &amp;&amp; node.right == <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="相同结点值的最大路径长度"><a href="#相同结点值的最大路径长度" class="headerlink" title="相同结点值的最大路径长度"></a>相同结点值的最大路径长度</h2><p>需要用到深度优先搜索</p>
-<p>树的递归题目中，写出的左右子节点的递归，可以默认写出时即已经是正确的结果，再进行后续。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> path = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestUnivaluePath</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	dfs(root);</span><br><span class="line">	<span class="keyword">return</span> path;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> left = dfs(root.left);</span><br><span class="line">	<span class="keyword">int</span> right = dfs(root.right);</span><br><span class="line">	<span class="comment">//dfs的子函数return的值可从 最外层的dfs看出。</span></span><br><span class="line">	<span class="comment">// Math.max(leftPath,rightPath)即，返回的是 左路径和右路径中的较大值。</span></span><br><span class="line">	<span class="comment">//即 left返回的是 root左节点 的左右路径中的较大值</span></span><br><span class="line">	<span class="comment">// right 返回的是root右节点 的左右路径中的较大值</span></span><br><span class="line">	<span class="keyword">int</span> leftPath = root.left!=<span class="keyword">null</span> &amp;&amp; root.left.val == root.val ? left+<span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> rightPath = root.right!=<span class="keyword">null</span> &amp;&amp; root.right.val == root.val ? right+<span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//获得了左右子节点的左右路径中的较长者之后，对于当前的root节点而言，若root节点的值和左节点相等，则左路径+1，类似的右路径+1。</span></span><br><span class="line">	path = Math.max(path,leftPath + rightPath);</span><br><span class="line">	<span class="comment">//path用来记录并更新一个以root为根结点的树的相同节点最大路径长度</span></span><br><span class="line">	<span class="keyword">return</span> Math.max(leftPath,rightPath);</span><br><span class="line">	<span class="comment">//所返回的值是之前计算过的左右路径中的较大值。</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="House-Robber-III"><a href="#House-Robber-III" class="headerlink" title="House Robber III"></a>House Robber III</h2><p>The thief has found himself a new place for his thievery again. There is only one entrance to this area, called the “root.” Besides the root, each house has one and only one parent house. After a tour, the smart thief realized that “all houses in this place forms a binary tree”. It will automatically contact the police if two directly-linked houses were broken into on the same night.</p>
-<p>Determine the maximum amount of money the thief can rob tonight without alerting the police<br>间隔遍历：在二叉树中取点，要求任意两点不相邻，求所取点之和的最大值为多少。</p>
-<p>对于root为根的二叉树，最优解为取根结点+四个孙子节点或 取两个孩子结点之间的较大值。即</p>
-<p>f(root) = max(root.val + f(ll) + f(lr) + f(rl) + f(rr) , f(l)+f(r))</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> val1 = root.val;</span><br><span class="line">	<span class="keyword">if</span>(root.left!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	val1 = val1 + rob(root.left.left) + rob(root.left.right); </span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(root.right!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	val1 = val1 + rob(root.right.left) + rob(</span><br><span class="line">	root.right.right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> val2 = rob(root.left)+rob(root.right);</span><br><span class="line">	<span class="keyword">return</span> Math.max(val1,val2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="求二叉树中第二小的值"><a href="#求二叉树中第二小的值" class="headerlink" title="求二叉树中第二小的值"></a>求二叉树中第二小的值</h2><p>给定一个非空特殊的二叉树，每个节点都是正数，并且每个节点的子节点数量只能为 2 或 0。如果一个节点有两个子节点的话，那么这个节点的值不大于它的子节点的值。 给出这样的一个二叉树，你需要输出所有节点中的第二小的值。如果第二小的值不存在的话，输出 -1 。</p>
-<p>定义两个变量，一个保存最小值一个保存次小值。再定义一个flag递归过程中，若找到过次小值则改变flag，返回次小值。若未找到过次小值，则返回-1；</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> first = Integer.MAX_VALUE, second = Integer.MAX_VALUE;</span><br><span class="line"><span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findSecondMinimumValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	helper(root);</span><br><span class="line">	<span class="keyword">return</span> flag == <span class="number">0</span> ? -<span class="number">1</span>:second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)</span><br><span class="line">	<span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">if</span>(root.val &lt; first)&#123;</span><br><span class="line">		second = first;</span><br><span class="line">		first = root.val;</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt;= second &amp;&amp; root.val &gt; first)&#123;</span><br><span class="line">		flag++;</span><br><span class="line">		second = root.val;</span><br><span class="line">	&#125;</span><br><span class="line">	helper(root.left);</span><br><span class="line">	helper(root.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为这个二叉树父节点的值必≤子节点的值，故根结点必定为最小值，所以第二小的值必在左右两个子树之中，<br>倘若左右两个子树中的最小值都不和根结点相等，则第二小的值是左右两个子树最小值中的较小值。<br>倘若左(右)子节点和父节点的值相等，则需要在左(右)子树中找出第二小的值来与右(左)子树的最小值一起比较出一个较小值出来。这样才能保证比对出来的是真正的第二小的值。<br>简而言之，要在左右子树中分别找出和根结点不相等的最小值。<br>这两个最小值中的较小者就是第二小的值。</p>
-<p>若左(右)子节点和根节点相等，才需要递归的找左(右)子树的次小值。<br>因为左右子树作为一个单独的树做此题的判断，root.left必定是left树的最小值，递归后找到的次小值也即左子树除根结点外的最小值。<br>否则直接取左右子节点中的较小值即可。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findSecondMinimumValue</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//递归返回条件 1 节点为空，树没有次小值。</span></span><br><span class="line">	<span class="keyword">if</span>(root.val==<span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	<span class="comment">//递归返回条件 2 节点没有子节点，树没有次小值。</span></span><br><span class="line">	<span class="keyword">int</span> leftVal = root.left.val;</span><br><span class="line">	<span class="keyword">int</span> rightVal = root.right.val;</span><br><span class="line">	<span class="keyword">if</span>(leftVal == root.val) &#123;</span><br><span class="line">		leftVal == 	findSecondMinimumValue(root.left);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(rightVal == root.val)&#123;</span><br><span class="line">		rightVal == findSecondMinimumValue(root.right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(leftVal != -<span class="number">1</span> &amp;&amp; rightVal != -<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> Math.min(leftVal,rightVal);</span><br><span class="line">		<span class="comment">//递归返回条件 3 因为左右节点若与根结点相等则会继续递归，递归到找到没有子节点的节点 返回-1为止。</span></span><br><span class="line">		<span class="comment">//若都不为 -1 则说明两边都没有一直递归到树的末端，而是在中途由于某个子节点不和父节点相等而返回</span></span><br><span class="line">		<span class="comment">//即满足，左右子节点都不和父节点的值相等。</span></span><br><span class="line">		<span class="comment">//那么这两个数值中的较小值就是整个树的次小值。</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(leftVal != -<span class="number">1</span>) <span class="keyword">return</span> leftVal;</span><br><span class="line">	<span class="comment">// 递归返回条件4 在上一步判断完了两个子节点都不和根结点相等之后，再继续执行则说明，必有一个子节点和根结点值相等，此时若 左子节点不为-1，即左子节点不和根结点相等，即右子节点和根节点相等，此时次小值为左子节点。</span></span><br><span class="line">	<span class="keyword">return</span> rightVal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/24/%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%98/" itemprop="url">链表</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-24T15:09:30+08:00">
-                2020-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="交换链表中的相邻结点"><a href="#交换链表中的相邻结点" class="headerlink" title="交换链表中的相邻结点"></a>交换链表中的相邻结点</h2><p>要求：不允许改变结点的数值<br>[1]-&gt;[2]-&gt;[3]-&gt;[4] 变为[2]-&gt;[1]-&gt;[4]-&gt;[3]</p>
-<p>pre 和 next 用于记录交换中的结点中的前后结点。</p>
-<p>在头结点之前申请一个结点：node，用于函数返回<br>再申请pre结点，用于交换操作：ListNode pre=node。<br>需要交换的结点为pre其后一位的结点和其后两位的结点即pre.next 和 pre.next.next<br>申请 结点l1 = pre.next和l2 = pre.next.next以方便交换操作。<br>申请 next结点用于记录 pre.next.next的后一个结点，以便交换操作进行后可以找到其后的结点，进行下一步交换操作。<br>l1 和 l2需要进行交换，<br>即令l1.next = next ;//交换操作进行后，l1在后，所以用l1来连接next结点<br> l2.next = l1;//完成l2和l1交换的操作。<br>为保证交换操作后，前链不断<br>pre.next = l2//因为l2已和l1交换，此时l2在前。<br>pre结点作为待交换的两个结点的前一个结点，在一次交换进行之后，需要放在下一个待交换结点对的前一个结点，即本次交换结点中靠后的那一个，即令pre = l1；<br>故完整逻辑为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ListNode node =<span class="keyword">new</span> ListNode(-<span class="number">1</span>)</span><br><span class="line">node.next = head;</span><br><span class="line">ListNode pre = node;</span><br><span class="line">While(pre.next!=<span class="keyword">null</span> &amp;&amp; pre.next.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">ListNode l1 = pre.next;</span><br><span class="line">ListNode l2 = pre.next.next;</span><br><span class="line">ListNode next = l2.next;</span><br><span class="line">l1.next = next;</span><br><span class="line">l2.next = l1;</span><br><span class="line">pre.next = l2;</span><br><span class="line">pre = l1</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> node.next</span><br></pre></td></tr></table></figure>
-<h2 id="链表求和"><a href="#链表求和" class="headerlink" title="链表求和"></a>链表求和</h2><p>Input: (7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 8 -&gt; 0 -&gt; 7<br>由于数字加法是从尾到头，因为栈的后进先出特性，可以借助栈进行操作。<br>0、声明head作为结果链表的头： ListNode head = new ListNode(-1);<br>1、    将两链表全部压入栈中<br>2、    对两个栈进行一次弹出pop操作，用x和y分别记录弹出元素,声明 carry = 0记录进位。<br>3、    xy求和，sum = x+y+carry<br>4、    声明新结点记录所得结果ListNode node = new ListNode(sum%10);进位carry = sum/10，<br>5、    因为弹出结点从尾到头，所以需要对所有求得的结点进行头插操<br>即node.next = head.next; head.next = node</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/myFirstBlog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/12/myFirstBlog/" itemprop="url">多模态论文阅读笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T15:30:02+08:00">
-                2019-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">论文笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>讨论 多模态数据中普遍存在的失配准问题以及模态间的信息缺失问题。<br>数据集：KAIST<br>    CVC-14<br>1、深度卷积神经网络的不同阶段对两个模态的信息进行融合。<br>Multispectral Deep Neural Networks for Pedestrian Detection</p>
-<p>2、通过映射矩阵的作用，使得网络能够在最后一层得到三个特征图，分别对应于两个模态各自的特征以及两个模态的融合特征，旨在充分融合两个模态信息的基础上，保留各自模态的特有信息。<br>Correlated and Individual Multi-Modal Deep Learning for RGB-D Object Recognition</p>
-<p>3、保留两个模态各自的特有信息，基于概率的思想在网络中加入两个模块，其中一个用来输出当前的输入图像对两个模态各自的特征以及融合特征的依赖程度，另一个模块借助上一个模块的输出作为权重，对来自两个模态各自的输出结果以及基于融合特征输出结果进行加权求和，得到最终的判别概率。<br>Unified Multi-spectral Pedestrain Detection Based on Probabilistic Fusion Networks</p>
-<p>4、多模态的迁移学习、域适应</p>
-<p>不同模态图像的信息缺失：体现出互补性和多模态数据引入的必要性。</p>
-<p>5、双模态数据融合问题可以转化为在哪个特征层进行特征融合的问题<br>四种方法分别为:<br>1、在第一块卷积层之后将来自不同模态的特征图进行融合。融合方式为串接后通过1x1的卷积，将串接后的特征图进行融合并降低到原来的维度。<br>2、在第四个卷积块之后融合。<br>3、在第五个卷积块之后融合。<br>4、在第二个全连接层之后进行融合。</p>
-<p>多尺度目标检测<br>1、基于图像金字塔的多尺度目标检测<br>2、基于特征金字塔的多尺度目标检测<br>结合多个卷积层后的特征图，得到一个包含了来自多个卷积层的特征信息的新的特征图。，之后在这个包含多层特征信息的特征图上进行目标检测。<br>直接在多个卷积层后的特征图上进行目标的检测，最终检测结果为全部检测结果的综合。<br>在多模态目标检测网络中加入多尺度处理的步骤<br>将两个模态各自使用的VGG16的第一个、第三个、第五个卷积块后的特征图进行拼接，之后再将两个模态的特征图进行融合。</p>
-<p>多模态数据的互补性验证(对比试验)</p>
-<p>分步训练方法<br>多模态数据存在信息缺失，使用分步的网络训练方法，<br>1、挑出 Valid-T Valid-RGB两个子数据集</p>
-<p>2、使用两个子数据集分别训练两个单模态的检测网络</p>
-<p>3、将第二步得到的两个单模态网络的卷积层参数加载到多模态融合网络之中。</p>
-<p>展望：从网络结构入手，加入特殊模块，使得多模态检测网络对于数据之间的失配准的敏感性降低。<br>通过网络改进或数据集标注方法的调整来实现便捷的端到端的训练方法。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/12/%E4%B8%8A%E9%87%87%E6%A0%B7%E5%8F%8D%E5%90%91%E8%9E%8D%E5%90%88/" itemprop="url">SSD上采样反向融合笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-12T15:30:02+08:00">
-                2019-11-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index">
-                    <span itemprop="name">论文笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1、为改善光照条件遮挡严重等环境，使用Kinect深度相机，引入深度图，利用多模态数据之间的互补性丰富特征，有效提升行人检测的精度。以行人检测算法ACF为基础，在RGB-D Person Databse 数据集上引入深度图。<br>2、结合行人检测的特点，改善非极大性抑制机制，利用位置和置信度综合判断，对检测框进行重复利用和有效抑制。INRIA数据集<br>3、针对回归精度不高和小目标检测效果差，提出上采样反向特征融合网络，将高层特征与低层特征进行有效融合和激活。</p>
-<p>检测问题有别于单纯的分类问题，分类问题不关注与图像占比问题，目标占据图像主要部分，所以一般网络模型越深，提取的特征越丰富，分类性能越好。而检测分为分类和定位两个子问题。且可能包含多个大小不一的目标，正确分类小目标需要更高层的语义信息，正确定位小目标需要高层所不具备的底层细节特征，如何解决这个问题是改善小目标的关键。</p>
-<p>作者在SSD算法中通过上采样反向融合方法，将高层特征层和低层特征进行有效的融合和激活。</p>
-<p>上采样反向融合网络框架<br>conv4_3经过卷积和池化得到conv5，感受野增大、分辨率减半。<br>本文将conv5 经过一个卷积层，然后利用转置卷积进行特征图上采样至与conv4_3分辨率一样大，在保留conv5卷积层大感受野、高层语义信息的同时恢复出部分丢失的细节信息，然后这个上采样的特征图与conv4_3特征图进行融合，利用1*1的卷积进行特征权重学习，最后将融合后的特征图进行激活得到conv4_r,既保留了conv4_3层的细节信息，又继承了conv5层的语义信息。特征更加丰富，适合用来检测和定位小目标。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/">&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/">&lt;i class=&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">&lt;i class=&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1832,7 +2082,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
