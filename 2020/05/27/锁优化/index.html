@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="斐波那契数列斐波那契数列的是这样一个数列：1、1、2、3、5、8、13、21、34….，即第一项 f(1) = 1,第二项 f(2) = 1…..,第 n 项目为 f(n) = f(n-1) + f(n-2)。求第 n 项的值是多少。 1234public int fib(int n)&amp;#123;&#x2F;&#x2F;定义函数fib(),设其功能为求第n项的值	if(n &amp;lt;= 2) return 1;&#x2F;&#x2F;斐波">
+<meta name="description" content="锁的粒度：变细，变粗。锁的细化：不在m1上直接加锁而是像m2那样在count++上加锁，即不需要锁的太多时，将锁细化。 12345678910111213141516171819202122232425262728293031323334353637383940package day02;import java.util.concurrent.TimeUnit;public class FineC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="递归">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;30&#x2F;%E9%80%92%E5%BD%92&#x2F;index.html">
+<meta property="og:title" content="锁优化">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;27&#x2F;%E9%94%81%E4%BC%98%E5%8C%96&#x2F;index.html">
 <meta property="og:site_name" content="莫一兮的个人博客">
-<meta property="og:description" content="斐波那契数列斐波那契数列的是这样一个数列：1、1、2、3、5、8、13、21、34….，即第一项 f(1) = 1,第二项 f(2) = 1…..,第 n 项目为 f(n) = f(n-1) + f(n-2)。求第 n 项的值是多少。 1234public int fib(int n)&amp;#123;&#x2F;&#x2F;定义函数fib(),设其功能为求第n项的值	if(n &amp;lt;= 2) return 1;&#x2F;&#x2F;斐波">
+<meta property="og:description" content="锁的粒度：变细，变粗。锁的细化：不在m1上直接加锁而是像m2那样在count++上加锁，即不需要锁的太多时，将锁细化。 12345678910111213141516171819202122232425262728293031323334353637383940package day02;import java.util.concurrent.TimeUnit;public class FineC">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-30T06:39:06.966Z">
+<meta property="og:updated_time" content="2020-05-27T07:40:29.548Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/30/递归/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/05/27/锁优化/"/>
 
 
 
 
 
-  <title>递归 | 莫一兮的个人博客</title>
+  <title>锁优化 | 莫一兮的个人博客</title>
   
 
 
@@ -240,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/30/%E9%80%92%E5%BD%92/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/27/%E9%94%81%E4%BC%98%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="莫一兮">
@@ -257,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">递归</h1>
+          <h1 class="post-title" itemprop="name headline">锁优化</h1>
         
 
         <div class="post-meta">
@@ -269,8 +269,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T14:02:17+08:00">
-                2020-04-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-27T12:06:35+08:00">
+                2020-05-27
               </time>
             
 
@@ -292,8 +292,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
-                    <span itemprop="name">数据结构与算法刷题</span>
+                  <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%8E%E9%AB%98%E5%B9%B6%E5%8F%91/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程与高并发</span>
                   </a>
                 </span>
 
@@ -329,13 +329,10 @@
       
 
       
-        <h2 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h2><p>斐波那契数列的是这样一个数列：1、1、2、3、5、8、13、21、34….，即第一项 f(1) = 1,第二项 f(2) = 1…..,第 n 项目为 f(n) = f(n-1) + f(n-2)。求第 n 项的值是多少。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">fib</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数fib(),设其功能为求第n项的值</span></span><br><span class="line">	<span class="keyword">if</span>(n &lt;= <span class="number">2</span>) <span class="keyword">return</span> <span class="number">1</span>;<span class="comment">//斐波那契问题的递归出口,f(1) = 1 ,f(2) = 1</span></span><br><span class="line">	<span class="keyword">return</span> fib(n-<span class="number">1</span>)+fib(n-<span class="number">2</span>)<span class="comment">//斐波那契问题的等价关系式</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="小青蛙跳台阶"><a href="#小青蛙跳台阶" class="headerlink" title="小青蛙跳台阶"></a>小青蛙跳台阶</h2><p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法。<br>跳上n级台阶的方法有两种，先跳1级，再跳n-1级，和先跳2级，再跳n-2级，这一点与斐波那契题类似，但需要注意递归出口不同。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ha</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;<span class="comment">//定义函数ha(),设其功能为n级台阶的跳法</span></span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">2</span>) <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> ha(n-<span class="number">1</span>)+ha(n-<span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="反转单链表"><a href="#反转单链表" class="headerlink" title="反转单链表"></a>反转单链表</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	Node next;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Node <span class="title">reverseList</span><span class="params">(Node head)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">return</span> head;<span class="comment">//递归出口，当节点为空，或只有一个节点时直接返回。</span></span><br><span class="line">	&#125;</span><br><span class="line">	Node reverseExceptHead =reverseList (head.next);<span class="comment">//定义一个除了首节点均逆置完毕的状态，首节点还正常指向它的下一个节点</span></span><br><span class="line">	Node node = head.next <span class="comment">//获得当前首节点的下一个节点，等待逆置</span></span><br><span class="line">	node.next = head;<span class="comment">//完成最后一步逆置</span></span><br><span class="line">	head.next = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">return</span> reverseExceptHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>锁的粒度：变细，变粗。<br>锁的细化：<br>不在m1上直接加锁而是像m2那样在count++上加锁，即不需要锁的太多时，将锁细化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> day02;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FineCoarseLock</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">	<span class="function"><span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">m1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		count++;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">m2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">			count++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			TimeUnit.SECONDS.sleep(<span class="number">2</span>);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当一个业务中有很多细锁，可以直接用一个粗锁。</p>
+<p>锁定某个对象o,若o的属性发生改变，不影响锁的使用，但是如果o变成另外一个对象，则锁定的对象发生改变，应该避免将锁定对象的应用变成另外的对象。</p>
 
       
     </div>
@@ -360,8 +357,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/30/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="next" title="动态规划">
-                <i class="fa fa-chevron-left"></i> 动态规划
+              <a href="/2020/05/26/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="next" title="多线程基础">
+                <i class="fa fa-chevron-left"></i> 多线程基础
               </a>
             
           </div>
@@ -370,8 +367,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/05/02/MySQL/" rel="prev" title="数据库基础">
-                数据库基础 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/05/27/CAS-%E6%97%A0%E9%94%81%E4%BC%98%E5%8C%96%E4%B9%90%E8%A7%82%E9%94%81/" rel="prev" title="CAS(无锁优化 乐观锁)">
+                CAS(无锁优化 乐观锁) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -424,17 +421,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -485,22 +473,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#斐波那契数列"><span class="nav-number">1.</span> <span class="nav-text">斐波那契数列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小青蛙跳台阶"><span class="nav-number">2.</span> <span class="nav-text">小青蛙跳台阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反转单链表"><span class="nav-number">3.</span> <span class="nav-text">反转单链表</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

@@ -238,6 +238,353 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/07/Scanner/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/07/Scanner/" itemprop="url">Scanner</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-07T14:35:36+08:00">
+                2020-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>线上笔试和leetcode刷题不同,有时需要自己写输入流,故做个简单记录。<br>导包：<br>import java.util.Scanner;<br>创建Scanner对象<br>Scanner s = new Scanner(System.in);</p>
+<p>获取输入的字符串有next()和nextLine()两种方法,hasNext()与hasNextLine()方法判断是否还有输入的数据,区别在于next()方法不会读取空格及空格后的字符，而nextLine()方法会读取到。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScannerDemo</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">		Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">		System.out.println(<span class="string">"next()方法的输入"</span>);</span><br><span class="line">		<span class="keyword">if</span>(sc.hasNext())&#123;</span><br><span class="line">			String str1 = sc.next();</span><br><span class="line">			System.out.println(<span class="string">"输入的数据为:"</span>+str1);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">next()方法的输入</span><br><span class="line">good morning</span><br><span class="line">输入的数据为:good</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScannerDemo</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span></span>&#123;</span><br><span class="line">		Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">		System.out.println(<span class="string">"nextLine()方法的输入"</span>);</span><br><span class="line">		<span class="keyword">if</span>(sc.hasNextLine())&#123;</span><br><span class="line">			String str2 = sc.nextLine();</span><br><span class="line">			System.out.println(<span class="string">"输入的数据为:"</span>+str2);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">nextLine()方法的输入</span><br><span class="line">good morning</span><br><span class="line">输入的数据为:good morning</span><br></pre></td></tr></table></figure>
+<p>获取int或float型数据使用 nextInt()和nextFloat(),使用方法与hasNext()一样。</p>
+<h2 id="尝试题目中可能会出现的不同类型输入"><a href="#尝试题目中可能会出现的不同类型输入" class="headerlink" title="尝试题目中可能会出现的不同类型输入"></a>尝试题目中可能会出现的不同类型输入</h2><p>输入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">1010</span></span><br></pre></td></tr></table></figure>
+<p>即在输入一个数字与输入一个字符串之间有回车此时有两种写法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Scanner scanner=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"><span class="keyword">int</span> k=scanner.nextInt();</span><br><span class="line">String s=scanner.next();</span><br><span class="line">System.out.println(k);</span><br><span class="line">System.out.println(s);</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Scanner scanner=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"><span class="keyword">int</span> k=scanner.nextInt();</span><br><span class="line">scanner.nextLine();</span><br><span class="line">String s=scanner.nextLine();</span><br><span class="line">System.out.println(k);</span><br><span class="line">System.out.println(s);</span><br></pre></td></tr></table></figure>
+<p>因为第二种方法的scanner.nextLine()会读取到两次输入之间的回车而提前结束输入，所以需要将其改为不接受回车的scanner.next()或在中间插入一个scanner.nextLine()读取那个回车</p>
+<p>输入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span> <span class="number">4</span></span><br><span class="line">ABCD</span><br><span class="line">ABCE</span><br><span class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">3</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>2代表字符串个数，4代表字符串中字符数和数字串数字个数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"><span class="keyword">int</span> num1 = scanner.nextInt();</span><br><span class="line"><span class="keyword">int</span> num2 = scanner.nextInt();</span><br><span class="line">String []string = <span class="keyword">new</span> String[num1];</span><br><span class="line"><span class="keyword">int</span> [] newint = <span class="keyword">new</span> <span class="keyword">int</span>[num2];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; num1 ; i++)&#123;</span><br><span class="line">		string[i] = scanner.next();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; num2 ; j++)&#123;</span><br><span class="line">		newint[j] = scanner.nextInt();</span><br><span class="line">&#125;</span><br><span class="line">	System.out.println(num1);</span><br><span class="line">	System.out.println(num2);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; num1 ; i++)&#123;</span><br><span class="line">		System.out.println(string[i]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; num2 ; j++)&#123;</span><br><span class="line">		System.out.println(newint[j]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输入</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">2</span> <span class="number">7</span> <span class="number">4</span> <span class="number">1</span> <span class="number">8</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>6代表下面字符串中的数字个数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line"><span class="keyword">int</span> num = scanner.nextInt();</span><br><span class="line"><span class="keyword">int</span> []nums = <span class="keyword">new</span> <span class="keyword">int</span> [num];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; num ; i++)&#123;</span><br><span class="line">	nums[i] = scanner.nextInt();</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(num);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; num ; i++)&#123;</span><br><span class="line">	System.out.print(nums[i]+<span class="string">' '</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E9%98%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9B%E9%98%B6/" itemprop="url">数据库进阶</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T17:57:29+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="管理事务处理"><a href="#管理事务处理" class="headerlink" title="管理事务处理"></a>管理事务处理</h2><p>事务处理（transaction processing）可以用来维护数据库的完整性，它保证成批的MySQL操作要么完全执行，要么完全不执行。<br>若实际使用过程中，由于某种数据库故障，使得两条语句之间发生了中断，则会发生错误，为解决这种问题，使用事务处理机制，用来管理必须成批执行的 MySQL操作以保证数据库不包含不完整的操作。它们会作为整体执行，或完全不执行。若没有错误发生整组语句提交给数据库表，若发生错误，则进行回退，以恢复数据库到某个已知且安全的状态。</p>
+<p><strong>事务（ transaction ）</strong>指一组SQL语句；<br><strong>回退（ rollback ）</strong>指撤销指定SQL语句的过程；<br><strong>提交（ commit ）</strong>指将未存储的SQL语句结果写入数据库表；<br><strong>保留点（ savepoint ）</strong>指事务处理中设置的临时占位符（place-holder），你可以对它发布回退（与回退整个事务处理不同）。</p>
+<p><strong>事务开始</strong><br>START TRANSACTION</p>
+<p><strong>ROLLBACK回退</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM ordertotals;</span><br><span class="line">START TRANSACTION;</span><br><span class="line">DELETE FROM ordertotals;</span><br><span class="line">SELECT * FROM ordertotals;</span><br><span class="line">ROLLBACK;</span><br><span class="line">SELECT * FROM ordertotals;</span><br></pre></td></tr></table></figure>
+<p>上例先显示ordertotals表，再开始事务处理，用DELETE语句删除 ordertotals 中的所有行。再用SELECT语句验证ordertotals确实为空。此时用ROLLBACK语句回退START TRANSACTION之后的所有语句。最后一条SELECT显示ordertotals不为空。<br><em>ROLLBACK 只能在一个事务处理内使用（在执行一条 START TRANSACTION 命令之后）。</em></p>
+<p><strong>COMMIT提交</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">START TRANSACTION;</span><br><span class="line">DELETE FROM orderitems WHERE order_num = 20010;</span><br><span class="line">DELETE FROM orders WHERE order_num = 20010;</span><br><span class="line">COMMIT;</span><br></pre></td></tr></table></figure>
+<p>以上，从orders表和orderitems表中删除order_num = 20010 的内容，涉及到两个数据库表，要使用事务处理保证数据不被部分删除，仅在两条DELETE都执行成功时，COMMIT语句才执行以更改数据库，若第二条DELETE执行失败，则第一条DELETE被自动撤销。</p>
+<p><strong>使用保留点SAVEPOINT</strong><br>对于复杂事物，可能需要部分提交或回退，使用保留点来告诉MySQL要回退到何处，保留点命名需唯一</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SAVEPOINT delete1;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROLLBACK TO delete1;</span><br></pre></td></tr></table></figure>
+<p><strong>更改默认的提交行为</strong><br>默认的MySQL行为是自动提交所有更改。换句话说，任何时候你执行一条MySQL语句，该语句实际上都是针对表执行的，而且所做的更改立即生效。为指示 MySQL不自动提交更改，需要使用以下语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET autocommit = 0;</span><br></pre></td></tr></table></figure>
+<p>autocommit针对每个连接而不是服务器。</p>
+<h2 id="全球化和本地化"><a href="#全球化和本地化" class="headerlink" title="全球化和本地化"></a>全球化和本地化</h2><p>MySQL支持众多的字符集。为查看所支持的字符集完整列表，使用以下语句显示所有可用的字符集以及每个字符集的描述和默认校对。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW CHARACTER SET;</span><br></pre></td></tr></table></figure>
+<p>为了查看所支持校对的完整列表，使用以下语句显示所有可用的校对，以及它们适用的字符集。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW COLLATION;</span><br></pre></td></tr></table></figure>
+<p>为确定所用的字符集和校对，可以使用以下语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &apos;character%&apos;;</span><br><span class="line">SHOW VARIABLES LIKE &apos;collation%&apos;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="安全管理"><a href="#安全管理" class="headerlink" title="安全管理"></a>安全管理</h2><p><strong>访问控制</strong><br>(1)多数用户只需要对表进行读和写，但少数用户甚至需要能创建和删除表；<br>(2)某些用户需要读表，但可能不需要更新表；<br>(3)你可能想允许用户添加数据，但不允许他们删除数据；<br>(4)某些用户（管理员）可能需要处理用户账号的权限，但多数用户不需要；<br>(5)你可能想让用户通过存储过程访问数据，但不允许他们直接访问数据；<br>(6)你可能想根据用户登录的地点限制对某些功能的访问。</p>
+<p><strong>创建用户账号</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER ben IDENTIFIED BY &apos;p@$$w0rd&apos;;</span><br></pre></td></tr></table></figure>
+<p><strong>账号重命名</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RENAME USER ben TO bforta;</span><br></pre></td></tr></table></figure>
+<p><strong>删除账号</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER bforta;</span><br></pre></td></tr></table></figure>
+<p><strong>设置访问权限</strong><br>新创建的用户账号没有任何访问权限，需要对其进行设置。<br>查看用户账号访问权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW GRANTS FOR ben;</span><br></pre></td></tr></table></figure>
+<p>上述语句输出<br>+———————————+<br>| Grants for ben@%                |<br>+———————————+<br>| GRANT USAGE ON <em>.</em> TO <code>ben</code>@<code>%</code> |<br>+———————————+<br>代表其在任何数据库上没有任何权限</p>
+<p>给账号ben赋予在数据库crashcourse上的select权限，即只读访问权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT ON crashcourse.* TO ben;</span><br></pre></td></tr></table></figure>
+<p>使用 REVOKE 撤销特定的权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE SELECT ON crashcourse.* FROM ben;</span><br></pre></td></tr></table></figure>
+<p><strong>更改口令</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD FOR ben =  Password(&apos;n3w p@$$w0rd&apos;);</span><br></pre></td></tr></table></figure>
+<h2 id="数据库维护"><a href="#数据库维护" class="headerlink" title="数据库维护"></a>数据库维护</h2><p><strong>备份数据</strong><br>(1)使用命令行实用程序 mysqldump 转储所有数据库内容到某个外部文件。在进行常规备份前这个实用程序应该正常运行，以便能正确地备份转储文件。<br>(2)可用命令行实用程序 mysqlhotcopy 从一个数据库复制所有数据（并非所有数据库引擎都支持这个实用程序）。<br>(3)可以使用MySQL的 BACKUP TABLE 或 SELECT INTO OUTFILE 转储所有数据到某个外部文件。这两条语句都接受将要创建的系统文件名，此系统文件必须不存在，否则会出错。数据可以用 RESTORETABLE 来复原。</p>
+<p>ANALYZE TABLE ，用来检查表键是否正确。<br>CHECK TABLE 用来针对许多问题对表进行检查。</p>
+<h2 id="改善性能"><a href="#改善性能" class="headerlink" title="改善性能"></a>改善性能</h2><p>(1)    MySQL是用一系列的默认设置预先配置的，从这些设置开始通常是很好的。但过一段时间后你可能需要调整内存分配、缓冲区大小等。（为查看当前设置，可使用 SHOW VARIABLES; 和 SHOW STATUS; 。）<br>(2)    MySQL一个多用户多线程的DBMS，换言之，它经常同时执行多个任务。如果这些任务中的某一个执行缓慢，则所有请求都会执行缓慢。如果你遇到显著的性能不良，可使用 SHOW PROCESSLIST 显示所有活动进程（以及它们的线程ID和执行时间）。你还可以用KILL 命令终结某个特定的进程（使用这个命令需要作为管理员登录）。<br>(3)    总是有不止一种方法编写同一条 SELECT 语句。应该试验联结、并、子查询等，找出最佳的方法。<br>(4)    使用 EXPLAIN 语句让MySQL解释它将如何执行一条 SELECT 语句。<br>(5)    一般来说，存储过程执行得比一条一条地执行其中的各条MySQL语句快。<br>(6) 应该总是使用正确的数据类型。<br>(7)决不要检索比需求还要多的数据。换言之，不要用 SELECT * （除非你真正需要每个列）。<br>(8)有的操作（包括 INSERT ）支持一个可选的 DELAYED 关键字，如果使用它，将把控制立即返回给调用程序，并且一旦有可能就实际执行该操作。<br>(9)在导入数据时，应该关闭自动提交。你可能还想删除索引（包括FULLTEXT 索引），然后在导入完成后再重建它们。<br>(10)必须索引数据库表以改善数据检索的性能。确定索引什么不是一 件微不足道的任务，需要分析使用的 SELECT 语句以找出重复的 WHERE 和 ORDER BY 子句。如果一个简单的 WHERE 子句返回结果所花 的时间太长，则可以断定其中使用的列（或几个列）就是需要索 引的对象。<br>(11)使用多条SELECT 语句和连接它们的 UNION 语句而不是一系列复杂的 OR 条件<br>(12)索引改善数据检索的性能，但损害数据插入、删除和更新的性能。 如果你有一些表，它们收集数据且不经常被搜索，则在有必要之 前不要索引它们。（索引可根据需要添加和删除。）<br>(13) LIKE 很慢。一般来说，最好是使用 FULLTEXT 而不是 LIKE 。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/06/%E6%B8%B8%E6%A0%87%E5%92%8C%E8%A7%A6%E5%8F%91%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1594,621 +1941,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/03/%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0/" itemprop="url">使用数据处理函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T16:48:52+08:00">
-                2020-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="文本处理函数"><a href="#文本处理函数" class="headerlink" title="文本处理函数"></a>文本处理函数</h2><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Trim()</td>
-<td align="left">去掉串左右的空格</td>
-</tr>
-<tr>
-<td align="left">Upper()</td>
-<td align="left">将串转换为大写</td>
-</tr>
-<tr>
-<td align="left">Lower()</td>
-<td align="left">将串转换为小写</td>
-</tr>
-<tr>
-<td align="left">Left()</td>
-<td align="left">返回串左边的字符</td>
-</tr>
-<tr>
-<td align="left">Right()</td>
-<td align="left">返回串右边的字符</td>
-</tr>
-<tr>
-<td align="left">Length()</td>
-<td align="left">返回串的长度</td>
-</tr>
-<tr>
-<td align="left">Locate()</td>
-<td align="left">找出串的一个子串</td>
-</tr>
-<tr>
-<td align="left">SubString()</td>
-<td align="left">返回子串的字符</td>
-</tr>
-<tr>
-<td align="left">Soundex()</td>
-<td align="left">返回串的SOUNDEX值</td>
-</tr>
-</tbody></table>
-<p>SubString(str,pos):SubString(被截取字段，从第几位开始截取)<br>SubString(str,pos,length):SubString(被截取字段，从第几位开始截取，截取长度)<br><em>若pos为负数，则是从后往前截取</em></p>
-<p><em>SOUNDEX 是一个将任何文本串转换为描述其语音表示的字母数字模式的算法。SOUNDEX考虑了类似的发音字符和音节，使得能对串进行发音比较而不是字母比较。虽然SOUNDEX 不是SQL概念，但MySQL（就像多数DBMS一样）都提供对SOUNDEX 的支持</em></p>
-<h2 id="日期和时间处理函数"><a href="#日期和时间处理函数" class="headerlink" title="日期和时间处理函数"></a>日期和时间处理函数</h2><p><strong>日期必须为格式yyyy-mm-dd</strong></p>
-<table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">AddDate()</td>
-<td align="left">增加一个日期（天、周等）</td>
-</tr>
-<tr>
-<td align="left">AddTime()</td>
-<td align="left">增加一个时间（时、分等）</td>
-</tr>
-<tr>
-<td align="left">CurDate()</td>
-<td align="left">返回当前日期</td>
-</tr>
-<tr>
-<td align="left">CurTime()</td>
-<td align="left">返回当前时间</td>
-</tr>
-<tr>
-<td align="left">Date()</td>
-<td align="left">返回日期时间的日期部分</td>
-</tr>
-<tr>
-<td align="left">DateDiff()</td>
-<td align="left">计算两个日期之差</td>
-</tr>
-<tr>
-<td align="left">Date_Add()</td>
-<td align="left">高度灵活的日期运算函数</td>
-</tr>
-<tr>
-<td align="left">Date_Format()</td>
-<td align="left">返回一个格式化的日期或时间串</td>
-</tr>
-<tr>
-<td align="left">Day()</td>
-<td align="left">返回一个日期的天数部分</td>
-</tr>
-<tr>
-<td align="left">DayOfWeek()</td>
-<td align="left">对于一个日期，返回对应的星期几</td>
-</tr>
-<tr>
-<td align="left">Hour()</td>
-<td align="left">返回一个时间的小时部分</td>
-</tr>
-<tr>
-<td align="left">Minute()</td>
-<td align="left">返回一个时间的分钟部分</td>
-</tr>
-<tr>
-<td align="left">Month()</td>
-<td align="left">返回一个日期的月份部分</td>
-</tr>
-<tr>
-<td align="left">Now()</td>
-<td align="left">返回当前日期和时间</td>
-</tr>
-<tr>
-<td align="left">Second()</td>
-<td align="left">返回一个时间的秒部分</td>
-</tr>
-<tr>
-<td align="left">Time()</td>
-<td align="left">返回一个日期时间的时间部分</td>
-</tr>
-<tr>
-<td align="left">Year()</td>
-<td align="left">返回一个日期的年份部分</td>
-</tr>
-</tbody></table>
-<p>使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_date = &apos;2005-09-01&apos;;</span><br></pre></td></tr></table></figure>
-<p>进行匹配时，若order_data列包含时间 例如 2005-09-01 11:30:05则会匹配失败。<br>所以要使用 Data()提取列的日期部分即写法如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Data(order_date) = &apos;2005-09-01&apos;;</span><br></pre></td></tr></table></figure>
-
-<p>要检索某个日期段之间的内容可使用 BETWEEN 也可使用 WHERE 对Year() Month()加以约束。<br>两种写法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Date(order_date) BETWEEN &apos;2005-09-01&apos; AND &apos;2005-09-30&apos;;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num</span><br><span class="line">FROM orders</span><br><span class="line">WHERE Year(order_date) = 2005 AND Month(order_date) = 9;</span><br></pre></td></tr></table></figure>
-
-<h2 id="数值处理函数"><a href="#数值处理函数" class="headerlink" title="数值处理函数"></a>数值处理函数</h2><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Abs()</td>
-<td align="left">返回一个数的绝对值</td>
-</tr>
-<tr>
-<td align="left">Cos()</td>
-<td align="left">返回一个角度的余弦</td>
-</tr>
-<tr>
-<td align="left">Exp()</td>
-<td align="left">返回一个数的指数值</td>
-</tr>
-<tr>
-<td align="left">Mod()</td>
-<td align="left">返回除操作的余数</td>
-</tr>
-<tr>
-<td align="left">Pi()</td>
-<td align="left">返回圆周率</td>
-</tr>
-<tr>
-<td align="left">Rand()</td>
-<td align="left">返回一个随机数</td>
-</tr>
-<tr>
-<td align="left">Sin()</td>
-<td align="left">返回一个角度的正弦</td>
-</tr>
-<tr>
-<td align="left">Sqrt()</td>
-<td align="left">返回一个数的平方根</td>
-</tr>
-<tr>
-<td align="left">Tan()</td>
-<td align="left">返回一个角度的正切</td>
-</tr>
-</tbody></table>
-<h2 id="聚集函数"><a href="#聚集函数" class="headerlink" title="聚集函数"></a>聚集函数</h2><table>
-<thead>
-<tr>
-<th align="left">函数</th>
-<th align="left">说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">AVG()</td>
-<td align="left">返回某列的平均值</td>
-</tr>
-<tr>
-<td align="left">COUNT()</td>
-<td align="left">返回某列的行数</td>
-</tr>
-<tr>
-<td align="left">MAX()</td>
-<td align="left">返回某列的最大值</td>
-</tr>
-<tr>
-<td align="left">MIN()</td>
-<td align="left">返回某列的最小值</td>
-</tr>
-<tr>
-<td align="left">SUM()</td>
-<td align="left">返回某列值之和</td>
-</tr>
-</tbody></table>
-<h2 id="创建分组"><a href="#创建分组" class="headerlink" title="创建分组"></a>创建分组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = 1003;</span><br></pre></td></tr></table></figure>
-<p>上述语句计算vend_id = 1003的产品数，若要搜索出所有vend_id的产品数可以使用GROUP BY子句创建分组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_id , COUNT(*) AS num_prods</span><br><span class="line">FROM products</span><br><span class="line">GROUP BY vend_id;</span><br></pre></td></tr></table></figure>
-<p>按vend_id排序并分组数据，对每个vend_id计算num_prods一次</p>
-<p><em>GROUP BY 子句可以包含任意数目的列。这使得能对分组进行嵌套，为数据分组提供更细致的控制。<br>如果在 GROUP BY 子句中嵌套了分组，数据将在最后规定的分组上进行汇总。换句话说，在建立分组时，指定的所有列都一起计算（所以不能从个别的列取回数据）。<br>GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在 SELECT 中使用表达式，则必须在GROUP BY 子句中指定相同的表达式。不能使用别名。<br>除聚集计算语句外， SELECT 语句中的每个列都必须在 GROUP BY 子句中给出。<br>如果分组列中具有 NULL 值，则 NULL 将作为一个分组返回。如果列中有多行 NULL 值，它们将分为一组。<br>GROUP BY 子句必须出现在 WHERE 子句之后， ORDER BY 子句之前。</em></p>
-<p><strong>HAVING 子句过滤分组</strong><br>非常类似于WHERE,但此时WHERE不起作用，因为WHERE过滤指的是行而不是分组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id, COUNT(*) AS orders </span><br><span class="line">FROM orders</span><br><span class="line">GROUP BY cust_id</span><br><span class="line">HAVING COUNT(*) &gt;=2;</span><br></pre></td></tr></table></figure>
-
-<h2 id="SELECT子句顺序"><a href="#SELECT子句顺序" class="headerlink" title="SELECT子句顺序"></a>SELECT子句顺序</h2><table>
-<thead>
-<tr>
-<th align="left">子句</th>
-<th align="left">说明</th>
-<th align="left">是否必须使用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">SELECT</td>
-<td align="left">要返回的列或表达式</td>
-<td align="left">是</td>
-</tr>
-<tr>
-<td align="left">FROM</td>
-<td align="left">从中检索数据的表</td>
-<td align="left">仅在从表选择数据时使用</td>
-</tr>
-<tr>
-<td align="left">WHERE</td>
-<td align="left">行级过滤</td>
-<td align="left">否</td>
-</tr>
-<tr>
-<td align="left">GROUP BY</td>
-<td align="left">分组说明</td>
-<td align="left">仅在按组计算聚集时使用</td>
-</tr>
-<tr>
-<td align="left">HAVING</td>
-<td align="left">组级过滤</td>
-<td align="left">否</td>
-</tr>
-<tr>
-<td align="left">ORDER BY</td>
-<td align="left">输出排序顺序</td>
-<td align="left">否</td>
-</tr>
-<tr>
-<td align="left">LIMIT</td>
-<td align="left">要检索的行数</td>
-<td align="left">否</td>
-</tr>
-</tbody></table>
-<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p>子查询：嵌套在其他查询中的查询</p>
-<p>例如：要列出订购物品 TNT2 的所有客户</p>
-<p>(1) 检索包含物品 TNT2 的所有订单的编号。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT order_name </span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE prod_id = &apos;TNT2&apos;;</span><br></pre></td></tr></table></figure>
-<p>结果：<br>order_num<br>20005<br>20007<br>(2) 检索具有前一步骤列出的订单编号的所有客户的ID。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_num in (20005,20007);</span><br></pre></td></tr></table></figure>
-<p>结果：<br>cust_id<br>10001<br>10004</p>
-<p>(3) 检索前一步骤返回的所有客户ID的客户信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(10001,10004);</span><br></pre></td></tr></table></figure>
-<p>使用子查询嵌套：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_name, cust_contact</span><br><span class="line">FROM customers</span><br><span class="line">WHERE cust_id IN(SELECT cust_id</span><br><span class="line">				FROM orders</span><br><span class="line">				WHERE order_num IN (SELECT order_name </span><br><span class="line">									FROM orderitems</span><br><span class="line">									WHERE prod_id = &apos;TNT2&apos;));</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/03/%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/03/%E5%88%9B%E5%BB%BA%E8%AE%A1%E7%AE%97%E5%AD%97%E6%AE%B5/" itemprop="url">创建计算字段</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-03T16:21:02+08:00">
-                2020-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>存储在数据库表中的数据一般不是应用程序所需要的格式。下面举几个例子。</p>
-<p>1、如果想在一个字段中既显示公司名，又显示公司的地址，但这两个信息一般包含在不同的表列中。<br>2、城市、州和邮政编码存储在不同的列中（应该这样），但邮件标签打印程序却需要把它们作为一个恰当格式的字段检索出来。<br>3、列数据是大小写混合的，但报表程序需要把所有数据按大写表示出来。<br>4、物品订单表存储物品的价格和数量，但不需要存储每个物品的总价格（用价格乘以数量即可）。为打印发票，需要物品的总价格。<br>5、需要根据表数据进行总数、平均数计算或其他计算</p>
-<p>在上述每个例子中，存储在表中的数据都不是应用程序所需要的。我们需要直接从数据库中检索出转换、计算或格式化过的数据；而不是检索出数据，然后再在客户机应用程序或报告程序中重新格式化。计算字段并不实际存在于数据库表中。计算字段是运行时在 SELECT 语句内创建的。</p>
-<p><strong>Concat</strong><br>使用Concat()对列进行拼接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(vend_name,&apos;(&apos;,vend_country,&apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
-<p><em>concat函数在连接字符串的时候，只要其中一个是NULL,那么将返回NULL</em></p>
-<p>Concat_ws() : concat with separator 以分隔符添加<br>Concat_ws(separator , str1,str2,…);</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat_ws(&apos;,&apos;,&apos;11&apos;,&apos;22&apos;,&apos;33&apos;);</span><br><span class="line"></span><br><span class="line">结果：</span><br><span class="line">11,22,33</span><br></pre></td></tr></table></figure>
-<p><em>分隔符可以是一个字符也可以是其他参数若分隔符为NULL，则结果为NULL</em></p>
-<p>group_concat(): 以排序字段分组，把要连接的字段分在一行，<br>group_concat([DISTINCT] 要连接的字段 [Order BY ASC/DESC 排序字段] [Separator ‘分隔符’])</p>
-<p>repeat()函数：重复<br>select repeat(‘ab’,2);<br>将ab重复2次</p>
-<p>SubString_index(str,delim,count)<br>SubString_index(被截取字段,关键字,关键字出现的字数)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT substring_index(&quot;a.b.c.d.e.f.g.h&quot;,&quot;.&quot;,3);</span><br><span class="line">结果：</span><br><span class="line">a.b.c</span><br></pre></td></tr></table></figure>
-
-
-<p><strong>RTrim</strong><br>使用RTrim()函数去掉值右边的所有空格，类似的LTrim()去掉值左边的所有空格、Trim()去掉串两边的所有空格。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;)</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
-<p><strong>别名</strong><br>在使用Concat()函数对列进行拼接之后，搜索结果的列名即为SELECT 后的内容,可使用 AS关键字赋予它一个别名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT Concat(RTrim(vend_name),&apos;(&apos;,RTrim(vend_country),&apos;)&apos;) AS vend_title</span><br><span class="line">FROM vendors</span><br><span class="line">ORDYER BY vend_name;</span><br></pre></td></tr></table></figure>
-
-<p><strong>执行算数计算</strong><br>可使用的算术操作符 ‘+’ ‘-‘ ‘ * ‘ ‘/‘ 加减乘除</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,quantity,item_price</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
-<p>使用以下语句</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT 	prod_id,</span><br><span class="line">		quantity,</span><br><span class="line">		item_price.</span><br><span class="line">		quantity*item_price AS expanded_price</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num = 20005;</span><br></pre></td></tr></table></figure>
-<p>创建了一个名为expanded_price结果为quantity * item_price的计算字段</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2259,7 +1991,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

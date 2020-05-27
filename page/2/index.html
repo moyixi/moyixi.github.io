@@ -238,6 +238,547 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/21/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/21/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95/" itemprop="url">模板方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-21T13:25:00+08:00">
+                2020-05-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p> 组件协作类模式<br> Template Method 模板方法<br>             ：某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，<br>                 或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现<br>                 如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求<br> <strong>定义一个操作中的算法的骨架(稳定)，而将一些步骤延迟(变化)到子类中，Template Method使得子类可以复用一个算法的结构，</strong><br> <strong>同时可以重定义(Override重写)该算法的某些特定步骤。</strong><br> 重复代码全部在父类里面，不同业务的，通过抽象方法给子类实现，即在父类中实现骨架，子类中具体实现。<br>Template Method 之前都是App来调用 Lib 早绑定<br>实现之后就是 Lib调用App 晚绑定<br> 两种写法应用程序流程对比：<br> 【Lib】<br> 【App】<br> 【Lib】<br> 【App】<br> 【Lib】<br>结构化软件设计流程<br>Lib开发人员： 开发 1、3、5<br>App开发人员： 开发 2、4 和程序主流程</p>
+<p>面向对象设计流程<br>Lib开发人员： 开发 1、3、5和程序主流程<br>App开发人员： 开发 2、4 </p>
+<p>普通的开发模式如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Ordinary</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Library lib = <span class="keyword">new</span> Library();</span><br><span class="line"></span><br><span class="line">		Application app = <span class="keyword">new</span> Application();</span><br><span class="line">		<span class="comment">//在主函数中将步骤按某种顺序串联。流程中需要用到程序库开发人员同时也需要用到应用程序开发人员。</span></span><br><span class="line">		lib.step1();</span><br><span class="line">		<span class="keyword">if</span>(app.step2()==<span class="keyword">true</span>) &#123;</span><br><span class="line">			lib.step3();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">4</span> ; i++) &#123;</span><br><span class="line">			app.step4();</span><br><span class="line">		&#125;</span><br><span class="line">		lib.step5();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Library</span></span>&#123;</span><br><span class="line">		<span class="comment">//程序库开发人员有完成某一项任务的1、3、5步骤</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step1</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step1"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step3</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step3"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step5</span><span class="params">()</span></span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step5"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span></span>&#123;</span><br><span class="line">		<span class="comment">//应用程序开发人员有某项任务的2、4步骤</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">step2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			System.out.println(<span class="string">"Ordinary step4"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>模板方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateMethodLib</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">//稳定 template method</span></span><br><span class="line">		<span class="comment">//前提：run 必须稳定，当做骨架可被重用</span></span><br><span class="line">		step1();</span><br><span class="line">		<span class="keyword">if</span>(step2()) &#123;<span class="comment">//支持变化</span></span><br><span class="line">			step3();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">4</span> ; i++) &#123;</span><br><span class="line">			step4();<span class="comment">//支持变化</span></span><br><span class="line">		&#125;</span><br><span class="line">		step5();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">step1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Lib step1"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">step3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Lib step3"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">step5</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Lib step5"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">abstract</span> <span class="keyword">boolean</span> <span class="title">step2</span><span class="params">()</span> </span>;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">step4</span><span class="params">()</span></span>;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>应用程序开发人员继承Lib类，并重写step2、step4方法，Lib中的run方法是稳定的，step2、step4是变化的，可以修改的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateMethodApp</span> <span class="keyword">extends</span> <span class="title">TemplateMethodLib</span></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">step2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">step4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"App step4"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		TemplateMethodLib tml = <span class="keyword">new</span> TemplateMethodApp();</span><br><span class="line">		tml.run();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/20/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%BB%8B%E7%BB%8D/" itemprop="url">设计模式介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-20T18:31:35+08:00">
+                2020-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p> 编译时依赖：编译时需要你存在我才能编译通过<br> 什么是设计模式：<br> 每一个模式描述了一个在我们周围不断重复发生的问题，以及该问题的解决方案的核心，这样就能一次又一次地使用该方案而不必做重复劳动<br> 可复用是设计模式的目标。<br> 面向对象是手法<br> 向下：深入理解三大面向对象机制<br> 封装、隐藏内部实现<br> 继承、复用现有代码<br> 多态、改写对象行为<br> 如何解决复杂性：<br> 分解：面对复杂些的常见做法：分而治之，但不好复用<br> 抽象：忽视非本质细节，而去处理泛化和理想化了的对象模型</p>
+<p> 面向对象设计原则:<br> 变化是复用的天敌，面向对象设计最大的优势在于抵御变化。</p>
+<p> 重新认识面向对象：<br> 理解隔离变化：</p>
+<p> 从宏观层面来看，面向对象的够安静方式更能适应软件的变化，能将变化所带来的影响减为最小</p>
+<p> 各司其职：<br> 从微观层面来看，面向对象的方式更强调各个类的责任，由于需求变化导致的新增类型不应该影响原来类型的实现—是所谓各负其责</p>
+<p> 对象是什么：<br> 从语言实现层面来看，对象封装了代码和数据。<br> 从规格层面讲，对象是一系列可被使用的公共接口<br> 从概念层面讲，对象是某种拥有责任的抽象。</p>
+<p> 面向对象设计原则<br> 1、依赖倒置原则(DIP)<br> 高层模块(稳定)不应该依赖于低层模块(变化),二者都应该依赖于抽象(稳定)</p>
+<p> 抽象(稳定)不应该依赖于实现细节(变化)，实现细节应该依赖于抽象(稳定)</p>
+<p> 2、开放封闭原则(OCP)<br> 对扩展开放，对更改封闭<br> 类模块应该是可扩展的，但是不可修改</p>
+<p> 3、单一职责原则(SRP)<br> 一个类应该仅有一个引起它变化的原因<br> 变化的方向隐含着类的责任</p>
+<p> 4、Liskov[音：丽斯科夫]替换原则(LSP)<br> 子类必须能够替换它们的基类(IS-A)<br> 继承表达类型抽象</p>
+<p> 5、接口隔离原则(ISP)<br> 不应该强迫客户程序依赖它们不用的方法<br> 接口应该小而完备(不要把不必要的方法 public出去)</p>
+<p> 6、优先使用对象组合，而不是类继承<br> 类继承通常为“白箱复用”，对象组合通常为“黑箱复用”。<br> 继承在某种程度上破坏了封装性，子类父类耦合度高。<br> 而对象组合只要求被组合的对象具有良好定义的接口，耦合度低。</p>
+<p> 7、封装变化点<br> 使用封装来创建对象之间的分界层，让设计者可以在分界层的一侧进行修改<br> 而不会对另一侧产生不良的影响，从而实现层次间的松耦合</p>
+<p> 8、针对接口编程，而不是针对实现编程<br> 不将变量类型声明为某个特定的具体类，而是声明为某个接口<br> 客户程序无需获知对象的具体类型，只需要知道对象所具有的接口<br> 减少系统中各部分的依赖关系，从而实现高内聚、松耦合的类型设计方案。</p>
+<p>面向接口编程，接口标准化是产业强盛的标志<br>    GOF-23模式分类<br>    从目的来看：<br>    创建型模式<br>        解决对象创建的工作<br>    结构型模式<br>        应对需求变化为对象的结构带来的冲击<br>    行为型模式<br>        多个类之间交互过程中责任划分的问题<br>    从范围来看：<br>    类模式：<br>    类模式倾向类和子类的静态关系，偏重继承方案</p>
+<pre><code>对象模式：
+对象模式处理对象间的动态关系，偏重组合方案
+
+设计模式的要点是：寻找变化点，在变化点处应用设计模式
+重构关键技法：
+静态-&gt;动态
+早绑定-&gt;晚绑定
+继承-&gt;组合
+编译时依赖-&gt;运行时依赖
+紧耦合-&gt;松耦合
+
+从封装变化角度对模式分类
+组件协作：
+    通过晚期绑定来实现框架与应用之间的松耦合
+    典型模式：
+        Template Method 模板方法
+                某一项任务有整体的操作骨架，但各个子步骤有很多改变的需求，
+                或者由于固有的原因(比如框架和应用之间的关系)，而无法和任务的整体结构同时实现
+                如何在确定稳定操作结构的前提下，来灵活应对各个子步骤的变化或晚期实现需求
+
+        Strategy        策略模式
+            动机：
+            软件构建过程中，某些对象使用的算法可能多种多样，经常改变，如果将这些算法都编码到对象中
+            将会使对象变得异常复杂，而且有时候支持不使用的算法也是一个性能负担
+            如何在运行时根据需要透明地更改对象的算法？将算法与对象本身解耦，从而避免上述问题？
+            定义一系列算法，把它们一个个封装起来，并且使他们可以互相替换(变化)。
+            该模式是的算法可独立于使用它的客户程序(稳定)而变化(扩展，子类化)
+        Observer/Event    观察者模式/事件模式
+单一职责：
+    在软件组件的设计中，如果责任划分的不清晰，使用继承得到的，结果往往是随着需求的变化，子类急剧膨胀，同时充斥着重复代码
+    这时候的关键是划清责任
+    典型模式：
+            Decorator 装饰器模式
+            主体操作和扩展操作分开分支继承
+            动机：
+                 某些情况下可能会过度的使用继承来扩展对象的功能，由于继承为类型引入的静态特质，使得这种扩展方式缺乏灵活性，并且随着子类的增多
+                 (扩展功能的增多)各种子类的组合(扩展功能的组合)会导致更多子类的膨胀
+             动态地给一个对象增加一些额外的职责，就增加功能而言，Decorator模式比生成子类(继承)更为灵活(消除重复代码&amp;减少子类个数)
+            通过采用组合而非继承的手法，Decorator模式实现了在运行时动态扩展对象功能的能力，而且可以根据需要扩展多个功能
+            避免了使用继承带来的“灵活性差”和“多子类衍生问题”。
+            Decorator类在接口上表现为 is-a Component的继承关系，即Decorator类继承了Component类所具有的接口。但在实现上又表现为
+            has-a Component的组合关系，即Decorator类又使用了另外一个Component类。
+            Decorator 模式的目的并非解决“多子类衍生的多继承”问题，Decorator模式应用的要点在于解决“主体类在多个方向上的扩展功能”---是为装饰的含义
+
+            Bridge 桥模式
+                将抽象部分(业务功能)与实现部分(平台实现)分离，使他们都可以独立地变化。
+
+                Bridge模式使用“对象间的组合关系”解耦了抽象和实现之间固有的绑定关系，使得抽象和实现可以沿着各自的维度来变化。所谓抽象和实现沿着
+                各自维度的变化，即&quot;子类化&quot;它们
+
+                Bridge模式有时候类似于多继承方案，但是多继承方案往往违背单一职责原则(即一个类只有一个变化的原因)，复用性比较差。
+                Bridge模式时比多继承方案更好的解决方法。
+
+                Bridge模式的应用一般在“两个非常强的变化维度”，有时一个类也有多于两个的变化维度，这时可以使用Bridge的扩展模式。
+                有时候一个类有多个变化维度，此时可以把某一个聚合的变化维度合在一起，打包成一个基类，用一个抽象指针指向它。有n个变化维度，就打包n个基类，用n个抽象指针指向它。
+
+
+对象创建：
+    通过“对象创建”模式绕开new，来避免对象创建(new)过程中所导致的紧耦合(依赖具体类)，从而支持对象创建的稳定，他是接口抽象之后的第一步工作。
+            Factory Method:工厂方法模式
+                    在软件系统中经常面临着创建对象的工作；由于需求的变化，需要创建的对象的具体类型经常变化。
+                    定义一个用于创建对象的接口，让子类决定实例化哪一个类，Factory Method 使得一个类的实例化延迟(目的：解耦，手段：虚函数)到子类
+                    Factory Method模式用于隔离类对象的使用者和具体类型之间的耦合关系，面对一个经常变化的具体类型，紧耦合关系(new)会导致软件的脆弱
+                    Factory Method模式通过面向对象的手法（多态），将所要创建的具体对象工作延迟到子类，从而实现一种扩展(而非更改)的策略，较好地解决了这种紧耦合关系
+                    Factory Method模式解决“单个对象”的需求变化。缺点在于要求创建方法/参数相同
+
+            Abstract Factory:抽象工厂模式，和工厂方法模式是同一类模式
+                    动机：软件系统中，经常面临着“一系列相互依赖的对象”的创建工作，同时由于需求的变化，往往存在更多系列对象的创建工作
+                    提供一个接口，让该接口负责创建一系列“相关或者相互依赖的对象”，无需指定他们具体的类。
+                    如果没有应对“多系列对象构建”的需求变化，则没有必要使用Abstract Factory模式，这时候使用简单的工厂完全可以
+                    系列对象指的是在某一特定系列下的对象之间有相互依赖，或作用的关系，不同系列的对象之间不能相互依赖
+                    Abstract Factory模式主要在于应对“新系列”的需求变动，其缺点在于难以应对“新对象”的需求变动
+                        即加新系列很简单，但加新对象比较麻烦
+            Prototype ：原型模式
+                    动机：软件系统装，经常面临着“某些结构复杂的对象”的创建工作，由于需求的变化，这些对象经常面临着剧烈的变化，但他们拥有比较稳定一致的接口
+                    Prototype模式同样用于隔离类对象的使用者和具体类型(易变类)之间的耦合关系，它同样要求这些易变类拥有稳定的接口
+                    Prototype模式对于“如何创建易变类的实体对象”采用“原型克隆”的方法来做，它使得我们可以非常灵活地动态创建“拥有某些稳定接口”的新对象
+                    所需工作仅是注册一个新类的对象(即原型)然后再任何需要的地方Clone
+                    Prototype模式中的Clone方法可以利用某些框架的序列化来实现深拷贝。
+            Builder：构建器
+                    动机：在软件系统中，有时候面临着“一个复杂对象”的创建工作，其通常由各个部分的子对象用一定的算法构成，由于需求的变化，这个复杂对象的各个部分
+                        经常面临着剧烈的变化，但是将他们组合在一起的算法却异常稳定
+                    将一个复杂对象的构建与其表示相分离，使得同样的构建过程(稳定)可以创建不同的表示(变化)
+                    Builder模式主要用于分步骤构建一个复杂的对象，在这其中“分步骤”是一个稳定的算法，而复杂对象的各个部分则经常变化、
+                    变化点在哪里，封装哪里------Builder模式主要在于应对“复杂对象各个部分”的频繁需求变动，其缺点在于难以应对“分步骤构建算法”的需求变动
+                    Builder模式中，要注意不同语言中构造器内调用虚函数的差别
+对象性能：    
+        面向对象很好地解决了“抽象”的问题，但是必不可免地要付出一定的代价。对于通常情况来讲，面向对象的成本大都可以忽略不计，但是某些情况下
+        面向对象带来的成本必须谨慎处理。
+        Singleton：单例模式
+            动机：在软件系统中，经常有这样一些特殊的类，必须保证它们在系统中只存在一个实例，才能确保他们的逻辑正确性、以及良好的效率
+            保证一个类只有一个实例，并提供一个该实例的全局访问点
+            Singleton模式中的实例构造器可以设置为protected以允许子类派生
+            Singleton模式一般不要支持拷贝后构造函数和Clone接口，因为这有可能导致多个对象实例，与Singleton模式的初衷违背
+            多线程环境下安全的Singleton 要注意对双检查锁的正确实现。
+        Flyweight：享元模式
+            动机：在软件系统采用纯粹对象方案的问题在于大量细粒度的对象会很快充斥在系统中，从而带来很高的运行时代价--主要指内存需求方面的代价
+            如何在避免大量细粒度对象问题的同时，让外部客户程序仍然能够透明地使用面向对象的方式来进行操作
+            运用共享技术有效地支持大量细粒度的对象。
+
+
+接口隔离：
+        在组件构建过程中，某些接口之间直接的依赖常常会带来很多问题，甚至根本无法实现，采用添加一层间接(稳定)的接口，
+        来隔离本来互相紧密关联的接口是一种常见的解决方案。
+        Facade:门面模式/界面模式        解耦    系统内和系统外    对象的关联关系
+            为子系统中的一组接口提供一个一致(稳定)的界面，Facade模式定义了一个高层接口，这个接口使得这一子系统更加容易使用(复用)
+            从客户程序的角度来看，Facade模式简化了整个组件系统的接口，对于组件内部与外部客户程序来说，达到了一种解耦的效果
+            内部子系统的任何变化不会影响到Facade接口的变化
+            Facade设计模式更注重从架构的层次去看整个系统，而不是单个类的层次，Facade很多时候更是一种架构设计模式
+            Facade模式中组件的内部应该是“相互耦合关系比较大的一系列组件”,而不是一个简单的功能集合。
+
+        Proxy：代理模式                解耦    两个对象间        的关联关系
+            在面向对象系统中，由于某种原因(比如对象创建的开销很大，或者某些操作需要安全控制，或者需要进程外的访问等)直接访问会给使用者、或者系统结构带来很多麻烦
+            如何在不失去透明操作对象的同时来管理/控制这些对象特有的复杂性？增加一层间接层是软件开发中常见的解决方式。
+            为其他对象提供一种代理以控制(隔离，使用接口)对这个对象的访问。
+
+        Adapter    适配器模式            老接口和新接口
+            由于应用环境的变化，常常需要把“一些现存的对象”放在新的环境中应用，但是新环境要求的接口是这些现存现象所不满足的。
+            将一个类的接口转换成客户希望的另外一个接口，Adapter模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作
+            Adapter模式主要应用于“希望复用一些现存的类，但是接口又与复用环境要求不一致的情况”在遗留代码复用。类库迁移等方面非常有用
+
+        Mediator:中介者            解耦    多个对象    
+            软件构建过程中，经常会出现多个对象互相关联交互的情况，对象之间常常会维持一种复杂的引用关系，
+            如果遇到一些需求的更改，这种直接的引用关系将面临不断地变化。
+            可以使用一个“中介对象”来管理对象间的关联关系，避免相互交互的对象之间的紧耦合引用关系，从而更好地抵御变化。
+            模式定义：用一个中介者来封装(封装变化)一系列的对象交互。中介者使各对象不需要显示的相互引用(编译时依赖-&gt;运行时依赖)
+            从而使其耦合松散(管理变化)，且可以独立地改变它们之间的交互。
+            将多个对象间复杂的关联关系解耦，Mediator模式将多个对象间的控制逻辑进行集中管理，变“多个对象互相关联”为
+            “多个对象和一个中介者关联”，简化了系统的维护，抵御了可能的变化。
+            随着控制逻辑的复杂化，Mediator具体对象的实现可能相当复杂。这时候可以对Mediator对象进行分解处理
+            Facade模式是解耦系统间(单向)的对象关联关系，Mediator模式是解耦系统内各个对象之间(双向)的关联关系
+状态变换：
+        在组件构建过程中，某些对象的状态经常面临变化，如何对这些变化进行有效的管理，同时又维持高层模块的稳定，“状态变化”
+        模式为此问题提供解决方案。
+        State    状态模式
+            允许一个对象在其内部状态改变时改变它的行为，从而使对象看起来似乎修改了其行为。
+            State模式将所有与一个特定状态相关的行为都放入一个State的子类对象中，在对象状态切换时，切换相应的对象
+            但同时维持State的接口，这样实现了具体操作与状态转换之间的解耦
+            为不同的状态引入不同的对象使得状态转换变得更加明确，而且可以保证不会出现状态不一致的情况，因为转换是原子性的
+            即要么彻底转换过来，要么不转换。
+            如果State对象没有没有实例对象，那么各个上下文可以共享同一个对象，从而节省对象开销
+        Memonto    备忘录模式
+            软件构建过程中，某些对象的状态在转换过程中，可能由于某种需要，要求程序能够回溯到对象之前处于某个点时的状态。
+            如果使用一些共有借口来让其他对象得到对象的状态，便会暴露对象的实现细节。
+            如何实现对象状态的良好保存与恢复，但又不会因此破坏对象本身的封装性
+            备忘录(Memento)存储原发器(Originator)对象的内部状态，在需要时恢复原发器状态
+            Memento模式的核心是信息隐藏，即Originator需要向外接隐藏信息，保持其封装性。但同时又需要将状态保持到外界(Memento)
+            由于现代语言运行时，都具有相当的对象序列化支持，因此往往采用效率高，又较容易正确实现的序列化方案来实现Memento方案
+数据结构：
+        常常有一些组件在内部具有特定的数据结构，如果让客户程序依赖这些特定的数据结构，会破坏组件的复用性，这时候如果将这些特定的数据结构封装在内部
+        在外部提供统一的接口，来实现与特定数据结构无关的访问，是一种行之有效的解决方案。
+        Composite 组合模式
+            将对象组合成树形结构以表示“部分-整体”的层次结构。Composite使得用户对单个对象和组合对象的使用具有一致性(稳定)
+        采用树形结构来实现普遍存在的对象容器，从而将一对多的关系转为一对一的关系，使得客户代码可以一致地(复用)处理对象和对象容器，
+        无需关心处理的是单个的对象还是组合的对象容器
+        将“客户代码与复杂的对象容器结构”解耦是Composite的核心思想，解耦之后，客户代码将与纯粹的抽象接口--而非对象容器的内部实现结构--发生依赖
+        从而更能应对变化。
+        Composite模式在具体实现中，可以让父对象的子对象反向追溯；如果父对象有频繁的便利需求，可使用缓存技巧来改善效率。
+
+        Iterator  迭代器模式
+            集合对象内部结构常常变化各异，但对于这些集合对象，我们希望在不暴露其内部结构的同时，可以让外部客户代码透明地访问其中包含的元素，
+        同时这种透明遍历也为同一种算法在多种集合对象上进行操作提供了可能。
+            提供一种方法，顺序访问一个聚合对象中的各个元素，而又不暴露(稳定)该对象的内部表示
+        要点：
+            迭代抽象：访问一个聚合对象的内容而无需暴露它的内部表示、
+            迭代多态：为遍历不同的集合结构提供一个统一的接口，从而支持同样的算法在不同的集合结构上进行操作
+            迭代器健壮性考虑：遍历的同时更改迭代器所在的集合结构，会导致问题
+        Chain of Responsibility 职责链模式
+            动机：软件构建过程中，一个请求可能会被多个对象处理，但是每个请求在运行时只能有一个接受者，如果显示指定，将必不可少地带来请求发送者与接受者的紧耦合
+            模式定义：使多个对象都有机会处理请求，从而避免请求的发送者和接受者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递请求，直到有一个对象处理它为止。
+            Chain of Responsibility模式应用场合在于“一个请求可能有多个接受者，但是最后真正的接受者只能有一个”，这时候请求发送者与接受者的耦合有可能出现“变化脆弱”
+            的症状，职责链的目的就是将二者解耦，从而更好地应对变化。
+            应用了Chain of Responsibility模式后，对象的职责分派将更具灵活性，我们可以在运行时动态添加/修改请求的处理职责。
+            如果请求传递到责任链的末尾仍得不到处理，应该有一个合理的缺省机制，这也是每一个接收对象的责任，而不是发出请求的对象的责任。
+行为变化：
+        在组件的构建过程中，组件行为的变化经常导致组件本身剧烈的变化，“行为变化”模式将组件的行为和组件本身进行解耦，从而支持组件行为的变化，实现两者之间的松耦合。
+        Command 命令模式
+            软件构建过程中，“行为请求者”与“行为实现者”通常呈现一种“紧耦合”。但是在某些场合--比如需要对行为进行“记录、撤销/重(undo/redo)、事务”等处理，这种无法抵御变化的紧耦合是不合适的
+            将请求(行为)封装为一个对象，从而使你可以用不同的请求对客户进行参数化，对请求排队或记录请求日志，以及支持可撤销的操作。
+            Command模式的根本目的在于将“行为请求者”与“行为实现者”解耦，在面向对象语言中，常见的实现手段是“将行为抽象为对象”。
+            实现Command接口的具体命令对象ConcreteCommand有时候根据需要可能会保存一些额外的状态信息，通过使用Composite模式，可以将多个“命令”封装为一个“复合命令”MacroCommand。
+            Command模式与C++中的函数对象有些类似，但两者定义行为接口的规范有所区别：Command以面向对象中的“接口-实现”来定义行为接口规范，更严格，但有性能损失，C++函数对象以函数签名来定义行为接口规范，更灵活
+
+        Visitor 访问器模式
+            软件构建过程中，由于需求的改变，某些类层次结构中常常需要增加新的行为(方法)，如果直接在基类中做这样的改变，将会给子类带来很繁重的变更负担，甚至破坏原有设计
+            表示一个作用于某对象结构中的各元素的操作。使得可以在不改变(稳定)各元素的类的前提下定义(扩展)作用于这些元素的新操作(变化)
+            Visitor 模式通过所谓双重分发(double dispatch)来实现在不更改(不添加新的操作-编译时)Element类层次结构的前提下，在运行时透明地为类层次结构上的各个类动态添加新的操作(支持变化)
+            所谓双重分发即Visitor模式中间包括了两个多态分发(注意其中的多台机制)：第一个为accept方法的多态辨析；第二个为visitElementX方法的多态辨析。
+            Visitor模式的最大缺点在于扩展类层次结构(添加新的Element子类)，会导致Visitor类的改变。因此Visitor模式适用于“Element类层次结构稳定，而其中的操作却经常面临频繁改动”
+
+
+领域问题：    
+        软件构建过程中，如果某一特定领域的问题比较复杂，类似的结构不断重复出现，如果使用普遍的编程方式来实现将面临非常频繁的变化。
+        在这种情况下，将特定领域的问题表达为某种语法规则下的句子，然后构建一个解释器来解释这样的句子，从而达到解决问题的目的。
+        Interpreter 解析器模式
+        给定一个语言，定义它的文法的一种表示，并定义一种解释器，这个解释器使用该表示来解释语言中的句子。
+        Interpreter模式的应用场景是Interpreter模式应用中的难点，只有满足“业务规则频繁变化，且类似的结构不断重复出现，并且容易抽象为语法规则的问题”才适合使用Interpreter模式。
+        使用Interpreter模式来表示文法规则，从而可以使用面向对象技巧来方便地“扩展”文法。
+        Interpreter模式比较适合简单的文法表示，对于复杂的文法表示，Interpreter模式会产生比较大的类层次结构，需要求助于语法分析生成器这样的标准工具。        
+
+
+模式应用时要分辨出哪些是稳定的哪些是变化的。
+
+
+
+总结
+    一个目标：管理变化，提高复用
+    两种手段：分解、抽象
+    八大原则：    依赖倒置原则(DIP)
+            开放封闭原则(OCP)
+            单一职责原则(SRP)
+            Liskov替换原则(LSP)
+            接口隔离原则(ISP)
+            对象组合优于类继承
+            封装变化点
+            面向接口编程
+
+    重构技法：    静态-&gt;动态
+            早绑定-&gt;晚绑定
+            继承-&gt;组合
+            编译时依赖-&gt;运行时依赖
+            紧耦合-&gt;松耦合
+
+    什么时候不用模式：代码可读性很差时
+                需求理解还很浅时
+                变化没有显现时
+                不是系统的关键依赖点
+                项目没有复用价值时
+                项目将要发布时
+    经验之谈：    不要为了模式而模式
+            关注抽象类&amp;接口
+            理清变化点和稳定点
+            审视依赖关系
+            要有Framework和Application的区隔思维
+            良好的设计是演化的结果</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/20/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1469,298 +2010,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/10/%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" itemprop="url">快速排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T13:02:47+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">排序算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>快排的思想为，首先找到一个基准，将大于基准的放在右边，小于基准的放在左边。然后再对基准左右的两个子数组进行快排。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuickSort</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> []arr = &#123;<span class="number">7</span>,<span class="number">9</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">8</span>&#125;;</span><br><span class="line">		sort(arr, <span class="number">0</span>, arr.length-<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> a:arr) &#123;</span><br><span class="line">			System.out.print(a);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> []arr , <span class="keyword">int</span> left , <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(left&gt;=right)<span class="keyword">return</span> ;</span><br><span class="line">		<span class="keyword">int</span> mid = partition(arr, left, right);</span><br><span class="line">		sort(arr, left, mid-<span class="number">1</span>);</span><br><span class="line">		sort(arr, mid+<span class="number">1</span>, right);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> []arr,<span class="keyword">int</span> left , <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> pivot = arr[right];</span><br><span class="line">		<span class="keyword">int</span> l = left;</span><br><span class="line">		<span class="keyword">int</span> r = right-<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(l &lt;= r) &#123;</span><br><span class="line">			<span class="keyword">while</span>(l &lt;= r &amp;&amp; arr[l] &lt;= pivot) &#123;</span><br><span class="line">				l++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">while</span>(l &lt;= r &amp;&amp; arr[r] &gt; pivot) &#123;</span><br><span class="line">				r--;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(l&lt;r) &#123;</span><br><span class="line">				swap(arr, l, r);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		swap(arr, l, right);</span><br><span class="line">		<span class="keyword">return</span> l;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> []arr , <span class="keyword">int</span> i , <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> temp = arr[i];</span><br><span class="line">		arr[i] = arr[j];</span><br><span class="line">		arr[j] = temp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="partition过程"><a href="#partition过程" class="headerlink" title="partition过程"></a>partition过程</h2><p>可以看出，快排中最为重要的就是partition的过程。现在对上面的partition过程进行分析。<br>先取待排序数组的最末尾位置为pivot，用l当做左指针从左往右寻找，r当做右指针从右往左寻找。<br>当l寻找到第一个大于pivot的元素，r寻找到第一个不小于privot的元素时暂停本次寻找。<br>由于最终目的是把所有小于pivot的元素放在左边，大于pivot的元素放在右边，故对上一步找到的那两个元素进行交换。<br>l和r这两个指针对数组的扫描直到l&gt;r时停止，这代表着整个数组已经按照pivot划分为两部分了。<br>上述循环结束之后，l指针左边的元素都小于等于pivot，r右边的元素都大于pivot，故l指针当前指向的元素大于pivot，而r指针当前指向的元素小于等于pivot，而此时pivot还在数组的最末端，未参与上述交换过程，为了将pivot放入正确的位置，可以将其与当前l指针指向的元素交换。交换后pivot位于l指针所在位置，可将其作为返回值，用于pivot左右子数组的快排分界线。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> []arr,<span class="keyword">int</span> left , <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> pivot = arr[right];</span><br><span class="line">		<span class="keyword">int</span> l = left;</span><br><span class="line">		<span class="keyword">int</span> r = right-<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span>(l &lt;= r) &#123;</span><br><span class="line">			<span class="keyword">while</span>(l &lt;= r &amp;&amp; arr[l] &lt;= pivot) &#123;</span><br><span class="line">				l++;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">while</span>(l &lt;= r &amp;&amp; arr[r] &gt; pivot) &#123;</span><br><span class="line">				r--;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(l&lt;r) &#123;</span><br><span class="line">				swap(arr, l, r);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		swap(arr, l, right);</span><br><span class="line">		<span class="keyword">return</span> l;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>第二种partition思路<br>同样选定待排序数组的最末尾位置为pivot，目的是在遍历一遍数组的过程中，把比pivot小的数字从左往右的放在数组中。<br>故使用location记录下一个要放的位置，每次找到一个比pivot小的元素，将其与location位置的数字交换，并将location自增1。<br>最后同样的要把数组最末尾位置与location交换，并返回location用于左右子数组的快排。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span> []arr,<span class="keyword">int</span> left , <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> pivot = arr[right];</span><br><span class="line">		<span class="keyword">int</span> location = left;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = left ; i &lt; right; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(arr[i]&lt;pivot) &#123;</span><br><span class="line">				swap(arr, i, location);</span><br><span class="line">				location++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		swap(arr, right, location);</span><br><span class="line">		<span class="keyword">return</span> location;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="pivot的选择"><a href="#pivot的选择" class="headerlink" title="pivot的选择"></a>pivot的选择</h2><p>上述partition过程中都是选择的最末尾位置为pivot，这可能使得比较极端的pivot使左右子数组长度不均衡，一种简单的优化方式是取最左，最右，中间三个值的中位数当做pivot。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/10/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="莫一兮">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="莫一兮的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/05/10/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/" itemprop="url">归并排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-10T12:19:00+08:00">
-                2020-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">排序算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>将长度为n的数组划分位两个长度为n/2的子数组，再分别对子数组采用归并排序，将两个排序好的子数组合并成一个,归并排序时间复杂度为O(nlogn),缺点是需要开辟额外的空间，空间复杂度为O(n)。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MegerSort</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[]args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> []arr = &#123;<span class="number">7</span>,<span class="number">9</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">8</span>&#125;;</span><br><span class="line">		<span class="keyword">int</span> []temp = <span class="keyword">new</span> <span class="keyword">int</span> [arr.length];</span><br><span class="line">		sort(arr, <span class="number">0</span>, arr.length - <span class="number">1</span>, temp);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> a : arr) &#123;</span><br><span class="line">			System.out.print(a+<span class="string">" "</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> []arr , <span class="keyword">int</span> left , <span class="keyword">int</span> right , <span class="keyword">int</span> []temp)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(left&lt;right) &#123;</span><br><span class="line">			<span class="keyword">int</span> mid = (left+right)/<span class="number">2</span>;</span><br><span class="line">			sort(arr,left,mid,temp);</span><br><span class="line">			sort(arr,mid+<span class="number">1</span>,right,temp);</span><br><span class="line">			merge(arr, left, mid, right, temp);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span> []arr , <span class="keyword">int</span> left , <span class="keyword">int</span> mid ,<span class="keyword">int</span> right , <span class="keyword">int</span> []temp)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> i = left;</span><br><span class="line">		<span class="keyword">int</span> j = mid+<span class="number">1</span>;</span><br><span class="line">		<span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(i&lt;=mid &amp;&amp; j&lt;=right) &#123;</span><br><span class="line">			temp[k++] = arr[i]&lt;=arr[j] ? arr[i++]:arr[j++];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(i&lt;=mid) &#123;</span><br><span class="line">			temp[k++] = arr[i++]; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">while</span>(j&lt;=right) &#123;</span><br><span class="line">			temp[k++] = arr[j++];</span><br><span class="line">		&#125;</span><br><span class="line">		k = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span>(left&lt;=right) &#123;</span><br><span class="line">			arr[left++] = temp[k++];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1811,7 +2060,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

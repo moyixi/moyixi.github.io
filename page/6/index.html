@@ -238,6 +238,358 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/25/%E5%AD%97%E5%85%B8%E6%A0%91Trie/" itemprop="url">字典树Trie</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-25T15:09:30+08:00">
+                2020-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>字典树、前缀树、Trie 用于判断字符串是否存在或是否具有某种字符串前缀</p>
+<p>实现前缀树：<br>插入、查找、查找前缀功能</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</span><br><span class="line">	Node[] childs = <span class="keyword">new</span> Node[<span class="number">26</span>];</span><br><span class="line">	<span class="keyword">boolean</span> isWord;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Node root = <span class="keyword">new</span> Node();</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">indexForChar</span><span class="params">(<span class="keyword">char</span> c)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> c - <span class="string">'a'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	insert(word,root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word,Node node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	<span class="keyword">if</span>(word.length == <span class="number">0</span>)&#123;</span><br><span class="line">		node.isWord == <span class="keyword">true</span>;</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> index = indexForChar(word.charAt(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">if</span>(node.childs[index] == <span class="keyword">null</span>)&#123;</span><br><span class="line">		node.childs[index] = <span class="keyword">new</span> Node();</span><br><span class="line">	&#125;</span><br><span class="line">	insert(word.substring(<span class="number">1</span>),node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> search(word,root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word,Node node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	<span class="keyword">if</span>(word.length()==<span class="number">0</span>) <span class="keyword">return</span> node.isWord;</span><br><span class="line">	<span class="keyword">int</span> index = indexForChar(word.charAt(<span class="number">0</span>));</span><br><span class="line">	<span class="keyword">return</span> search(word.substring(<span class="number">1</span>),node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> startWith(prefix, root);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">startWith</span><span class="params">(String prefix, Node node)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span> (prefix.length() == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">int</span> index = indexForChar(prefix.charAt(<span class="number">0</span>));</span><br><span class="line">    <span class="keyword">return</span> startWith(prefix.substring(<span class="number">1</span>), node.childs[index]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="莫一兮">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="莫一兮的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/24/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91/" itemprop="url">二叉查找树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-24T15:09:30+08:00">
+                2020-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E5%88%B7%E9%A2%98/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构与算法刷题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>二叉查找树(BST)：根结点大于等于左子树所有节点，小于等于右子树所有节点.<br>特点：中序遍历有序(由小到大)，那么按右 中 左 方式的遍历即由大到小的有序</p>
+<h2 id="修建二叉查找树"><a href="#修建二叉查找树" class="headerlink" title="修建二叉查找树"></a>修建二叉查找树</h2><p>给定一个二叉查找树和左右边界值，修剪二叉查找树，只保留边界值之内的数字。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">trimBST</span><span class="params">(TreeNode root , <span class="keyword">int</span> L ,<span class="keyword">int</span> R)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">if</span>(root.val &lt; L) <span class="keyword">return</span> trimBST(root.right,L,R);</span><br><span class="line">	<span class="comment">//若当前root值小于左边界，则左子树可被抛弃，问题等同于修剪以root.right为根结点的子树</span></span><br><span class="line">	<span class="keyword">if</span>(root.val &gt; R) <span class="keyword">return</span> trimBST(root.left,L,R);</span><br><span class="line">	<span class="comment">//若当前root值大于右边界，则右子树可被抛弃，问题等同于修剪以root.left为根结点的子树</span></span><br><span class="line">	root.left = trimBST(root.left,L,R);</span><br><span class="line">	root.right = trimBST(root.right,L,R);</span><br><span class="line">	<span class="comment">//经过上面两部判断后，root值都在L,R的范围之内，可将问题递归至左右结点。</span></span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="寻找二叉查找树由小到大第k个元素"><a href="#寻找二叉查找树由小到大第k个元素" class="headerlink" title="寻找二叉查找树由小到大第k个元素"></a>寻找二叉查找树由小到大第k个元素</h2><p>因为二叉查找树中序遍历有序，所以中序遍历到第k个即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> val;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode root , <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	inOrder(root, k);</span><br><span class="line">	<span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//类比于普通情况下的中序遍历</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	dfs(root.left);</span><br><span class="line">	visit(root);</span><br><span class="line">	dfs(root.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node,<span class="keyword">int</span> k)</span></span>&#123;<span class="comment">//中序遍历找到第k个元素的过程</span></span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	inOrder(node.left,k);</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">	cnt++;</span><br><span class="line">	<span class="keyword">if</span>(cnt == k)&#123;</span><br><span class="line">		val = node.val;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//上面这一坨就是visit(root);讲的故事</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">	inOrder(node.right,k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="寻找二叉查找树由小到大第k个元素-递归解法"><a href="#寻找二叉查找树由小到大第k个元素-递归解法" class="headerlink" title="寻找二叉查找树由小到大第k个元素,递归解法"></a>寻找二叉查找树由小到大第k个元素,递归解法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// count 函数计算以root为根节点的二叉树上有多少个节点。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">count</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span> + count(root.left)+count(root.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//若以root.left 为根节点的二叉树上有n个结点则 root 是第 n+1个节点。</span></span><br><span class="line"><span class="comment">//那么进入此题判断逻辑，若 root.left 有k-1个节点，则root为所求的第k个节点。</span></span><br><span class="line"><span class="comment">//若root.left上的节点比k-1多，则抛弃右子树</span></span><br><span class="line"><span class="comment">//若root.left上的节点比k-1少，则抛弃左子树，并减去左子树上的节点个数和root节点，在右子树上继续进行本题。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode root , <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> leftcount = count(root.left);</span><br><span class="line">	<span class="keyword">if</span>(leftcount == k - <span class="number">1</span>) <span class="keyword">return</span> root.val;</span><br><span class="line">	<span class="keyword">if</span>(leftcount  &gt; k - <span class="number">1</span>) <span class="keyword">return</span> kthSmallest(root.left , k);</span><br><span class="line">	<span class="keyword">return</span> kthSmallset(root.right , k - leftcount - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="把二叉查找树每个节点的值都加上比它大的节点的值。"><a href="#把二叉查找树每个节点的值都加上比它大的节点的值。" class="headerlink" title="把二叉查找树每个节点的值都加上比它大的节点的值。"></a>把二叉查找树每个节点的值都加上比它大的节点的值。</h2><p>二叉查找树节点值 左 &lt; 中 &lt; 右<br>对于整棵二叉查找树，从大到小排序之后，从 1 到 n,第x个数 需要加上的值 是它前面所有数的和,即0不变，1=0+1 , 2=0+1+2 , 3=0+1+2+3。<br>二叉查找树按照 左 中 右遍历是从小到大,按照 右 中 左遍历是从大到小。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">convertBST</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	traver(root);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">traver</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span> ;</span><br><span class="line">	traver(node.right);</span><br><span class="line">	sum += node.val;</span><br><span class="line">	node.val = sum;</span><br><span class="line">	traver(node.left);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树查找树中两个节点的最近公共祖先"><a href="#二叉树查找树中两个节点的最近公共祖先" class="headerlink" title="二叉树查找树中两个节点的最近公共祖先"></a>二叉树查找树中两个节点的最近公共祖先</h2><p>两个节点 p q，值分别为 p.val q.val<br>若当前节点root的值在root.val在p q值之间，即root为p q的公共祖先<br>若root的值比p、q的值都大，则p、q的祖先在root 的左子树上<br>若root的值比p、的值都小，则p、q的祖先在root 的右子树上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root , TreeNode p , TreeNode q)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root.val &gt; p.val &amp;&amp; root.val &gt; q.val) <span class="keyword">return</span> lowestCommonAncestor(root.left , p , q);</span><br><span class="line">	<span class="keyword">if</span>(root.val &lt; p.val &amp;&amp; root.val &lt; q.val) <span class="keyword">return</span> lowestCommonAncestor(root.right , p , q);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉树中两个两个节点的最低公共祖先"><a href="#二叉树中两个两个节点的最低公共祖先" class="headerlink" title="二叉树中两个两个节点的最低公共祖先"></a>二叉树中两个两个节点的最低公共祖先</h2><p>对于p、q两个节点，从根节点root开始遍历，若root等于p、q中的某个，则其为公共祖先。否则分别递归左右子树，若一个节点在左子树上一个节点在右子树上<br>则root为公共结点，若两个节点都在左子树上，则最低公共祖先在左子树上，右子树同理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root , TreeNode p , TreeNode q)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span> || root == p || root == q) <span class="keyword">return</span> root;</span><br><span class="line">	TreeNode left = lowestCommonAncestor(root.left , p , q);</span><br><span class="line">	TreeNode right = lowestCommonAncestor(root.right , p , q);</span><br><span class="line">	<span class="comment">//以下内容也可写为三目运算符</span></span><br><span class="line">	<span class="keyword">if</span>(left!=<span class="keyword">null</span>&amp;&amp;right!=<span class="keyword">null</span>) <span class="keyword">return</span> root;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(left!=<span class="keyword">null</span>) <span class="keyword">return</span> left;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(right!=<span class="keyword">null</span>) <span class="keyword">return</span> right;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="comment">//以上内容也可写为三目运算符:</span></span><br><span class="line">	<span class="keyword">return</span> left == <span class="keyword">null</span> ? right : right == <span class="keyword">null</span>? left : root;</span><br><span class="line">	<span class="comment">//left为null 时返回right,不为空时判断right是否为null, right为null则返回left 否则返回root;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="将有序数组变为二叉查找树"><a href="#将有序数组变为二叉查找树" class="headerlink" title="将有序数组变为二叉查找树"></a>将有序数组变为二叉查找树</h2><p>把数组中点看做根，讲数组分为左右子树，再对左右子树做同样操作,类似二分查找。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">sortedArraytoBST</span><span class="params">(<span class="keyword">int</span> [] num)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(num == <span class="keyword">null</span>|| num.length == <span class="number">0</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">return</span> help(num , <span class="number">0</span> , num.length - <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> TreeNode <span class="title">helper</span><span class="params">(<span class="keyword">int</span> []num , <span class="keyword">int</span> l , <span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(l&gt;r) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">int</span> m = (l+r)/<span class="number">2</span>;</span><br><span class="line">	TreeNode root = <span class="keyword">new</span> TreeNode(num[m]);</span><br><span class="line">	root.left = helper(num, l , m-<span class="number">1</span>);</span><br><span class="line">	root.right = helper(num, m+<span class="number">1</span> , r);</span><br><span class="line">	<span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="根据有序链表构造平衡的二叉查找树"><a href="#根据有序链表构造平衡的二叉查找树" class="headerlink" title="根据有序链表构造平衡的二叉查找树"></a>根据有序链表构造平衡的二叉查找树</h2><p>取巧解法：先把有序链表转换为有序数组，问题就变成了有序数组构造二叉查找树问题即(6)<br>普通解法：定义函数，使用快慢指针，可以找到链表的中点。有了这个函数就可以和之前的有序数组构造二叉查找树问题类似了。<br>快慢指针找链表的中点有两种写法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ListNode fast = head;</span><br><span class="line">ListNode slow = head;</span><br><span class="line"><span class="keyword">while</span>(fast!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	fast = fast.next;</span><br><span class="line">	slow = slow.next;</span><br><span class="line">	<span class="keyword">if</span>(fast==<span class="keyword">null</span>)<span class="keyword">break</span>;</span><br><span class="line">	fast = fast.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>//上面这种写法偶数个节点时slow指向中点右侧，奇数个节点时slow指向中间节点的下一个节点<br>例： 1 2 3 4 5 6<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:null<br>e: 循环退出</p>
+<p>例： 1 2 3 4 5 6 7<br>a: fast:1 slow:1<br>b: fast:2 slow:2 fast:3<br>c: fast:4 slow:3 fast:5<br>d: fast:6 slow:4 fast:7<br>e: fast:null slow:5  fast==null break;循环退出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ListNode slow = head;</span><br><span class="line">ListNode fast = head.next;</span><br><span class="line"><span class="keyword">while</span>(fast!=<span class="keyword">null</span> &amp;&amp; fast.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">	slow = slow.next;</span><br><span class="line">	fast = fast.next.next;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>//上面这种写法偶数个节点时slow指向中点左侧，奇数个节点时slow指向中间节点<br>例： 1 2 3 4 5 6<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: fast.next==null,循环停止</p>
+<p>例： 1 2 3 4 5 6 7<br>a: slow:1 fast:2<br>b: slow:2 fast:4<br>c: slow:3 fast:6<br>d: slow:4 fast:null<br>e: fast==null,循环停止</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> ListNode <span class="title">getPreMid</span><span class="params">(ListNode node)</span></span>&#123;</span><br><span class="line">	ListNode slow = head;</span><br><span class="line">	ListNode fast = head.next;</span><br><span class="line">	ListNode pre = head;</span><br><span class="line">	<span class="keyword">while</span>(fast!=<span class="keyword">null</span> &amp;&amp; fast.next!=<span class="keyword">null</span>)&#123;</span><br><span class="line">		pre = slow;</span><br><span class="line">		slow = slow.next;</span><br><span class="line">		fast = fast.next.next;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> pre;<span class="comment">//本题所找到的pre 是slow节点的前一个节点,以便后续操作时同时取到中点和中点前一个节点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">sortedListToBST</span><span class="params">(ListNode head)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(head == <span class="keyword">null</span>)<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">if</span>(head.next == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">new</span> TreeNode(head.val);<span class="comment">//若链表只有一个节点，则直接将其变为二叉树节点即可。</span></span><br><span class="line">	ListNode preMid = getPreMid(head);</span><br><span class="line">	ListNode mid = preMid.next;</span><br><span class="line">	preMid.next = <span class="keyword">null</span>;<span class="comment">//调用getPreMid函数获得了有序链表的中点和中点的前一个节点后，将链表从中点断开，问题变为两个链表的子问题，</span></span><br><span class="line">					   <span class="comment">//左边子问题的初始节点仍然为head,将mid转化为二叉树节点,右边子问题的初始节点为mid.next</span></span><br><span class="line">	TreeNode t = <span class="keyword">new</span> TreeNode(mid.val);</span><br><span class="line">	t.left = sortedListToBST(head);</span><br><span class="line">	t.right = sortedListToBST(mid.next);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值"><a href="#判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值" class="headerlink" title="判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值"></a>判断二叉查找树中是否可寻找到两个节点，使它们之和为一个给定数值</h2><p>twosum问题的变体，解题方法是在有序数组中使用双指针，二叉查找树中序遍历即可变为有序数组</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node , List&lt;Integer&gt; nums)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(root == <span class="keyword">null</span>)<span class="keyword">return</span>;</span><br><span class="line">	inOrder(root.left,nums);</span><br><span class="line">	nums.add(root.val);</span><br><span class="line">	inOrder(root.right,nums);</span><br><span class="line">&#125;<span class="comment">//中序遍历把二叉查找树转为有序数组并存于nums中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">findTarget</span><span class="params">(TreeNode root, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	List&lt;Integer&gt; nums = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">	inOrder(root , nums);</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span> , j = nums.size() - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">while</span>(i &lt; j)&#123;</span><br><span class="line">		<span class="keyword">if</span>(nums.get(i)+nums.get(j)==k) &#123;<span class="keyword">return</span> <span class="keyword">true</span>;&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(nums.get(i)+nums.get(j)&gt;k)&#123;</span><br><span class="line">		j--;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="在二叉查找树中查找两个节点之差的最小绝对值"><a href="#在二叉查找树中查找两个节点之差的最小绝对值" class="headerlink" title="在二叉查找树中查找两个节点之差的最小绝对值"></a>在二叉查找树中查找两个节点之差的最小绝对值</h2><p>中序遍历，遍历时取某一节点和其前一个节点，计算差值，取最小。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> minDiff = Integer.MAX_VALUE;</span><br><span class="line"><span class="keyword">private</span> TreeNode preNode = <span class="keyword">null</span>;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">	inOrder(node.left);</span><br><span class="line">	<span class="keyword">if</span>(preNode != <span class="keyword">null</span>) minDiff = Math.min(minDiff, node.val - preNode.val);</span><br><span class="line">	preNode = node;</span><br><span class="line">	inOrder(node.right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMinimumDifference</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">	inOrder(root);</span><br><span class="line">	<span class="keyword">return</span> minDiff;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="寻找二叉查找树中出现次数最多的值"><a href="#寻找二叉查找树中出现次数最多的值" class="headerlink" title="寻找二叉查找树中出现次数最多的值"></a>寻找二叉查找树中出现次数最多的值</h2><pre><code class="java"><span class="keyword">private</span> <span class="keyword">int</span> curCnt = <span class="number">1</span>;
+<span class="keyword">private</span> <span class="keyword">int</span> MaxCnt = <span class="number">1</span>;
+<span class="keyword">private</span> TreeNode preNode = <span class="keyword">null</span>;
+<span class="keyword">public</span> <span class="keyword">int</span> [] findMode(TreeNode root){<span class="comment">//中序遍历得到结果存入maxCntNums中再将其转化为数组ret</span>
+    List&lt;Integer&gt; maxCntNums = <span class="keyword">new</span> ArrayList&lt;&gt;();
+    inOrder(root,maxCntNums);
+    <span class="keyword">int</span> [] ret = <span class="keyword">new</span> <span class="keyword">int</span>[maxCntNums.size()];
+    <span class="keyword">int</span> idx = <span class="number">0</span>;
+    <span class="keyword">for</span>(<span class="keyword">int</span> num: maxCntNums){
+    ret[idx++] = num;
+    }
+    <span class="keyword">return</span> ret;
+}
+<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(TreeNode node , List&lt;Integer&gt; nums)</span></span>{
+    <span class="keyword">if</span>(node ==<span class="keyword">null</span> )<span class="keyword">return</span>;
+    inOrder(node.left, nums);
+<span class="comment">//累计相同数字出现次数</span>
+    <span class="keyword">if</span>(preNode != <span class="keyword">null</span>){
+        <span class="keyword">if</span>(preNode.val==node.val) curCnt++;
+        <span class="keyword">else</span> curCnt = <span class="number">1</span>;
+    }
+<span class="comment">//若当前数字出现次数大于最大出现次数，则更新</span>
+    <span class="keyword">if</span>(curCnt &gt; maxCnt){
+        maxCnt = curCnt;
+        nums.clear();
+        nums.add(node.val);
+    }<span class="keyword">else</span> <span class="keyword">if</span> (curCnt == maxCnt){<span class="comment">//若当前数字出现次数等于最大出现次数，则增加一个众数</span>
+        nums.add(node.val);
+    }
+    preNode = node;
+<span class="comment">//</span>
+    inOrder(node.right,nums);
+}</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/18/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%B1%BB%E7%AE%97%E6%B3%95%E9%A2%982/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1045,7 +1397,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
